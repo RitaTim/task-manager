@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+{% load bootstrap %}
+
+{% block title %}
+	Профиль
+{% endblock %}
+
+{% block content%}	
+	<div class = "container projects">
+		<label> {{user.username}}</label>
+		<label> {{profile.level}}</label>
+	</div>
+{% endblock %}
+
+{% block nav%}
+	<li class="dropdown">
+		<a href="/projects" class="dropdown-toggle" data-toggle="dropdown">Проекты<b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li><a href="/projects">Все</a></li>
+			{% for pro in projects %}
+			<li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
+			{% endfor %}
+		</ul>
+	</li>
+	<li><a href="#">Статистика</a></li>
+	<li><a href="/profile/dashboard">Задачи</a></li>
+	<li><a href="#">Форум</a></li>
+{% endblock %}

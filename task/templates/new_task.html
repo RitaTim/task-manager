@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% load bootstrap %}
+
+{% block content%}
+<div class = "container">
+		<div class = "row">
+			<div class = "col-md-6 col-md-offset-2 well">
+				<div class = "large-offset-3 large-6 columns">
+					<form action = "/task/new/{{project.id}}" method = "post" enctype="multipart/form-data">
+						{% csrf_token %}
+
+						{{form|bootstrap}}
+						
+						
+						<input class = "button" type = "submit" value = "Создать">
+						
+					</form>
+				</div>
+			</div>
+		</div>
+</div>			
+
+{% endblock%}

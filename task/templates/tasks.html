@@ -1,0 +1,141 @@
+{% extends "main.html" %}
+
+{% block title %}
+	Задачи
+{% endblock %}
+
+{% block content%}	
+
+<div class="row" style="margin-top:20px;">
+	<div class='col-sm-12'>
+		<div class='box bordered-box blue-border' style='margin-top:50px;'>
+			<div class='box-header orange-background'>
+				<div class='title project_id' id="{{project.id}}">
+					<h3>{{project.title}}</h3>
+				</div>
+				<div class='actions'>
+					<a class="btn box-collapse btn-xs btn-link" href="/task/tasks/{{project.id}}">Задачи</a>
+					<a class="btn box-collapse btn-xs btn-link" href="/task/dashboard/{{project.id}}">Dashboard</a>
+				</div>
+
+			</div>
+			<div class='box-table'>
+				<div class='responsive-table'>
+					<div class='scrollable-area' style= 'width:100%'>
+					
+					<table class="table table-striped col-md-12" id="table_articles">
+                    <thead>
+                        <tr>
+                        			<th></th>
+									<th><center><a href = "/task/tasks/{{project.id}}/sort_by_iterate">Итерация</a></center></th>
+									<th><center>
+										<a href = "/task/tasks/{{project.id}}/sort_by_title">Задача</a> 
+										<a href = "/task/new/{{project.id}}">
+											<b>+</b> 
+										</a>
+										</center>
+									</th>		
+									<th><center><a href = "/task/tasks/{{project.id}}/sort_by_type">Тип</a></center></th>
+									<th><center><a href = "/task/tasks/{{project.id}}/sort_by_assigned">Исполнитель</a></center></th>
+									<th><center><a href = "/task/tasks/{{project.id}}/sort_by_status">Статус</a></center></th>
+									<th><center><a href = "/task/tasks/{{project.id}}">Обновлена</a></center></th>
+								</tr>
+                    </thead>
+                    <tbody>
+						{% for task  in tasks %}
+							<tr data-position="{{task.pos}}" id="{{task.id}}">
+										<td hidden>
+											{{task.pos}}
+										</td>
+										<td>
+											{{task.iteration}}
+										</td>
+										<td>
+											{{task.title}}
+										</td>
+										<td>
+											{{task.type_task}}
+										</td>
+										<td>
+											{{task.assigned}}
+										</td>
+										<td>
+											{{task.status}}
+										</td>
+										<td>
+											{{task.updated}}
+										</td>
+							</tr>
+						{% endfor %}
+                    </tbody>
+                </table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    	var id_project = $('.project_id').attr('id');
+
+    	var getOrder = function(){
+			var rows = $('#table_articles tr');
+			var order = [];
+			jQuery.each(rows, function(i, row){
+				//var name_ = row.attr('name');
+				//var id_   = row.attr('id')
+				order.push(row);
+            });
+			return order;//table_art.fnGetData(this);
+		}	
+
+        var table_art = $('#table_articles').dataTable({
+					         	//"bServerSide": true,
+					         	//"bProcessing": true,
+					         	//data : getOrder(),
+					         	//success: function(){
+					        	//	console.log('TTTTT');
+					        	//	$.ajax({
+					        	//		url  : "/task/tasks/" + id_project + "/change_order", 
+					        	//		type : "GET",
+					        	//		data : getOrder()
+					        	//	})
+								//    .done(function( data ){ 
+								//    })
+								//    .fail(function(err){alert("faile req!!!")});
+						        //}
+						        //"bJQueryUI": true,
+						        //"bSortable": true,
+						       // "bFilter": false,
+						        //"bPaginate": false,
+						        //"bLengthChange": false,
+						        //"bInfo": false,
+						        //"sAjaxSource": "/task/tasks/" + id_project + "/change_order",				    	
+						    	//"fnRowCallback": function (nRow, aData, iDisplayIndex) {
+						    	//	console.log(nRow);
+						    		//console.log(aData);
+						    	//	console.log(iDisplayIndex);
+            						//nRow.setAttribute('id', aData.RowOrder);  //Initialize row id for every row
+        						//},
+					         })	       
+    });
+</script>
+
+{% endblock %}
+
+{% block nav%}
+	<li class="dropdown">
+		<a href="/projects" class="dropdown-toggle" data-toggle="dropdown">Проекты<b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li><a href="/projects">Все</a></li>
+			{% for pro in projects %}
+			<li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
+			{% endfor %}
+		</ul>
+	</li>
+	<li><a href="#">Статистика</a></li>
+	<li><a href="/profile">Моя страница</a></li>
+{% endblock %}

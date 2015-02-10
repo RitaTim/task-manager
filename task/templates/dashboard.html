@@ -1,0 +1,217 @@
+{% extends "main.html" %}
+
+{% load bootstrap %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="row" style="margin-top:20px;">
+    <div class='col-sm-12'>
+        <div class='box bordered-box blue-border' style='margin-top:50px;'>
+            
+            <div class='box-header'>
+                <div class = "row">
+                    <div class = 'title col-sm-2'>
+                        <h3 id="title_project">{{project.title}}</h3>
+                    </div>
+                    <div class = "col-sm-4 col-sm-offset-6">
+                        <div class="btn-group" role="group" aria-label="...">
+                          <a  href="/task/tasks/{{project.id}}"><button type="button" class="btn btn-default">Задачи</button></a>
+                          <a  href="/task/dashboard/{{project.id}}"><button type="button" class="btn btn-default">Dashboard</button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class = "row">
+                                    <div class = "col-sm-1">                                    
+                                        <h4><label>Спринт: </label></h4>
+                                    </div>
+                                    <div class = "col-sm-4">
+                                        {% if iterations|length == 0 %}
+                                            <a href="#"><h4> создать</h4></a> 
+                                        {% else %}                                                                      
+                                            <select class="selectpicker  btn btn-default" id="which_iteration">
+                                                {% for iteration in iterations %}
+                                                <option class = "black_text" >{{ iteration.title }}</option>
+                                                {% endfor %}
+                                            </select>                                        
+                                        {% endif  %}
+                                    </div>
+                                
+                </div>
+                <div class="row">
+                    <div class = "col-sm-1">
+                                    <select class="selectpicker btn btn-default" id="which_tasks">
+                                        <a  href="/task/dashboard/{{project.id}}"><option class = "black_text" >Все</option></a>
+                                        <a  href="/task/dashboard/{{project.id}}"><option class = "black_text" >Мои</option></a>
+                                    </select>
+                    </div>
+                           <!-- <script type="text/javascript">
+                                 $('.selectpicker').selectpicker({
+                                    style: 'btn-info',
+                                    size: 4
+                                    });
+                            </script>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class = "row ">
+                    
+                    <div class="col-md-3 board_widget green_back ">
+                        <center><div class = "h1 board-header">To Do</div></center>
+                        <div class = "board_list"> 
+                            <div class='table-responsive' style= 'width:100%'> 
+                                <ul class="list-group" id="to_do">
+                                {% for task in tasks %}
+                                    {% if task.status == "not_dev" %}
+                                        <li class = "board_item board_item_color"> 
+                                            <p> <b> {{task.title}}</b> </p>
+                                            <p> {{task.text}} </p>
+                                        </li>
+                                    {% endif %}
+                                {% endfor%}    
+                                </ul>
+                            </div>
+                        </div>
+                        <a href = "#"><div class = "white_text"><h4>Добавить...</h4></div></a>
+                    </div>
+                   
+                    <div class="col-md-3 board_widget green_back ">                  
+                        <center><div class = "h1 board-header">In progress</div></center>
+                        <div class = "board_list"> 
+                            <div  class='table-responsive' style= 'width:100%'> 
+                                <ul class="list-group" id="in_rogress" >                                
+                                </ul>
+                            </div>
+                        </div>           
+                    </div>
+                   
+                
+                    <div class="col-md-3 board_widget green_back ">
+                        <center><div class = "h1 board-header">Test</div></center>
+                        
+                        <div class = "board_list"> 
+                            <div  class='table-responsive' style= 'width:100%'> 
+                                <ul id = "test" class="list-group">
+                                                                 
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+
+                    <div class="col-md-3 board_widget green_back" >                  
+                        <center><div class = "h1 board-header">Done</div></center> 
+                        <div class = "board_list"> 
+                            <div  class='table-responsive' style= 'width:100%'> 
+                                <ul id = "done" class="list-group">
+                                                                  
+                                </ul>
+                            </div>
+                        </div>         
+                    </div>
+
+            </div><!--row-->
+        </div><!--dashboard-->
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var title_project = $("#title_project").val();
+                var data = {title_project: title_project, name_task: "", title_iter: ""};
+
+                $.ajax({
+                    url : "/task/get_tasks", 
+                    type : "GET",
+                    dataType: "json",
+                    data : data,
+                    success : function(json) {
+                        $('#to_do').append( 'YEP!!');
+                    },
+                    error : function(err) {
+                        alert("fail");
+                    }
+                });
+                    //.done(function(res){
+                    //    $('#to_do').append("success"); 
+                    //    var tasks_to_do = res["tasks_to_do"];
+                    //    var tasks_in_progress = res["tasks_in_progress"];
+                    //    var tasks_test = res["tasks_test"];
+                    //    var tasks_done = res["tasks_done"];
+//
+                    //    $.each( tasks_to_do, function( index, value ){
+ // $('#to_do').append("<li class = 'board_item board_item_color'><p> <b>' + {{value.title}} + '</b> </p><p>' + {{value.text}} + '</p></li>");
+                    //    });                       
+//
+                    //})
+                    //.fail(function(err){
+                    //    $('#to_do').append("fail"); 
+                    //})
+            })
+    </script>
+
+           
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+        
+        $(document).ready(function() {
+
+            $(function() {
+                 //var $test = $( "#test ul" ),
+                //    $done = $( "#done ul" );
+
+                //$test.sortable().disableSelection();
+
+                $( "#test, #done, #in_rogress, #to_do" ).sortable({
+                  connectWith: "ul",
+                  opacity:0.5,
+                  dropOnEmpty:true,
+                  update: function (event, ui) {
+                    var order = $(this).sortable('serialize');
+
+                    // POST to server using $.post or $.ajax
+                    $.ajax({
+                        data: {'sortable': order, timestamp: $.now()},
+                        type: 'POST',
+                        url: '/profile/dashboard_change'
+                    });
+                  },
+                  //receave: function(event, ui) { 
+                  //  $.ajax({
+                  //      data: ui.draggable,
+                  //      type: 'POST',
+                  //      url: '/your/url/here'
+                  //  });
+                  //}
+                }).disableSelection(); // для отмены выделения текста на элементах
+                //$( ".dropfalse" ).sortable("option", "dropOnEmpty", false);
+
+                  
+
+        })
+    });
+
+</script>
+
+{% endblock %}
+
+{% block nav%}
+    <li class="dropdown">
+        <a href="/projects" class="dropdown-toggle" data-toggle="dropdown">Проекты<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="/projects">Все</a></li>
+            {% for pro in projects %}
+            <li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li><a href="#">Статистика</a></li>
+    <li><a href="/profile">Моя страница</a></li>
+    <li><a href="#">Форум</a></li>
+{% endblock %}
