@@ -59,7 +59,7 @@ INSTALLED_APPS = (
     'forum',
     'iteration',
     'user_profile',
-    'jquery',
+    'jquery'
 )
 
 AUTH_PROFILE_MODEL = 'user_profile.UserProfile'

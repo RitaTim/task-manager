@@ -5,10 +5,9 @@ from django.contrib.auth.models import User
 from project.models import Project
 import datetime
 
-# Create your models here.
 class Task(models.Model):
 	title = models.CharField(max_length = 200, verbose_name = "Название")
-	text = models.TextField(verbose_name = "Описание")	
+	text = models.TextField(verbose_name = "Описание", blank = False)	
 	dead_line = models.DateTimeField(blank = True, default=datetime.datetime.now, verbose_name = "Последний срок")
 	start_time = models.DateTimeField(blank = True, default=datetime.datetime.now)
 	end_time = models.DateTimeField(blank = True, default=datetime.datetime.now)
@@ -35,7 +34,7 @@ class Task(models.Model):
 	    ('done', 'Done'),
 	)
 	type_task = models.CharField(max_length = 7, choices = TYPES_TASKS, default = 'task', verbose_name = "Тип задачи")
-	status = models.CharField(max_length = 7, choices = STATUS_TASKS, default = 'not_dev')
+	status = models.CharField(max_length = 11, choices = STATUS_TASKS, default = 'not_dev')
 
 	def __unicode__(self):
 		return self.title

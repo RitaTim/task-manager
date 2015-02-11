@@ -44,4 +44,5 @@ def dashboard(request, id_project = 0):
 	return render_to_response('dashboard.html', args)
 
 def dashboard_change():
+	
 	return
