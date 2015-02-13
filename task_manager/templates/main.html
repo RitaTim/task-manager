@@ -7,6 +7,7 @@
 	<title>{%block title%}{%endblock%}</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css'%}"/>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/data-table.css'%}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/redactor/redactor.css'%}"/>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/own/own.css'%}"/>
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" media="all" rel="stylesheet"/>
 	<!--<link href="{% static 'css/bootstrap-select.css" rel="stylesheet" />-->
@@ -14,9 +15,16 @@
 	<script src= "{% static 'jquery-ui-1.11.2/js/jquery-ui.js' %}"></script>
 	<script src= "{% static 'js/jquery.dataTables.js' %}"></script>
 	<script src= "{% static 'js/jquery.dataTables.rowReordering.js' %}"></script>
-	<script src= "{% static 'js/jquery.dataTables.grouping.js' %}"></script>
+	<script src= "{% static 'js/redactor/redactor.js' %}"></script>
 	{% block script %}{% endblock %}
 	<style>
+		.filter{
+			
+			border: 2px solid #468847;
+		}
+		.block_{
+			background-color:  #F8F8F8;
+		}
 		.well {
 			margin-top : 100px;
 		}

@@ -1,11 +1,16 @@
 from django.conf.urls import patterns, include, url
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'task_manager.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-    url(r'^$', 'project.views.projects'),
-    url(r'^create$', 'project.views.create'),
-    url(r'^new$', 'project.views.new'),
-    url(r'^project/(?P<id_project>\d+)$', 'project.views.show_project'),
+urlpatterns = patterns('project.views',
+
+    url( r'^$', 							    'projects'	  ),
+    url( r'^create$', 							'create'	  ),
+    url( r'^new$', 								'new'		  ),
+    url( r'^project/(?P<id_project>\d+)$', 		'show_project'),
+    url( r'^edit_project/(?P<id_project>\d+)$', 'edit_project'),
 )
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

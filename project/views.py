@@ -5,8 +5,8 @@ from django.http.response import HttpResponse, Http404
 from project.models import Project
 from forms import ProjectForm
 from django.contrib.auth.models import User
+import logging
 
-# Create your views here.
 def create(request):
 	if request.method == 'POST':
 		form = ProjectForm(request.POST)
@@ -41,12 +41,46 @@ def new(request):
 	args['projects'] = Project.objects.all()	
 	return render_to_response('new.html', args)
 
+def edit_project(request, id_project = 0):
+	if request.method == "POST":
+		url = ''
+		if id_project:
+			project = Project.objects.get(id = id_project) 
+			form 	= ProjectForm(request.POST, instance = project)
+			url  	= "/projects/project/" + str(id_project)
+		else:
+			form = ProjectForm(request.POST, request.FILES)
+			url  = "/projects"
+
+		if not form.is_valid():
+			return HttpResponse("Форма не валидна")
+		
+		form.save()	
+
+		return redirect(url)
+	else: # GET
+		args={}
+		args.update(csrf(request))	
+
+		if id_project:
+			project = Project.objects.get(id = id_project)
+			args['form'] = ProjectForm(instance = project)
+		else:
+			args['form'] = ProjectForm()
+		args['project'] = Project.objects.get(id = id_project)
+
+		return render_to_response('project_edit.html', args)
+
 def projects(request):
 	user = request.user
 	
 	args = {}
 	args['user'] = user
 	args['projects'] = Project.objects.all() 
+	if 'filter' in request.GET:
+		args['filter'] = request.GET['filter']
+	else:
+		args['filter'] = 0
 
 	return render_to_response('projects.html', args)
 

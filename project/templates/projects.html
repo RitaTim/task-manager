@@ -5,7 +5,7 @@
 	Все проекты
 {% endblock %}
 
-{% block content%}	
+{% block content%}
 	<div class = "projects">
 	    {% for project in projects %}
 	    
@@ -24,9 +24,9 @@
 							</small>
 						</div>
 						<div class = "col-md-6">
-							{{project.logo}}{{ project.logo_file }}
 							{% if project.logo %}
-								<img src="{% static '' %}{{ project.logo}}" />
+								<img src="{{ MEDIA_URL }}{{ project.logo}}">
+								<!--<img src="{% static '' %}{{ project.logo}}" />-->
 							{% endif %}							
 						</div>
 					</div>
