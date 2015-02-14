@@ -67,7 +67,7 @@
                             <ul class="list-group" id="to_do">
                                 {% for task in tasks %}
                                     {% if task.status == "to_do" %}
-                                        <li class = "board_item board_item_color" id="{{task.id}}"> 
+                                        <li class = "board_item background_light" id="{{task.id}}"> 
                                             <p> <b> {{task.title}}</b> </p>
                                             <p> {{task.text}} </p>
                                         </li>
@@ -86,7 +86,7 @@
                             <ul class="list-group" id="in_progress">
                                 {% for task in tasks %}
                                     {% if task.status == "in_progress" %}
-                                        <li class = "board_item board_item_color" id="{{task.id}}"> 
+                                        <li class = "board_item background_light" id="{{task.id}}"> 
                                             <p> <b> {{task.title}}</b> </p>
                                             <p> {{task.text}} </p>
                                         </li>
@@ -105,7 +105,7 @@
                             <ul class="list-group" id="test">
                                 {% for task in tasks %}
                                     {% if task.status == "test" %}
-                                        <li class = "board_item board_item_color" id="{{task.id}}"> 
+                                        <li class = "board_item background_light" id="{{task.id}}"> 
                                             <p> <b> {{task.title}}</b> </p>
                                             <p> {{task.text}} </p>
                                         </li>
@@ -123,7 +123,7 @@
                             <ul class="list-group" id="done">
                                 {% for task in tasks %}
                                     {% if task.status == "done" %}
-                                        <li class = "board_item board_item_color" id="{{task.id}}"> 
+                                        <li class = "board_item background_light" id="{{task.id}}"> 
                                             <p> <b> {{task.title}}</b> </p>
                                             <p> {{task.text}} </p>
                                         </li>

@@ -35,7 +35,7 @@
 			vertical-align: bottom;
 			display: inline-block;
 		}
-		.box-content{
+		.box-project{
 			margin-top: 20px;
 			border-radius: 4px;
          	border-top: 4px;
@@ -59,7 +59,6 @@
 		}
 		.navbar-fixed-top{
 			background-color : #002000;
-    		border-color : #000000;
 		}
 		.white_text{
 			color: white;
@@ -109,7 +108,7 @@
         	width: 100%;
         	padding: 5px;
 		}
-		.board_item_color{
+		.board_item_color{ /* убрать из дашборда */
 			background: -webkit-linear-gradient(#cdf2cb, #9ff19b); /* For Safari 5.1 to 6.0 */
 			background: -o-linear-gradient(#cdf2cb, #9ff19b); /* For Opera 11.1 to 12.0 */
 			background: -moz-linear-gradient(#cdf2cb, #9ff19b); /* For Firefox 3.6 to 15 */
@@ -201,12 +200,14 @@
 				<a class='toggle-nav btn pull-left' href='#'>
 					<i class='icon-reorder'></i>
 				</a>
-				<ul class="nav pull-right">
-					<li class='dropdown dark user-menu'>
+				<ul class="nav pull-right user_nav">
+					<li class='dropdown'>
 						<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 							<span class='user-name'><div class = "white_text">
 							{% if user %}
-								{{user.username}}
+								<a href="/profile">
+									{{user.username}}
+								</a>
 							{% else %}
 								нет юзернэйма	
 							{% endif %}
@@ -230,7 +231,7 @@
 						</ul>
 					</li>
 				</ul>
-				<form action='#' class='navbar-form navbar-right hidden-xs' method='get'> 
+				<form action='#' class='navbar-form navbar-right' method='get'> 
 					<button class='btn btn-link icon-search'></button>
 					<div class='form-group'>
 						<input value="" class="form-control" placeholder="Поиск..." autocomplete="off" id="q_header" name="q" type="text" />

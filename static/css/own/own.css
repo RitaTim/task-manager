@@ -1,3 +1,81 @@
 .table th{
 	text-align : center;
 }
+/*images*/
+.avatar{
+	width: 100%;
+	border-radius: 5px;
+}
+.sos{
+	width: 100px;
+	height: 100px;
+}
+.marg_top_head{
+	margin-top: 50px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.marg_top{
+	margin-top: 20px;
+}
+
+.margin_20{
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+.margin_10{
+	margin: 10px 10px 10px 10px;
+}
+
+.padding_10{
+	padding: 10px 10px 10px 10px;
+}
+
+.margin_5{
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.bordered{
+	border: 1px solid #E7E7E7;
+}
+.user_info_panel{
+	background-size: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.user_option{
+	border: 1px solid #E7E7E7;
+	border-radius: 5px;
+	min-height: 50px;
+	margin-bottom: 30px;
+	vertical-align: middle;
+	margin-left: 5px;
+	padding:5px;
+}
+
+.background_light{
+	background: -webkit-linear-gradient(#cdf2cb, #9ff19b); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#cdf2cb, #9ff19b); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#cdf2cb, #9ff19b); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#cdf2cb, #9ff19b); /* Standard syntax */
+}
+
+.align_right{
+	text-align: right;
+}
+
+.progress-bar{
+	height: 40px;
+}
+.user_nav{
+	padding-left: 10px;
+	padding-right: 10px;
+}
