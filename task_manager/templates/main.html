@@ -43,9 +43,6 @@
         	height: 125px;
         	width: 400px;
 		}
-		.projects{
-			margin-top: 50px;
-		}
 		.green_back{
 			background: -webkit-linear-gradient(#71cb6d, #008500); /* For Safari 5.1 to 6.0 */
 			background: -o-linear-gradient(#71cb6d, #008500); /* For Opera 11.1 to 12.0 */
@@ -57,7 +54,7 @@
 		.light_green_back{
 			background-color: #eeffee;
 		}
-		.navbar-fixed-top{
+		.top-bar{
 			background-color : #002000;
 		}
 		.white_text{
@@ -166,6 +163,9 @@
 		.black_text{
 			color: black;
 		}
+		.nav li {
+			width: 100%;
+		}
 
 
 	</style>
@@ -192,7 +192,7 @@
 <body>
 	<div class = "row">
 		<header>
-			<nav class='navbar navbar-fixed-top navbar-default'>
+			<nav class='navbar navbar-fixed-top top-bar navbar-default'>
 				<a class='navbar-brand' href='/admin'>
 					<i class="icon-lock"></i>
 					<div class = "white_text"> Tatatask Maaaan!</div>
@@ -241,21 +241,18 @@
 		</header>
 	</div>
 
-	<div class="row">
+	<div class="navbar navbar-fixed-top side-bar col-sm-offset-11 col-sm-1">
+		<ul class="nav navbar-nav" id="menu">
+			{% block nav %}
+			{% endblock %}
+		</ul>
+	</div>
+
+	<div class="row body-content">		
 		{% block content %}
 		{% endblock %}
 	</div>
-	<div class = "row">
-			<div class="navbar navbar-fixed-bottom col-md-5 col-md-offset-4">
-				<div class="navbar-inner">
-						<ul class="nav navbar-nav">
-							{% block nav %}
-							{% endblock %}
-						</ul>
-				</div>
-			</div>
-	</div>
-
+	
 	<script src = "{% static 'js/bootstrap.js' %}"></script>
 	<script src="{% static 'js/bootstrap-alert.js' %}"></script>
 	<!--<script src="{% static 'js/jquery-2.1.3.min.js' %}"></script>-->

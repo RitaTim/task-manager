@@ -4,46 +4,59 @@
 	{{project.title}}
 {% endblock %}
 
-{% block content%}	
-	<div class = "projects">	    
-	    <div class = "container">
+{% load staticfiles %}
+{% block content%}	    
+	    <form href="/projects/edit_project/{{project.id}}" action="GET">
 	    	<div class = "row">
-	    		<a href = "/projects/edit_project/{{project.id}}">
-			   	<div class="col-md-4 box-content green_back box_in_project marg_left">
-			   		{{project.title}}	
-
-			   	</div>
-			   	</a>
+	    		<div class="col-md-4">
+			   		<img src="{% static 'images/mauses_kixoj7j.jpg' %}" class="logo-project">
+			   	</div>	
+			   	<div class="col-md-8">
+			   		<label class="col-md-12"><h3>{{project.title}}</h3></label>
+			   		{{project.text}}
+			   		<a href="/projects/edit_project/{{project.id}}" class="col-md-2 col-md-offset-10 btn btn-default">Редактировать</a>
+			   	</div>	
 			</div>
-		</div>
-		<div class = "container">
+
 			<div class = "row">
-			   	<a href = "#">
-			    <div class="col-md-4 box-content green_back box_in_project marg_left">
-			   		СТАТИСТИКА		
-			   	</div>
-			   	</a>
-			   	<a href = "/task/tasks/{{project.id}}">
-			   	<div class="col-md-4 box-content green_back box_in_project">			   	  
-			   		ЗАДАЧИ			
-			   	</div>
-			   	</a>
-			</div>
-		</div>
-	</div>
+	    		<div class="col-md-6">
+			   		<div class="info-item">
+			   			<label>Поседние обновления</label>
 
+			   		</div>
+			   	</div>
+			   	<div class="col-md-6">
+			   		<div class="info-item">
+			   			<label>Текущая итерация</label>
+			   		</div>
+			   	</div>	
+			</div>
+		</form>
+		
 {% endblock %}
 
 {% block nav%}
-	<li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Проекты<b class="caret"></b>
-		<ul class="dropdown-menu"></a>
+	<li>
+		<a href="#">Проекты</a>
+		<ul>
 			<li><a href="/projects">Все</a></li>
 			{% for pro in projects %}
-			<li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
+				<li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
 			{% endfor %}
 		</ul>
 	</li>
-	<li><a href="#">Статистика</a></li>
+	<li>
+		<a href="#">Итерации</a>
+		<ul>
+			<li><a href="#">Все</a></li>
+			{% for iteration in iterations %}
+				<li><a href="#">{{iteration.title}}</a></li>
+			{% endfor %}
+			<li><a href="#">Добавить</a></li>
+		</ul>
+	</li>	
 	<li><a href="/task/tasks/{{project.id}}">Задачи</a></li>
+	<li><a href="#">Форум</a></li>
+	<li><a href="#">Сотрудники</a></li>
+	<li><a href="#">Статистика</a></li>
 {% endblock %}

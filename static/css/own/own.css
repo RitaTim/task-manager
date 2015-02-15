@@ -10,6 +10,11 @@
 	width: 100px;
 	height: 100px;
 }
+.logo-project{
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+}
 .marg_top_head{
 	margin-top: 50px;
 	margin-left: 20px;
@@ -78,4 +83,89 @@
 .user_nav{
 	padding-left: 10px;
 	padding-right: 10px;
+}
+
+/*side bar*/
+/**
+ * Skyrim-inspired Menu
+ */
+
+
+a {
+	color: black; 
+	text-decoration: none;
+}
+
+	a:hover, li:hover > a {
+		color: green;
+	}
+
+#menu {
+	background:  #f8f8f8;
+	float: right;
+	font-size: 1.5em;
+	min-height: 100%;
+	margin-top: 60px;
+	padding: 0px;
+	border: 1px solid green;
+	border-radius: 3px;
+}
+
+#menu li {
+	position: relative;
+	list-style-type: none;
+	z-index: 1;
+}
+
+#menu li a {
+	display: block;
+	padding: 0.5em 1em;
+	white-space: nowrap;
+}
+
+	#menu li ul {
+		position: absolute;
+		overflow: hidden;
+		display: none;
+		right: 100%;
+		top: 0.5em;
+		float: none;
+		background-color: #f8f8f8;
+	}
+	
+	#menu li:hover ul {
+		display: block;
+	}
+	
+	#menu li ul a {
+		position: relative;
+		font-size: 0.8em;
+	}
+	
+	#menu li ul a:hover:before {
+		content: "";
+		display: none;
+		width: 1em;
+		height: 1em;
+		background: rgba(0,0,0,0.75);
+		border: 1px solid #FFF;
+		position: absolute;
+		top: 0.5em;
+		left: -0.75em;
+	}
+/*main templ*/
+.body-content{
+	margin-top: 60px;
+	margin-left: 30px;
+	margin-right: 200px;
+	margin-bottom: 30px;
+}
+.info-item{
+	background:  #f8f8f8;
+	font-size: 1.5em;
+	min-height: 100%;
+	margin-top: 30px;
+	padding: 10px;
+	border: 1px solid green;
+	border-radius: 3px;
 }
