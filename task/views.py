@@ -42,34 +42,32 @@ def show_dashboard(request, id_project = 0, id_iteration = 0, id_user = 0):
 
 	return render_to_response('dashboard.html', args)
 
-def edit_task(request, id_project = 0, id_task = 0):
+def edit_task(request, id_task = '0'):
 	if request.method == "POST":
-		url = ''
-		if id_task:
+		if id_task != '0':
 			task = Task.objects.get(id = id_task) 
 			form = TaskForm(request.POST, instance = task)
-			url  = "/task/" + str(id_project) + "/" + str(id_task)
 		else:
-			form = TaskForm(request.POST, request.FILES)
-			url  = "/task/tasks/" + str(id_project)
+			form = TaskForm(request.POST,  request.FILES)
 
 		if not form.is_valid():
 			return HttpResponse("Форма не валидна")
 		
 		form.save()	
 
-		return redirect(url)
+		return redirect(request.META.get('HTTP_REFERER','/'))
 	else: # GET
-		args={}
-		args.update(csrf(request))	
-
-		if id_task:
+		args={}	
+		args.update(csrf(request))
+		if 'id_task' in request.GET:
+			id_task = int(request.GET['id_task'])
+		if id_task != 0:
 			task = Task.objects.get(id = id_task)
 			args['form'] = TaskForm(instance = task)
 		else:
 			args['form'] = TaskForm()
-		args['project'] = Project.objects.get(id = id_project)
 
+		args['id_task'] = id_task
 		return render_to_response('task.html', args)
 
 def get_tasks(request, id_project = 0, id_iteration = 0, which_tasks = '0'):
@@ -122,4 +120,3 @@ def change_status(request, id_task = "", new_status = ""):
 	Task.objects.filter(id=id_task).update(status=new_status)
 
 	return HttpResponse(request)
-

@@ -189,7 +189,7 @@ a {
 	list-style-type: none;
 
 }
-.box-forums{
+.box-form{
 	padding: 10px;
 	border: 1px solid green;
 	border-radius: 3px;
@@ -207,4 +207,8 @@ a {
 	border-radius: 5px;
 	border: 1px solid green;
 	padding: 5px;
+}
+/*tasks*/
+.box-task{
+	width:50%;
 }
