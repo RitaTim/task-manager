@@ -5,6 +5,7 @@ from user_profile.forms import UserProfileForm
 from user_profile.forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
+from iteration.models import Iteration
 from project.models import Project
 from task.models import Task
 import json
@@ -26,6 +27,12 @@ def profile(request, id_project = 0):
 	args = {}
 	args.update(csrf(request))
 
+	args['projects'] = Project.objects.exclude(id=id_project)
+	try:
+		args['iterations'] = Iteration.objects.filter(project = id_project)
+	except Iteration.DoesNotExist:
+		args['iterations'] = []
+		
 	args['profile'] = profile
 	args['user'] = user
 	tasks = Task.objects.filter(assigned = user.id).exclude(status="not_dev")

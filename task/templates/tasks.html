@@ -10,9 +10,9 @@
 {% endblock %}
 
 {% block content%}	
-	<div class="row" style="margin-top:20px;">
+	<div class="row">
 		<div class='col-sm-12'>
-			<div class='box bordered-box blue-border' style='margin-top:50px;'>
+			<div class='box'>
 				<div class='box-header'>
 	                <div class = "row">
 	                    <div class = 'title col-sm-2'  id="project" id_project="{{project.id}}">
@@ -85,18 +85,4 @@
 	    	</div>
 		</div>
 	</div>
-{% endblock %}
-
-{% block nav%}
-	<li class="dropdown">
-		<a href="/projects" class="dropdown-toggle" data-toggle="dropdown">Проекты<b class="caret"></b></a>
-		<ul class="dropdown-menu">
-			<li><a href="/projects">Все</a></li>
-			{% for pro in projects %}
-				<li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
-			{% endfor %}
-		</ul>
-	</li>
-	<li><a href="#">Статистика</a></li>
-	<li><a href="/profile">Моя страница</a></li>
 {% endblock %}

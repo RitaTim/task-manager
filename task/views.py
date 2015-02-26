@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 import json
 import logging
 
-def show_tasks(request, id_project = 0, sort_by = "sort_by_update"):
+def show_tasks(request, id_project = 0):
 	if request.GET:
 		return HttpResponse(request)
 
