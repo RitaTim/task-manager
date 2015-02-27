@@ -16,7 +16,7 @@ $(document).ready(function(){
             })
 	}
 
-	load_comments( $('.box-forums a:first-child').find('label').prop('id') );
+	load_comments( $('.box-form a:first-child').find('label').prop('id') );
 
 	$('.forum').on('click', function(){
 		load_comments($(this).attr('id'));

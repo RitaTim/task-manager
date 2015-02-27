@@ -6,18 +6,18 @@ from comment.models import Comment
 from forum.models import Forum
 import logging
 
-def forum (request):
+def forum (request, id_project = 0):
 	args = {}
 	args['user']     = request.user
-	args['projects'] = Project.objects.all() 
-	args['forums']   = Forum.objects.all()
+	args['project']  = Project.objects.get(id = id_project)
+	args['forums']   = Forum.objects.filter(project = id_project)
 
 	return render_to_response('forum.html', args)
 
 def get_comments (request, id_forum = 0):
 	args = {}
 	if 'id_forum' in request.GET:
-		id_forum = request.GET['id_forum']
+		id_forum = int(request.GET['id_forum'])
 	args['comments'] = Comment.objects.filter(forum = request.GET['id_forum']).values('text', 'updated', 'user__username')
 	args['forum']    = Forum.objects.get(id = id_forum)
 	return render_to_response('comments.html', args)

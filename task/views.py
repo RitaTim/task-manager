@@ -16,8 +16,7 @@ def show_tasks(request, id_project = 0):
 
 	args = {}
 	args['user'    ] = request.user
-	args['projects'] = Project.objects.all() 
-	args['project' ] = args['projects'].get(id = id_project)
+	args['project' ] = Project.objects.get(id = id_project)
 	args['tasks'   ] = Task.objects.filter(project = id_project)	
 
 	try:
@@ -31,10 +30,9 @@ def show_dashboard(request, id_project = 0, id_iteration = 0, id_user = 0):
 	args = {}
 	args.update(csrf(request))
 	args['user'	   ] = request.user
-	args['projects'] = Project.objects.all()
 	
 	if id_project:
-		args['project'] = args['projects'].get(id = id_project)
+		args['project'] = Project.objects.get(id = id_project)
 		try:
 			args['iterations'] = Iteration.objects.filter(project = id_project).order_by('dead_line')
 		except Iteration.DoesNotExist:
@@ -99,6 +97,7 @@ def get_tasks(request, id_project = 0, id_iteration = 0, which_tasks = '0'):
 	tasks_not_dev		= []
 		
 	for task in tasks:
+		task['style'] = _get_style_priority(task['priority'])
 		if task['status']   == "not_dev":
 			tasks_not_dev.append(task)
 		elif task['status'] ==	"to_do":	
@@ -113,6 +112,14 @@ def get_tasks(request, id_project = 0, id_iteration = 0, which_tasks = '0'):
 	data = json.dumps({'tasks_not_dev' : tasks_not_dev, 'tasks_in_progress' : tasks_in_progress, 'tasks_test' : tasks_test,  'tasks_done' : tasks_done,  'tasks_to_do' : tasks_to_do})
 
 	return HttpResponse(data, mimetype='application/json') 
+
+def _get_style_priority(priority):
+	if priority == 0:
+		return ""
+	if priority > 4:
+		return "priority_max"
+	else:
+		return "priority_" + str(priority)
 
 def change_status(request, id_task = "", new_status = ""):
 	id_task 	= request.GET['id_task']

@@ -66,16 +66,12 @@
 		</div><!--col-sm-12-->
 	</div><!--row-->
 
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="task_title" aria-hidden="true">
-		<div class="modal-dialog box-task">
-	    	<div class="modal-content">
-		    	<div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			        <h4 class="modal-title">Задача</h4>
-			    </div>
-		      	<div class="modal-body">
-		      	</div>
-	    	</div>
-		</div>
-	</div>
+
+{% endblock %}
+
+{% block nav %}
+	<li><a href="/projects/project/{{project.id}}">{{project.title}}</a></li>
+	<li><a href="/forum/{{project.id}}">Форум</a></li>
+	<li><a href="#">Сотрудники</a></li>
+	<li><a href="#">Статистика</a></li>
 {% endblock %}

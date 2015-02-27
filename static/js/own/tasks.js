@@ -6,7 +6,6 @@ $(document).ready(function(){
 		"bInfo"	   : false,
 	})
 
-
 	var show_form_task = function(id_task){
 		$.ajax({
             url : "/task/edit_task", 
@@ -22,9 +21,9 @@ $(document).ready(function(){
         })
 	};
 
-	$('.task_title').on('click', function(){
+	$(document).on('click','.task_title', function(){
 		show_form_task( $(this).attr('id') );
-	})
+	});
 
 	$('.add-task').on('click', function(){
 		show_form_task( 0 );

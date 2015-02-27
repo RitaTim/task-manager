@@ -5,8 +5,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = patterns('forum.views',
 
-    url( r'^$',              'forum'),
-    url( r'^get_comments/$', 'get_comments')
+    url( r'^(?P<id_project>\d+)$', 'forum'),
+    url( r'^get_comments/$',		'get_comments')
 )
 
 urlpatterns += staticfiles_urlpatterns()
