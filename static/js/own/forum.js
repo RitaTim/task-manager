@@ -1,4 +1,25 @@
-$(document).ready(function(){ 	
+$(document).ready(function(){ 
+
+      var show_form_forum = function(id_forum){
+            $.ajax({
+                  url : "/forum/edit_forum", 
+                  type : "GET",
+                  data : { 'id_forum' : id_forum},
+                  success : function(data) { 
+                        $('.modal-body').html(data);
+                        $('#myModal').modal('show');
+                  },
+                  error : function(err) {
+                      alert("Fail GET /forum/edit_forum" + id_forum);
+                  }
+            })
+            $('.modal-title').text("Форум");
+      };
+
+      $(document).on('click', '.add-forum', function(){
+            show_form_forum(0);
+      });
+
 	
 	var load_comments = function(id_forum){
 		$.ajax({

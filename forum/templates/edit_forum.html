@@ -1,0 +1,8 @@
+{% load bootstrap %}
+<div class = "box-form">
+	<form action = "/forum/edit_forum/{{forum.id}}" method = "post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{form|bootstrap}}
+		<input class="button" type="submit" value="Сохранить" id="save">		
+	</form>
+</div>
