@@ -8,16 +8,12 @@
 	<div class = "projects">	    
 	    <div class = "container">
 	    	<div class = "row">
-	    		<a href = "#">
+	    		<a href = "/projects/edit_project/{{project.id}}">
 			   	<div class="col-md-4 box-content green_back box_in_project marg_left">
-			   		{{project.title}}		
+			   		{{project.title}}	
+
 			   	</div>
 			   	</a>
-			   	<a href = "/profile">
-			   	<div class="col-md-4 box-content green_back box_in_project">			   	  
-			   		МОЯ СТРАНИЦАЦА			
-			   	</div>
-				</a>
 			</div>
 		</div>
 		<div class = "container">
@@ -50,5 +46,4 @@
 	</li>
 	<li><a href="#">Статистика</a></li>
 	<li><a href="/task/tasks/{{project.id}}">Задачи</a></li>
-	<li><a href="/profile">Моя страница</a></li>
 {% endblock %}

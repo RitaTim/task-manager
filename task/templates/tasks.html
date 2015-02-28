@@ -4,126 +4,87 @@
 	Задачи
 {% endblock %}
 
+{% load staticfiles %}
+{% block script %}
+    <script src= "{% static 'js/own/tasks.js'%}"></script>
+{% endblock %}
+
 {% block content%}	
-
-<div class="row" style="margin-top:20px;">
-	<div class='col-sm-12'>
-		<div class='box bordered-box blue-border' style='margin-top:50px;'>
-			<div class='box-header orange-background'>
-				<div class='title project_id' id="{{project.id}}">
-					<h3>{{project.title}}</h3>
+	<div class="row" style="margin-top:20px;">
+		<div class='col-sm-12'>
+			<div class='box bordered-box blue-border' style='margin-top:50px;'>
+				<div class='box-header'>
+	                <div class = "row">
+	                    <div class = 'title col-sm-2'  id="project" id_project="{{project.id}}">
+	                        <h3>{{project.title}}</h3>
+	                    </div>
+	                    <div class = "col-sm-4 col-sm-offset-6">
+	                        <div class="btn-group" role="group" aria-label="...">
+	                          <a  href="/task/tasks/{{project.id}}"><button type="button" class="btn btn-default">Задачи</button></a>
+	                          <a  href="/task/dashboard/{{project.id}}"><button type="button" class="btn btn-default">Dashboard</button></a>
+	                        </div>
+	                    </div>
+	                </div>
 				</div>
-				<div class='actions'>
-					<a class="btn box-collapse btn-xs btn-link" href="/task/tasks/{{project.id}}">Задачи</a>
-					<a class="btn box-collapse btn-xs btn-link" href="/task/dashboard/{{project.id}}">Dashboard</a>
-				</div>
+				<div class='box-table'>
+					<div class='responsive-table'>
+						<div class='scrollable-area' style= 'width:100%'>
+							<table class="table table-striped col-md-12" id="table_articles">
+			                    <thead>
+			                        <tr>
+										<th> Итерация   </th>
+										<th>
+											 Задача <a href = "/task/new/{{project.id}}"><b>+</b></a>
+										</th>		
+										<th> Тип		 </th>
+										<th> Исполнитель </th>
+										<th> Статус		 </th>
+										<th> Обновлена   </th>
+									</tr>
+			                    </thead>
+			                    <tbody>
+									{% for task  in tasks %}
+										<tr data-position="{{task.pos}}" id="{{task.id}}">
+											<td> {{ task.iterate  }}	</td>
+											<td> 
+												<a href="/task/{{project.id}}/{{task.id}}" >
+												 {{ task.title    }}
+												</a>
+											</td>
+											<td> {{ task.type_task}}	</td>
+											<td> {{ task.assigned }}	</td>
+											<td> {{ task.status   }}	</td>
+											<td> {{ task.updated  }}	</td>
+										</tr>
+									{% endfor %}
+			                    </tbody>
+		                	</table>
+						</div><!--scrollable-area-->
+					</div><!--responsive-table-->
+				</div><!--box-table-->
+			</div><!--box-->
+		</div><!--col-sm-12-->
+	</div><!--row-->
 
-			</div>
-			<div class='box-table'>
-				<div class='responsive-table'>
-					<div class='scrollable-area' style= 'width:100%'>
-					
-					<table class="table table-striped col-md-12" id="table_articles">
-                    <thead>
-                        <tr>
-                        			<th></th>
-									<th><center><a href = "/task/tasks/{{project.id}}/sort_by_iterate">Итерация</a></center></th>
-									<th><center>
-										<a href = "/task/tasks/{{project.id}}/sort_by_title">Задача</a> 
-										<a href = "/task/new/{{project.id}}">
-											<b>+</b> 
-										</a>
-										</center>
-									</th>		
-									<th><center><a href = "/task/tasks/{{project.id}}/sort_by_type">Тип</a></center></th>
-									<th><center><a href = "/task/tasks/{{project.id}}/sort_by_assigned">Исполнитель</a></center></th>
-									<th><center><a href = "/task/tasks/{{project.id}}/sort_by_status">Статус</a></center></th>
-									<th><center><a href = "/task/tasks/{{project.id}}">Обновлена</a></center></th>
-								</tr>
-                    </thead>
-                    <tbody>
-						{% for task  in tasks %}
-							<tr data-position="{{task.pos}}" id="{{task.id}}">
-										<td hidden>
-											{{task.pos}}
-										</td>
-										<td>
-											{{task.iteration}}
-										</td>
-										<td>
-											{{task.title}}
-										</td>
-										<td>
-											{{task.type_task}}
-										</td>
-										<td>
-											{{task.assigned}}
-										</td>
-										<td>
-											{{task.status}}
-										</td>
-										<td>
-											{{task.updated}}
-										</td>
-							</tr>
-						{% endfor %}
-                    </tbody>
-                </table>
-
-					</div>
-				</div>
-			</div>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="task_title" aria-hidden="true">
+		<div class="modal-dialog">
+	    	<div class="modal-content">
+		      	<div class="modal-header">
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		        		<span aria-hidden="true">&times;</span>
+		        	</button>
+		        	<h4 class="modal-title" id="task_title">Modal title</h4>
+		      	</div>
+		      	<div class="modal-body">
+		        ...
+		      	</div>
+		      	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary">Save changes</button>
+		      	</div>
+	    	</div>
 		</div>
 	</div>
-</div>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-    	var id_project = $('.project_id').attr('id');
-
-    	var getOrder = function(){
-			var rows = $('#table_articles tr');
-			var order = [];
-			jQuery.each(rows, function(i, row){
-				//var name_ = row.attr('name');
-				//var id_   = row.attr('id')
-				order.push(row);
-            });
-			return order;//table_art.fnGetData(this);
-		}	
-
-        var table_art = $('#table_articles').dataTable({
-					         	//"bServerSide": true,
-					         	//"bProcessing": true,
-					         	//data : getOrder(),
-					         	//success: function(){
-					        	//	console.log('TTTTT');
-					        	//	$.ajax({
-					        	//		url  : "/task/tasks/" + id_project + "/change_order", 
-					        	//		type : "GET",
-					        	//		data : getOrder()
-					        	//	})
-								//    .done(function( data ){ 
-								//    })
-								//    .fail(function(err){alert("faile req!!!")});
-						        //}
-						        //"bJQueryUI": true,
-						        //"bSortable": true,
-						       // "bFilter": false,
-						        //"bPaginate": false,
-						        //"bLengthChange": false,
-						        //"bInfo": false,
-						        //"sAjaxSource": "/task/tasks/" + id_project + "/change_order",				    	
-						    	//"fnRowCallback": function (nRow, aData, iDisplayIndex) {
-						    	//	console.log(nRow);
-						    		//console.log(aData);
-						    	//	console.log(iDisplayIndex);
-            						//nRow.setAttribute('id', aData.RowOrder);  //Initialize row id for every row
-        						//},
-					         })	       
-    });
-</script>
-
 {% endblock %}
 
 {% block nav%}
@@ -132,7 +93,7 @@
 		<ul class="dropdown-menu">
 			<li><a href="/projects">Все</a></li>
 			{% for pro in projects %}
-			<li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
+				<li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
 			{% endfor %}
 		</ul>
 	</li>

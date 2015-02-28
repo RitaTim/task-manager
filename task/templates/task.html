@@ -2,22 +2,43 @@
 {% load bootstrap %}
 
 {% block content%}
-<div class = "container">
-		<div class = "row">
-			<div class = "col-md-4 col-md-offset-4 well">
-				<div class = "large-offset-3 large-6 columns">
-					<form action = "/projects/new" method = "post" enctype="multipart/form-data">
-						{% csrf_token %}
-
-						{{form|bootstrap}}
-						
-						
-						<input class = "button" type = "submit" value = "Создать">
-						
-					</form>
-				</div>
+<div class="row" style="margin-top:20px;">
+	<div class='col-sm-12'>
+		<div class='box bordered-box blue-border' style='margin-top:50px;'>
+			<div class='box-header'>
+	            <div class = "row">
+	                <div class = 'title col-sm-2'  id="project" id_project="{{project.id}}">
+	                    <h3>{{project.title}}</h3>
+	                </div>
+	                <div class = "col-sm-4 col-sm-offset-6">
+	                    <div class="btn-group" role="group" aria-label="...">
+	                      <a  href="/task/tasks/{{project.id}}"><button type="button" class="btn btn-default">Задачи</button></a>
+	                      <a  href="/task/dashboard/{{project.id}}"><button type="button" class="btn btn-default">Dashboard</button></a>
+	                    </div>
+	                </div>
+	            </div>
 			</div>
-		</div>
-</div>			
+
+			<div class = "container">
+				<div class = "row">
+					<div class = "col-md-8 col-md-offset-1 well">
+						<div class = "large-offset-3 large-6 columns">
+							<form action = "" method = "post" enctype="multipart/form-data">
+								{% csrf_token %}
+								{{form|bootstrap}}
+								<input class = "button" type = "submit" value = "Сохранить">		
+							</form>
+						</div>
+					</div>
+				</div>
+			</div><!--container-->
+		</div><!--box-->
+	</div><!--col-sm-12-->
+</div><!--row-->	
 
 {% endblock%}
+
+{% block nav%}
+	<li><a href="#">Статистика</a></li>
+	<li><a href="/profile">Моя страница</a></li>
+{% endblock %}

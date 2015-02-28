@@ -59,7 +59,7 @@ INSTALLED_APPS = (
     'forum',
     'iteration',
     'user_profile',
-    'jquery',
+    'jquery'
 )
 
 AUTH_PROFILE_MODEL = 'user_profile.UserProfile'
@@ -108,7 +108,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-MEDIA_ROOT = '/home/rita/Documents/task_manager/media/'
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+
+MEDIA_ROOT = os.path.join(
+    os.path.abspath(os.path.dirname(__file__)),
+    'media',
+)
+
+MEDIA_URL  = '/media/'
+
 #STATIC_ROOT = '/home/rita/Documents/task_manager/static/'
 
 STATICFILES_DIRS =(
