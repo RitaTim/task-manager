@@ -10,6 +10,11 @@
 	width: 100px;
 	height: 100px;
 }
+.logo-project{
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+}
 .marg_top_head{
 	margin-top: 50px;
 	margin-left: 20px;
@@ -78,4 +83,293 @@
 .user_nav{
 	padding-left: 10px;
 	padding-right: 10px;
+}
+
+/*side bar*/
+/**
+ * Skyrim-inspired Menu
+ */
+
+
+a {
+	color: black; 
+	text-decoration: none;
+}
+
+	a:hover, li:hover > a {
+		color: green;
+	}
+
+#menu {
+	background:  #f8f8f8;
+	float: right;
+	font-size: 1.5em;
+	min-height: 100%;
+	margin-top: 60px;
+	padding: 0px;
+	border: 1px solid green;
+	border-radius: 3px;
+}
+
+#menu li {
+	position: relative;
+	list-style-type: none;
+	z-index: 1;
+	width: 100%;
+}
+
+
+#menu li a {
+	display: block;
+	padding: 0.5em 1em;
+	white-space: nowrap;
+}
+
+	#menu li ul {
+		position: absolute;
+		overflow: hidden;
+		display: none;
+		right: 100%;
+		top: 0.5em;
+		float: none;
+	}
+	
+	#menu li:hover ul {
+		display: block;		
+		background-color: #f8f8f8;
+		border-radius: 3px;
+
+	}
+	
+	#menu li ul a {
+		position: relative;
+		font-size: 0.8em;
+	}
+	
+	#menu li ul a:hover:before {
+		content: "";
+		display: none;
+		width: 1em;
+		height: 1em;
+		background: rgba(0,0,0,0.75);
+		border: 1px solid #FFF;
+		position: absolute;
+		top: 0.5em;
+		left: -1.7em;
+	}
+/*main templ*/
+.body-content{	
+	margin-top: 70px;
+	margin-left: 30px;
+	margin-right: 210px;
+	margin-bottom: 30px;
+}
+.info-item{
+	background:  #f8f8f8;
+	font-size: 1.5em;
+	min-height: 100%;
+	margin-top: 30px;
+	padding: 10px;
+	border: 1px solid green;
+	border-radius: 3px;
+}
+.active-li{
+	background-color: rgba(0,0,0,0.15);
+	color: green;
+}
+
+/*profile*/
+.tab-pane{
+	margin-top: 20px;
+}
+/*forum*/
+.box-comments{
+	border: 1px solid green;
+	border-radius: 3px;
+	padding: 0px 30px 20px 30px;
+}
+.box-comment{
+	list-style-type: none;
+
+}
+.box-form{
+	padding: 10px;
+	border: 1px solid green;
+	border-radius: 3px;
+}
+.title{
+	color: green;
+}
+.sub-data{
+	color: #777;
+	text-align: right;
+}
+.message_box{
+	width: 100%;
+	height: 100px;
+	border-radius: 5px;
+	border: 1px solid green;
+	padding: 5px;
+}
+/*tasks dashboard*/
+.box-task{
+	width:50%;
+}
+.dashboard-content{
+	margin-top: 70px;
+	margin-left: 30px;
+	margin-bottom: 30px;
+}
+.dashboard-menu{
+	margin-right: 80px;
+}
+.priority_1{
+	border: 7px solid yellow;
+	margin-top: 10px;
+}
+.priority_2{
+	border: 7px solid green;
+}
+.priority_3{
+	border: 7px solid blue;
+}
+.priority_4{
+	border: 7px solid red;
+}
+.priority_max{
+	border: 7px solid black;
+}
+/* main */
+.filter{
+	
+	border: 2px solid #468847;
+}
+.block_{
+	background-color:  #F8F8F8;
+}
+.well {
+	margin-top : 100px;
+}
+.marg{
+	margin-bottom: 40px;
+}
+.box-project{
+	margin-top: 20px;
+	border-radius: 4px;
+ 	border-top: 4px;
+	border-bottom: 4px;
+	height: 125px;
+	width: 400px;
+}
+.green_back{
+	background: -webkit-linear-gradient(#71cb6d, #008500); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#71cb6d, #008500); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#71cb6d, #008500); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#71cb6d, #008500); /* Standard syntax */
+	color: white;
+
+}
+.light_green_back{
+	background-color: #eeffee;
+}
+.top-bar{
+	background-color : #002000;
+}
+.white_text{
+	color: white;
+}
+.box_in_project{
+	height: 240px;
+	margin: 15px;
+}
+.marg_left{
+	margin-left: 50px;
+}
+.board_widget{
+	margin-top: 10px;
+	border-radius: 4px;
+ 	border-top: 4px;
+	border-bottom: 4px;
+	height: 550px;
+	width: 23%;
+	margin-left: 10px;
+
+}
+.board_list{
+	border-radius: 4px;
+ 	border-top: 4px;
+	border-bottom: 4px;
+	height: 80%;
+	width: 100%;
+}
+.list-group{
+	list-style-type:none;
+	min-height: 400px;
+}
+
+}
+.board_header{
+	color: white;
+}
+.board_item{
+	margin-top: 10px;
+	border-radius: 4px;
+ 	border-top: 1px;
+	border-bottom: 10px;
+	height: 100px;
+	width: 100%;
+	padding: 10px;
+	overflow: hidden;
+}
+.board_item_color{ /* убрать из дашборда */
+	background: -webkit-linear-gradient(#cdf2cb, #9ff19b); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#cdf2cb, #9ff19b); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#cdf2cb, #9ff19b); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#cdf2cb, #9ff19b); /* Standard syntax */
+	color: black;
+}
+.table-responsive {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-y: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  border: 1px solid #ddd;
+  height: 100%;
+}
+.q{
+	margin-top: 70px;
+	border-radius: 4px;
+ 	border-top: 4px;
+	border-bottom: 4px;
+	height: 150px;
+	width: 200px;
+	margin-left: 20px;
+	background-color: blue;
+}
+.box-table{
+	text-align : center;
+}
+.box-header{
+	height: 10%;
+	width: 95%;
+	margin-left: 2.5%;
+}
+.project_button{
+	height: 100%;
+	border-radius: 4px;
+	border-width: 0pt;
+	border-color: black;
+	text-align: center;
+	vertical-align: middle;
+		background-color: #eeeeee; 
+		margin-right: 4px;
+		margin-left: 4px;
+		:;
+}
+.white_text{
+	color:white;
+}
+.black_text{
+	color: black;
 }

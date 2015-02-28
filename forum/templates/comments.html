@@ -1,0 +1,28 @@
+<ul class="box-comments">
+	<h2 class="title">{{forum.title}}</h2>
+	<hr>
+	<div id="lst-comments">
+	{% for comment in comments %}
+		<li class="box-comment">
+			<label class="title">{{comment.user__username}}</label>
+			<div class="box-text-comment">
+				{{ comment.text }}
+			</div>
+			<div class="sub-data">
+				{{ comment.updated }}
+			</div>
+			<hr>
+		</li>
+	{% endfor %}	
+	</div>			
+	<div>
+		<div class='form-group'>
+		<form action="" method="post">
+			<label>Комметарий:</label>
+			<textarea class="message_box" id="text_comment"></textarea>
+		</form>
+		<a><button id="add_comment" class="btn btn-default" data-forum="{{forum.id}}">Добавить</button></a>
+	</div>
+</ul>
+{% load staticfiles %}
+<script src = "{% static 'js/own/comment.js' %}"></script>

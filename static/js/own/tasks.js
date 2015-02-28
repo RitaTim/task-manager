@@ -6,17 +6,28 @@ $(document).ready(function(){
 		"bInfo"	   : false,
 	})
 
-
-	$('.task_title').click(function(){
+	var show_form_task = function(id_task){
 		$.ajax({
-            url : "/task/get_task", 
+            url : "/task/edit_task", 
             type : "GET",
-            data : { 'id_task' : $(this).attr('id'), 'id_project' : $("#project").attr('id_project')},
-            success : function(data) { },
+            data : { 'id_task' : id_task},
+            success : function(data) { 
+            	$('.modal-body').html(data);
+            	$('#myModal').modal('show');
+            },
             error : function(err) {
-                alert("Fail GET /task/get_task");
+                alert("Fail GET /task/edit_task");
             }
         })
-	})
+	};
 
+	$(document).on('click','.task_title', function(){
+		show_form_task( $(this).attr('id') );
+	});
+
+	$('.add-task').on('click', function(){
+		show_form_task( 0 );
+	});
+
+	$('#myModal').modal('hide');
 })

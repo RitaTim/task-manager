@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
 from django.http.response import HttpResponse, Http404
 from project.models import Project
+from iteration.models import Iteration
 from forms import ProjectForm
 from django.contrib.auth.models import User
 import logging
@@ -89,6 +90,7 @@ def show_project(request, id_project = 0):
 
 	args = {}
 	args['user'] = user
-	args['projects'] = Project.objects.all() 
+	args['projects'] = Project.objects.values('id', 'title')
 	args['project'] = Project.objects.get(id = id_project)
+	args['iterations'] = Iteration.objects.filter(project_id = id_project).values('id', 'title')
 	return render_to_response('project.html', args)

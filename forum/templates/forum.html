@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+
+{% block title %}
+	{{project.title}}
+{% endblock %}
+
+{% block content%}
+	<div class="row">
+		<div class="col-sm-2">
+			<div class="box-form col-sm-12">
+				{% for forum in forums %}
+					<a><label class="forum col-sm-12" id="{{forum.id}}">{{forum.title}}</label></a>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-sm-10" id="box_comments">
+		</div>
+	</div>		
+	{% load staticfiles %}
+	<script src = "{% static 'js/own/forum.js' %}"></script>
+{% endblock %}
+
+{% block nav %}
+	<li> <a href="/projects/project/{{project.id}}">{{project.title}}</a></li>
+	<li> <a href="/task/tasks/{{project.id}}">Задачи</a></li>
+	<li><a href="#">Сотрудники</a></li>
+	<li><a href="#">Статистика</a></li>
+{% endblock %}
