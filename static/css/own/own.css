@@ -25,6 +25,10 @@
 	margin-top: 20px;
 }
 
+.marg_buttom_20{
+	margin-bottom: 20px;
+}
+
 .margin_20{
 	margin-top: 20px;
 	margin-left: 20px;
@@ -183,10 +187,19 @@ a {
 	margin-top: 20px;
 }
 /*forum*/
+
 .box-comments{
 	border: 1px solid green;
 	border-radius: 3px;
 	padding: 0px 30px 20px 30px;
+}
+
+.box-comments-not-bordered{
+	padding: 0px 30px 20px 30px;
+}
+
+.comments{
+	margin: 15px;
 }
 .box-comment{
 	list-style-type: none;
@@ -212,6 +225,12 @@ a {
 	padding: 5px;
 }
 /*tasks dashboard*/
+.margin-right-2{
+	margin-right: 2px;
+}
+.data-task{
+	border-left: 2px solid green;
+}
 .box-task{
 	width:50%;
 }

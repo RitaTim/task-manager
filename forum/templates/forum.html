@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content%}
-	<div class="row">
+	<div class="row margin-right-2">
 		<div class="col-sm-2">
 			<div class="box-form col-sm-12">
 				{% for forum in forums %}
@@ -15,7 +15,7 @@
 			</div>
 			<a class="add-forum col-sm-12"><i class="fa fa-plus text-success"></i> Создать</a>
 		</div>
-		<div class="col-sm-10" id="box_comments">
+		<div class="col-sm-10 box-comments" id="box_comments">
 		</div>
 	</div>		
 	{% load staticfiles %}

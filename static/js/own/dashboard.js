@@ -50,7 +50,7 @@ $(document).ready(function() {
     var lst_tasks_dom = function(tasks){
         lst_res = '';
         $.each( tasks, function( index, value ){
-                    lst_res += "<li class = '" + value.style + " board_item board_item_color' id=" + value.id + "><p><b><a class='task_title' id='" + value.id + "'>" + value.title + "</a></b></p><p>" + value.text + "</p></li>";
+                    lst_res += "<li class = '" + value.style + " board_item board_item_color' id=" + value.id + "><a><b><p class='task_title' id='" + value.id + "'>" + value.title + "</p></b></a><p>" + value.text + "</p></li>";
         })
         return lst_res;
     };
