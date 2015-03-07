@@ -18,9 +18,15 @@
 </head>
 <body>
 	<div class = "row">
+		<div class="navbar navbar-fixed-top col-sm-offset-11 col-sm-1" id="box-menu">
+			<ul class="nav navbar-nav" id="menu">
+				{% block nav %}
+				{% endblock %}
+			</ul>
+		</div>
 		<header>
 			<nav class='navbar navbar-fixed-top top-bar navbar-default'>
-				<a class='navbar-brand' href='/admin'>
+				<a class='navbar-brand' href='/projects'>
 					<i class="icon-lock"></i>
 					<div class = "white_text"> Tatatask Maaaan!</div>
 				</a>
@@ -29,28 +35,22 @@
 				</a>
 				<ul class="nav pull-right user_nav">
 					<li class='dropdown'>
-						<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
-							<span class='user-name'><div class = "white_text">
-							{% if user %}
-								<a href="/profile">
-									{{user.username}}
-								</a>
-							{% else %}
-								нет юзернэйма	
-							{% endif %}
+						<a class='dropdown-toggle text-top-bar' data-toggle='dropdown' href='#'>
+							<span class=''>
+								{{user.username}}
 							</span>
-							<b class='caret'></b></div>
+							<b class='caret'></b>
 						</a>
-						<ul class='dropdown-menu'>
+						<ul class='dropdown-menu pull-right'>
 							<li>
-								<a href="#">
+								<a href="/profile">
 									<i class='icon-user'></i>
 									Профиль
 								</a>
 							</li>
 							<li class='divider'></li>
 							<li>
-								<a href="/auth/logout_user">
+								<a href="/logout_user">
 									<i class='icon-signout'></i>
 									Выход
 								</a>
@@ -71,13 +71,6 @@
 	<div class="row body-content" id="body-content">		
 		{% block content %}
 		{% endblock %}
-	</div>
-
-	<div class="navbar navbar-fixed-top col-sm-offset-11 col-sm-1" id="box-menu">
-		<ul class="nav navbar-nav" id="menu">
-			{% block nav %}
-			{% endblock %}
-		</ul>
 	</div>
 
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="task_title" aria-hidden="true">

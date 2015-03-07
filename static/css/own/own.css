@@ -162,6 +162,9 @@ a {
 		left: -1.7em;
 	}
 /*main templ*/
+.text-top-bar{
+	color: white;
+}
 .body-content{	
 	margin-top: 70px;
 	margin-left: 30px;
@@ -181,7 +184,10 @@ a {
 	background-color: rgba(0,0,0,0.15);
 	color: green;
 }
-
+/*auth*/
+.auth-box{
+	margin-top : 100px;
+}
 /*profile*/
 .tab-pane{
 	margin-top: 20px;
