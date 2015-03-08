@@ -1,10 +1,10 @@
 $(document).ready(function(){ 	
 
-      var load_comment = function(id_forum){
+      var load_comment = function(args){
             $.ajax({
             url : "/comment/create", 
             type : "GET",
-            data : { 'id_forum' : id_forum, 'text' :  $('#text_comment').val()},
+            data : args,
             dataType: "html",
             success : function(data) { 
                   $('#lst-comments').append(data);
@@ -16,7 +16,13 @@ $(document).ready(function(){
       }
 
       $('#add_comment').on('click', function(){
-            load_comment($(this).attr('data-forum'));
+            var text =  $('#text_comment').val();
+            if ( $(this).attr('data-forum') ) {
+                  load_comment( { 'id_forum' : $(this).attr('data-forum'), 'text' : text } )
+            }
+            else {
+                  load_comment( { 'id_task' : $(this).attr('data-task'),  'text' : text } )
+            }
       });
 
 })

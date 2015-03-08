@@ -1,8 +1,8 @@
 {% load bootstrap %}
-<div class = "box-form">
-	<form action = "/task/edit_task/{{id_task}}" method = "post" enctype="multipart/form-data">
-		{% csrf_token %}
-		{{form|bootstrap}}
-		<input class="button" type="submit" value="Сохранить" id="save">		
-	</form>
+<div class="box-form">
+	<div class="contents">
+	</div>
+	<hr>
+	<div id="box-comments">
+	</div>
 </div>

@@ -9,6 +9,7 @@ from iteration.models import Iteration
 from django.contrib.auth.models import User
 import json
 import logging
+import datetime
 
 def show_tasks(request, id_project = 0):
 	if request.GET:
@@ -40,7 +41,7 @@ def show_dashboard(request, id_project = 0, id_iteration = 0, id_user = 0):
 
 	return render_to_response('dashboard.html', args)
 
-def edit_task(request, id_task = '0'):
+def task(request, id_task = '0', contents = 'describe'):
 	if request.method == "POST":
 		if id_task != '0':
 			task = Task.objects.get(id = id_task) 
@@ -57,16 +58,30 @@ def edit_task(request, id_task = '0'):
 	else: # GET
 		args={}	
 		args.update(csrf(request))
+		contents = request.GET['contents']
 		if 'id_task' in request.GET:
 			id_task = int(request.GET['id_task'])
-		if id_task != 0:
-			task = Task.objects.get(id = id_task)
-			args['form'] = TaskForm(instance = task)
+		if id_task != 0:			
+			if contents == 'describe':
+				args['task'] = Task.objects.filter(id = id_task).values('title', 'id', 'text', 'project__title', 'iterate__title', 'type_task', 'status', 'assigned__username', 'entrasted__username')[0]
+			else:
+				task = Task.objects.get(id = id_task)
+				args['form'] = TaskForm(instance = task)
+				args['task_id'] = task.id
 		else:
 			args['form'] = TaskForm()
 
-		args['id_task'] = id_task
-		return render_to_response('task.html', args)
+		tmpl = contents + '_task.html'
+		return render_to_response(tmpl, args)
+
+def show_task(request, id_task = '0'):
+	args = {}
+	if 'id_task' in request.GET:
+		id_task = int(request.GET['id_task'])
+	if id_task != 0:
+		args['task'] = Task.objects.filter(id = id_task).values('title', 'id', 'text', 'project__title', 'iterate__title', 'type_task', 'status', 'assigned__username', 'entrasted__username')[0]
+
+	return render_to_response('task.html', args)
 
 def get_tasks(request, id_project = 0, id_iteration = 0, which_tasks = '0'):
 	if request.method == 'POST':
@@ -122,8 +137,18 @@ def _get_style_priority(priority):
 		return "priority_" + str(priority)
 
 def change_status(request, id_task = "", new_status = ""):
-	id_task 	= request.GET['id_task']
-	new_status  = request.GET['new_status']
-	Task.objects.filter(id=id_task).update(status=new_status)
-
+	args = {}
+	id_task    = request.GET['id_task']
+	task = Task.objects.get(id = id_task)	
+	new_status = request.GET['new_status']
+	
+	if task.status == "to_do" and new_status == "in_progress":
+		start_time = datetime.datetime.now()	
+		Task.objects.filter(id = id_task).update(status = new_status, start_time = start_time)	
+	elif new_status == "done":
+		end_time = datetime.datetime.now()
+		Task.objects.filter(id = id_task).update(status = new_status, end_time = end_time)
+	else:
+		Task.objects.filter(id = id_task).update(status = new_status)
+	
 	return HttpResponse(request)

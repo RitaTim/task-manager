@@ -17,14 +17,6 @@ def forum (request, id_project = 0):
 
 	return render_to_response('forum.html', args)
 
-def get_comments (request, id_forum = 0):
-	args = {}
-	if 'id_forum' in request.GET:
-		id_forum = int(request.GET['id_forum'])
-	args['comments'] = Comment.objects.filter(forum = request.GET['id_forum']).values('text', 'updated', 'user__username')
-	args['forum']    = Forum.objects.get(id = id_forum)
-	return render_to_response('comments.html', args)
-
 def edit_forum(request, id_forum = 0):
 	if request.method == "POST":
 		if id_forum:

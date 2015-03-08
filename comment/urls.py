@@ -4,7 +4,8 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = patterns('comment.views',
-    url( r'^create$', 'create'),
+    url( r'^create$',       'create'      ),
+    url( r'^get_comments$', 'get_comments'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

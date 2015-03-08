@@ -4,8 +4,9 @@ urlpatterns = patterns('task.views',
 
     url( r'^tasks/(?P<id_project>\d+)$',             'show_tasks'    ),
     url( r'^dashboard/(?P<id_project>\d+)$',         'show_dashboard'),
-    url( r'^edit_task$',            				 'edit_task'     ),
-    url( r'^edit_task/(?P<id_task>\d+)$',            'edit_task'     ),
+    url( r'^task$',            				         'task'          ),
+    url( r'^task/(?P<id_task>\d+)$',                 'task'          ),
+    url( r'^show_task$',            				 'show_task'     ),
     url( r'^change_status$',                         'change_status' ),
     url( r'^get_tasks$',                             'get_tasks'     ),
 )
