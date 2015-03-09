@@ -7,6 +7,7 @@ from project.models import Project
 from forms import TaskForm
 from iteration.models import Iteration
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 import json
 import logging
 import datetime
@@ -87,15 +88,24 @@ def get_tasks(request, id_project = 0, id_iteration = 0, which_tasks = '0'):
 	if request.method == 'POST':
 		return HttpResponse("Ожидался метод GET")
 		
-	id_project 	    = request.GET['id_project']
-	id_iteration 	= request.GET['id_iteration']
-	which_tasks 	= request.GET['which_tasks']
+	id_project 	    = request.GET['id_project']   if ('id_project' in request.GET) else 0
+	id_iteration 	= request.GET['id_iteration'] if ('id_iteration' in request.GET) else 0
+	which_tasks 	= request.GET['which_tasks']  if ('which_tasks' in request.GET) else 0
 	name_user 		= request.user
     
 	if id_project :
-		tasks = Task.objects.filter(project = id_project)
+		try:
+			tasks = Task.objects.filter(project = id_project)
+		except Task.ObjectDoesNotExist:
+			return HttpResponse( json.dumps( { 'empty' : 1 } ), mimetype='application/json')
 	else:
-		tasks = Task.objects.filter()
+		try:
+			tasks = Task.objects.filter()
+		except Task.ObjectDoesNotExist:
+			return HttpResponse( json.dumps( { 'empty' : 1 } ), mimetype='application/json')
+
+	if tasks == []:
+		return HttpResponse( json.dumps( { 'empty' : 1 } ), mimetype='application/json')
 	
 	if id_iteration :
 		tasks = tasks.filter(iterate = id_iteration)

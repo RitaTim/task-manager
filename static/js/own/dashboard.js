@@ -62,11 +62,13 @@ $(document).ready(function() {
             type : "GET",
             dataType: "json",
             data : get_data_filter(),
-            success : function(data) {                    
-                $('#to_do')      .append( lst_tasks_dom(data.tasks_to_do)       ); 
-                $('#in_progress').append( lst_tasks_dom(data.tasks_in_progress) );
-                $('#test')       .append( lst_tasks_dom(data.tasks_test)        );
-                $('#done')       .append( lst_tasks_dom(data.tasks_done)        );           
+            success : function(data) {
+                if (!data.empty) {                    
+                    $('#to_do')      .append( lst_tasks_dom(data.tasks_to_do)       ); 
+                    $('#in_progress').append( lst_tasks_dom(data.tasks_in_progress) );
+                    $('#test')       .append( lst_tasks_dom(data.tasks_test)        );
+                    $('#done')       .append( lst_tasks_dom(data.tasks_done)        );  
+                }         
             },
             error : function(err) {
                 alert("fail");
