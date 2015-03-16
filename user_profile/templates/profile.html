@@ -8,8 +8,7 @@
 {% load staticfiles %}
 {% block content%}	
 	<div class='row'>
-
-		<div class='box'>
+		<div class='box padding_10'>
 			<div class='box-content'>
 				<ul class='nav nav-tabs'>
 					<li class='active'>
@@ -26,7 +25,7 @@
 					</li>
 				</ul>
 
-				<div class='tab-content'>
+				<div class='tab-content padding_10'>
 					<div class='tab-pane active' id='tab1'>
 						<div class='col-sm-2 bordered '>
 							<div class="user_info_panel padding_10">
@@ -108,51 +107,56 @@
 									</div><!--row-->
 								</div>
 										
-								<div class='col-sm-11 col-sm-offset-1'>											
-									<div>
-										<h3>Рабочий процесс</h3>
+								<div class='col-sm-11 col-sm-offset-1'>
+									<h3 class="title">Рабочий процесс</h3>
+
+									<div class="row">
+										<div class="col-sm-2">
+											<select id="iterates-menu" class="table-select">
+												{% for iterate in iterates %}
+													<option id="{{iterate.id}}" {% if iterate.id == iterate_curr_id %} selected {% endif %}>
+														<h4>{{ iterate.title }}</h4>
+													</option>
+												{% endfor %}
+											</select>
+										</div>
+
+										<div id="time-iterate">
+										</div>
 									</div>
-											
-									<div class="row progress">
-										<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-    										Задача 1
-  										</div>
+									
+									<div class="row marg_buttom_20">
+										<h5 class="col-sm-2">Рабочее время:</h5>
+										<label id="spend-time"></label>
+									</div>
 
-										<div class="progress-bar progress-bar-warning" role="progressbar" style="width:10%">
-											задача 2
-										</div>
+									<div class="row progress" id="progress-bar">
+									</div><!--row progress-->	
 
-										<div class="progress-bar progress-bar-danger" role="progressbar" style="width:20%">
-											Задача 3
-										</div>
-									</div><!--row progress-->
-											
 									<div class="row">
 										<table class="table table-striped col-md-12" id="table_articles">
 											<thead>
 												<tr>
-													<th> To do   	 </th>
+													<th> 
+														To do
+														<a id="add_task">+</a>
+													</th>
 													<th> In progress </th>		
 													<th> Test		 </th>
 													<th> Done        </th>
 												</tr>
 								            </thead>
-								            <tbody>
+								            <tbody>								            
 												<tr class="text-center">
-													{% for tasks in type_tasks %}
-														<td class="dropdown">
-															<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-																{{ tasks | length }}
-															</a> 
-															<ul class='dropdown-menu'>
-																{% for task in tasks %}
-																	<li id="{{task.id}}">
-																		{{ task.title }}
-																	</li>
-																{% endfor %}
+													{% for type in type_tasks %}
+												        <td class="dropdown" id="{{type}}">
+												            <a href="#" class="dropdown-toggle count-tasks" data-toggle="dropdown">
+												                
+												            </a> 
+															<ul class='dropdown-menu tasks-menu'>
 															</ul> 
-														</td>
-													{% endfor %}
+												        </td>
+												    {% endfor %}
 												</tr>
 								            </tbody>
 										</table>
@@ -161,7 +165,7 @@
 									<div class="row navbar-default padding_10" id="describe_task" hidden>
 										<div class="row padding_10">
 											<div class='form-group'>
-												<label id="title_task">
+												<label id="title_task" class="title">
 												</label>
 											</div>
 
@@ -170,14 +174,13 @@
 													<div id="text_task">
 													</div>
 												</div>
+											</div><!--row-->
 
-												<div class="sos col-sm-4">
-													<div class='box'>
-														<div class='box-content'>
-															<img src="{% static 'images/sos.jpg' %}" class="sos">
-														</div>
+											<div class="row">
+												<div class='form-group col-sm-8'>
+													<div id="box_comments">
 													</div>
-												</div><!--sos-->
+												</div>
 											</div><!--row-->
 										</div><!--row padding_10-->
 									</div><!--row navbar-default padding_10-->
@@ -186,7 +189,7 @@
 						</div><!--col-md-10-->
 					</div><!--tab-pane 1-->
 
-					<div class='tab-pane' id='tab2'>
+					<div class='tab-pane tab-content' id='tab2'>
 					</div><!--tab-pane 2-->
 				</div> <!--tab-content-->
 			</div><!--box-content-->
@@ -194,4 +197,18 @@
 	</div><!--row marg_top_head-->
 
 	<script src = "{% static 'js/own/profile.js' %}"></script>					
+{% endblock %}
+
+{% block nav %}
+	<li id="/projects/project/{{project.id}}" class="active-li">
+		<a href="#">{{project.title}}</a>
+		<ul>
+			<li><a href="/projects">Все</a></li>
+			{% for pro in projects %}
+				<li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
+			{% endfor %}
+		</ul>
+	</li>
+	<li> <a href="/task/tasks/{{project.id}}">Задачи</a></li>
+	<li> <a href="/forum/{{project.id}}">Форум</a></li>
 {% endblock %}

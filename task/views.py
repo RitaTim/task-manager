@@ -8,9 +8,11 @@ from forms import TaskForm
 from iteration.models import Iteration
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 import json
 import logging
-import datetime
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 def show_tasks(request, id_project = 0):
 	if request.GET:
@@ -146,6 +148,59 @@ def _get_style_priority(priority):
 	else:
 		return "priority_" + str(priority)
 
+def get_progress_bar_user(request, id_iterate = '0', id_user = '0'):
+	if id_user == '0':
+		id_user = request.session['_auth_user_id']
+	else:
+		id_user = int(id_user)
+
+	if id_iterate != '0':
+		iterate = Iteration.objects.filter(id = id_iterate).values('start_line', 'dead_line')[0]
+		iterate_time = { 
+			'start_line' : iterate['start_line'].strftime('%Y-%m-%d %H:%M'),
+			'dead_line'  : iterate['dead_line' ].strftime('%Y-%m-%d %H:%M'),
+		}
+	else:
+		iterate_time = { 'start_line' : 'Нет текущей итерации'}
+	
+	tasks  = Task.objects.filter( Q(assigned = id_user) & Q(iterate = id_iterate) & ( Q(status = 'in_progress') | Q(status = 'done') ) ).order_by('-status').values('status', 'start_time', 'end_time', 'title', 'id', 'priority')
+	to_progress_bar = []
+	sum_work_time = timedelta(0)
+	today_time = timezone.now()
+
+	for task in tasks:
+		if task['status'] == "done":
+			task['perform_time'] = task['end_time'] - task['start_time']
+		else:
+			task['perform_time'] = today_time - task['start_time']
+		sum_work_time += task['perform_time']
+
+	for task in tasks:
+		data_task = { 
+			'id'           : task['id'],
+			'width'        : (task['perform_time'].total_seconds() * 100) / sum_work_time.total_seconds(),
+			'perform_time' : str(task['perform_time']).split('.')[0],
+			'title'        : task['title'],
+			'css_class'    : 'progress-bar-striped active '+_get_class_progress_by_priority(task['priority']) if task['status'] == 'in_progress' else _get_class_progress_by_priority(task['priority'])
+		}
+		to_progress_bar.append(data_task)
+	return HttpResponse(json.dumps({ 'all_time': str(sum_work_time).split('.')[0], 'progress_bar' : to_progress_bar, 'iterate_time' : iterate_time }), content_type='application/json')
+
+def _get_class_progress_by_priority(priority):
+	if priority == 0:
+		return ''
+	elif priority == 1:
+		return 'progress-bar-warning'
+	elif priority == 2:
+		return 'progress-bar-success'
+	elif priority == 3:
+		return 'progress-bar-info'
+	elif priority == 4:
+		return 'progress-bar-danger'
+	else:
+		return 'progress-bar-black'
+
+
 def change_status(request, id_task = "", new_status = ""):
 	args = {}
 	id_task    = request.GET['id_task']
@@ -153,10 +208,10 @@ def change_status(request, id_task = "", new_status = ""):
 	new_status = request.GET['new_status']
 	
 	if task.status == "to_do" and new_status == "in_progress":
-		start_time = datetime.datetime.now()	
+		start_time = datetime.now()	
 		Task.objects.filter(id = id_task).update(status = new_status, start_time = start_time)	
 	elif new_status == "done":
-		end_time = datetime.datetime.now()
+		end_time = datetime.now()
 		Task.objects.filter(id = id_task).update(status = new_status, end_time = end_time)
 	else:
 		Task.objects.filter(id = id_task).update(status = new_status)
