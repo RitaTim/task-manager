@@ -4746,6 +4746,7 @@ a.thumbnail.active {
           box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
 }
 .progress-bar {
+  padding-top: 7px;
   float: left;
   width: 0;
   height: 100%;
@@ -4812,6 +4813,10 @@ a.thumbnail.active {
 }
 .progress-bar-danger {
   background-color: #d9534f;
+}
+
+.progress-bar-black {
+  background-color: black;
 }
 .progress-striped .progress-bar-danger {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
