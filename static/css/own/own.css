@@ -15,6 +15,12 @@
 	height: 100%;
 	border-radius: 10px;
 }
+.logo-project-box{
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	border: 1px solid green;
+}
 .marg_top_head{
 	margin-top: 50px;
 	margin-left: 20px;
@@ -296,8 +302,11 @@ a {
 	border-radius: 4px;
  	border-top: 4px;
 	border-bottom: 4px;
-	height: 125px;
-	width: 400px;
+	height: 100%;
+	width: 100%;
+	min-height: 250px;
+	padding: 5px 20px 20px 20px;
+	font-size: 1.5em;
 }
 .green_back{
 	background: -webkit-linear-gradient(#71cb6d, #008500); /* For Safari 5.1 to 6.0 */
@@ -328,7 +337,7 @@ a {
 	border-radius: 4px;
  	border-top: 4px;
 	border-bottom: 4px;
-	height: 550px;
+	height: 650px;
 	width: 23%;
 	margin-left: 10px;
 

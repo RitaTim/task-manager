@@ -9,10 +9,10 @@
     <form href="/projects/edit_project/{{project.id}}" action="GET">
     	<div class = "row">
     		<div class="col-md-4">
-		   		<img src="{% static 'images/mauses_kixoj7j.jpg' %}" class="logo-project">
+		   		<img src="{% static 'images/task_man.jpg' %}" class="logo-project">
 		   	</div>	
 		   	<div class="col-md-8">
-		   		<label class="col-md-12"><h3>{{project.title}}</h3></label>
+		   		<label class="col-md-12"><h3 class="title">{{project.title}}</h3></label>
 		   		{{project.text}}
 		   		<a class="edit-project col-md-2 col-md-offset-10 btn btn-default" id="{{project.id}}">Редактировать</a>
 		   	</div>	
