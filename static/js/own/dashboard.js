@@ -57,6 +57,7 @@ $(document).ready(function() {
 
     var change_dashboard = function(){
         $('#to_do, #in_progress, #test, #done').empty();
+        id_project = $('#project')[0].title;
         $.ajax({
             url : "/task/get_tasks", 
             type : "GET",
@@ -77,6 +78,5 @@ $(document).ready(function() {
     }
 
     change_dashboard();
-    $('#which_iteration' ).on('change', function(){ change_dashboard() });
-    $('#which_tasks').on('change', function(){ change_dashboard() });
+    $('.filter_select' ).on('change', function(){ change_dashboard() });
 })

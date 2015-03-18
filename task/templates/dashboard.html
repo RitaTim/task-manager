@@ -10,8 +10,8 @@
 <div class="row">
     <div class='col-sm-12 dashboard-content'>
         <div class="row">
-            <div class='title col-sm-2' id="project" id_project="{{project.id}}">
-                <h3>{{project.title}}</h3>
+            <div class='title col-sm-2' id="project" title="{{project.id}}">
+                <h3>{{ project.title }}</h3>
             </div>
             <div class = "col-sm-4 col-sm-offset-5">
                 <div class="btn-group" role="group" aria-label="...">
@@ -34,15 +34,19 @@
                 {% if iterations|length == 0 %}
                     <a href="#"><h4> создать</h4></a> 
                 {% else %}                                                                      
-                    <select class="selectpicker  btn btn-default" id="which_iteration">
+                    <select class="selectpicker btn btn-default filter_select" id="which_iteration">
                         {% for iteration in iterations %}
-                        <option class="black_text" id="{{iteration.id}}"><a href="task/dashboard/{{project.id}}?id_iteration={{iteration.id}}">{{ iteration.title }}</a></option>
+                            <option class="black_text" id="{{iteration.id}}" {% if iteration.id == iterate_curr_id %} selected {% endif %}>
+                                <a href="task/dashboard/{{project.id}}?id_iteration={{iteration.id}}">
+                                    {{ iteration.title }}
+                                </a>
+                            </option>
                         {% endfor %}
                     </select>                                        
                 {% endif %}
             </div>   
             <div class = "col-sm-1">
-                <select class="selectpicker btn btn-default" id="which_tasks">
+                <select class="selectpicker btn btn-default filter_select" id="which_tasks">
                     <option class="black_text">Все</option>
                     <option class="black_text" id="{{user.id}}">Мои</option>
                 </select>
@@ -59,7 +63,7 @@
                             </ul>
                         </div>
                     </div>
-                    <a href = "#"><div class = "white_text"><h4>Добавить...</h4></div></a>
+                    <a href = "#"><div class="white_text assign_for_user"><h4>Добавить...</h4></div></a>
                 </div>
                    
                 <div class="col-md-4 board_widget green_back ">                  

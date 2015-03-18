@@ -14,9 +14,17 @@ import logging
 from datetime import datetime, timedelta
 from django.utils import timezone
 
+# import the logging library
+import logging
+
+# Get an instance of a logger
+#logger = logging.getLogger(log.error)
+
 def show_tasks(request, id_project = 0):
 	if request.GET:
 		return HttpResponse(request)
+
+	#logger.error('Something went wrong!')
 
 	args = {}
 	args['user'    ] = request.user
@@ -30,11 +38,21 @@ def show_tasks(request, id_project = 0):
 
 	return render_to_response('tasks.html', args)
 
+def show_lst_not_dev(request, id_project = 0):
+	args = {}
+	args['user'    ] = request.user
+	#args['project' ] = Project.objects.get(id = id_project)
+	args['tasks'] = Task.objects.filter( status = "not_dev", assigned = None).values('title', 'id', 'text', 'priority')	
+
+	return render_to_response('lst_not_dev.html', args)
+
 def show_dashboard(request, id_project = 0, id_iteration = 0, id_user = 0):
 	args = {}
 	args.update(csrf(request))
 	args['user'	   ] = request.user
 	
+	today_time  = datetime.now
+	args['iterate_curr_id'] = Iteration.objects.filter( dead_line__gt = today_time, start_line__lt = today_time )[0].id
 	if id_project:
 		args['project'] = Project.objects.get(id = id_project)
 		try:
@@ -44,7 +62,7 @@ def show_dashboard(request, id_project = 0, id_iteration = 0, id_user = 0):
 
 	return render_to_response('dashboard.html', args)
 
-def task(request, id_task = '0', contents = 'describe'):
+def task(request, id_task = '0'):
 	if request.method == "POST":
 		if id_task != '0':
 			task = Task.objects.get(id = id_task) 
@@ -62,29 +80,17 @@ def task(request, id_task = '0', contents = 'describe'):
 		args={}	
 		args.update(csrf(request))
 		contents = request.GET['contents']
-		if 'id_task' in request.GET:
-			id_task = int(request.GET['id_task'])
-		if id_task != 0:			
-			if contents == 'describe':
+		if id_task != '0':			
+			if contents == 'describe' or  contents == 'all_form':
 				args['task'] = Task.objects.filter(id = id_task).values('title', 'id', 'text', 'project__title', 'iterate__title', 'type_task', 'status', 'assigned__username', 'entrasted__username')[0]
-			else:
+			if contents == 'edit' or contents == 'all_form':
 				task = Task.objects.get(id = id_task)
 				args['form'] = TaskForm(instance = task)
 				args['task_id'] = task.id
 		else:
 			args['form'] = TaskForm()
 
-		tmpl = contents + '_task.html'
-		return render_to_response(tmpl, args)
-
-def show_task(request, id_task = '0'):
-	args = {}
-	if 'id_task' in request.GET:
-		id_task = int(request.GET['id_task'])
-	if id_task != 0:
-		args['task'] = Task.objects.filter(id = id_task).values('title', 'id', 'text', 'project__title', 'iterate__title', 'type_task', 'status', 'assigned__username', 'entrasted__username')[0]
-
-	return render_to_response('task.html', args)
+		return render_to_response('task.html', args)
 
 def get_tasks(request, id_project = 0, id_iteration = 0, which_tasks = '0'):
 	if request.method == 'POST':
@@ -140,14 +146,6 @@ def get_tasks(request, id_project = 0, id_iteration = 0, which_tasks = '0'):
 
 	return HttpResponse(data, mimetype='application/json') 
 
-def _get_style_priority(priority):
-	if priority == 0:
-		return ""
-	if priority > 4:
-		return "priority_max"
-	else:
-		return "priority_" + str(priority)
-
 def get_progress_bar_user(request, id_iterate = '0', id_user = '0'):
 	if id_user == '0':
 		id_user = request.session['_auth_user_id']
@@ -200,6 +198,13 @@ def _get_class_progress_by_priority(priority):
 	else:
 		return 'progress-bar-black'
 
+def _get_style_priority(priority):
+	if priority == 0:
+		return ""
+	if priority > 4:
+		return "priority_max"
+	else:
+		return "priority_" + str(priority)
 
 def change_status(request, id_task = "", new_status = ""):
 	args = {}
@@ -216,4 +221,17 @@ def change_status(request, id_task = "", new_status = ""):
 	else:
 		Task.objects.filter(id = id_task).update(status = new_status)
 	
+	return HttpResponse(request)
+
+def assign_for_user(request):
+	args = {}
+	if 'id_user' in request.GET:
+		id_user = request.GET['id_user']
+	else:
+		id_user = request.user.id
+
+	if 'tasks_id' in request.GET:
+		args['data'] = json.loads(request.GET['tasks_id'])
+		tasks_id = json.loads(request.GET['tasks_id'])
+		Task.objects.filter(id__in = tasks_id).update(assigned = id_user, status = "to_do")
 	return HttpResponse(request)

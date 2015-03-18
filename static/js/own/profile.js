@@ -68,8 +68,7 @@ $(document).ready(function(){
                     lst_progress += "<div id='" + value.id + "' class='progress-bar " + value.css_class + "' role='progressbar' style='width:" + value.width + "%'><a href='#' data-toggle='tooltip' title='Выполнение: " + value.perform_time+ "'>" + value.title + "</a></div>";
                 });
                 $('#progress-bar').html(lst_progress);
-                $('#time-iterate').html('<label>' + data.iterate_time.start_line + ' - ' + data.iterate_time.dead_line + '</label>')
-                console.log(data.all_time);
+                $('#time-iterate').html('<label>' + data.iterate_time.start_line + ' - ' + data.iterate_time.dead_line + '</label>');
                 $('#spend-time').html(data.all_time);
             },
             error : function(err) {
