@@ -8,11 +8,13 @@ from django.http.response import HttpResponse
 from iteration.models import Iteration
 from project.models import Project
 from task.models import Task
+from user_profile.models import UserProfile
 import json
 import logging
 from datetime import datetime
 from django.db.models import Max
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.cache import cache
 #from django.http import JsonResponse
 
 @login_required
@@ -26,25 +28,17 @@ def profile(request, id_project = 0):
 
 	args = {}
 	args.update(csrf(request))
-		
-	args['user']    = request.user
-	args['profile'] = args['user'].profile
+	args['cache']   = cache.get_many( [ 'user_id', 'project_id', 'iterate_id', 'project_title', 'user_name' ] )		
+	args['user']    = UserProfile.objects.filter(id = args['cache']['user_id']).values('id', 'user__username', 'user__first_name', 'user__last_name', 'level', 'avatar', 'date_of_birth')
+	args['project'] = Project.objects.filter( id = args['cache']['project_id'] ).values('title')[0]
 	
-	tasks = Task.objects.filter(assigned = args['user'].id).exclude(status="not_dev")
+	tasks = Task.objects.filter(assigned = args['cache']['user_id'], project = args['cache']['project_id'] ).exclude(status="not_dev")
 	args['type_tasks'] = [ 'tasks_to_do', 'tasks_in_progress', 'tasks_test', 'tasks_done']
-	
-	args['projects'] = Project.objects.all()
-	if tasks:
-		args['project'] = tasks[0].project
-	elif args['projects']:
-		args['project'] = args['projects'][0]
 
-	today_time      = datetime.now
 	if args['project']:
-		args['iterate_curr_id'] = Iteration.objects.filter( dead_line__gt = today_time, start_line__lt = today_time )[0].id
-	
+		args['iterate_curr_id'] = args['cache']['iterate_id']	
 		try:
-			args['iterates'] = Iteration.objects.filter(project = args['project'])
+			args['iterates'] = Iteration.objects.filter(project = args['cache']['project_id'] )
 		except Iteration.DoesNotExist:
 			args['iterates'] = []
 		

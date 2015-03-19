@@ -5,10 +5,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = patterns('project.views',
 
-    url( r'^$', 							    'projects'	  ),
-    url( r'^project/(?P<id_project>\d+)$', 		'show_project'),
-    url( r'^edit_project/$',                    'edit_project'),
-    url( r'^edit_project/(?P<id_project>\d+)$', 'edit_project'),
+    url( r'^$',              'projects'	   ),
+    url( r'^project$',       'show_project'),
+    url( r'^edit_project$',  'edit_project'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

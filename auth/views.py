@@ -9,6 +9,8 @@ from django.shortcuts 				import HttpResponseRedirect
 from django.contrib            import auth
 from auth.forms                import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.cache import cache
+import logging
 
 def auth_form(request):
 	if request.user.id :
@@ -18,29 +20,6 @@ def auth_form(request):
 	args['form'] = AuthenticationForm
 
 	return render_to_response('auth.html', args)
-
-
-def login_user(request):
-	args = {}
-	args.update(csrf(request))
-	
-	username = request.POST.get['username', '']
-	password = request.POST.get['password', '']
-	user = auth.authenticate(username = username, password = password)
-
-	if user is not None:
-		if user.is_active:
-			auth.login(request, user)
-			return redirect("/projects")
-		else: 
-			return HttpResponse("User not active")
-	else:
-		return render_to_response('auth.html', {'error' : 'show'})
-
-
-def logout_user(request):
-	logout(request)
-	return HttpResponseRedirect('/auth')
 
 def register(request):
 	if request.method == "POST":

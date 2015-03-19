@@ -15,13 +15,13 @@
 			<div class='box'>
 				<div class='box-header'>
 	                <div class = "row">
-	                    <div class = 'title col-sm-2'  id="project" id_project="{{project.id}}">
-	                        <h3>{{project.title}}</h3>
+	                    <div class = 'title col-sm-2'  id="project" id_project="{{ project_id }}">
+	                        <h3>{{ cache.project_title }}</h3>
 	                    </div>
 	                    <div class = "col-sm-4 col-sm-offset-6">
 	                        <div class="btn-group" role="group" aria-label="...">
-	                          <a  href="/task/tasks/{{project.id}}"><button type="button" class="btn btn-default">Задачи</button></a>
-	                          <a  href="/task/dashboard/{{project.id}}"><button type="button" class="btn btn-default">Dashboard</button></a>
+	                          <a  href="/task/tasks"><button type="button" class="btn btn-default">Задачи</button></a>
+	                          <a  href="/task/dashboard"><button type="button" class="btn btn-default">Dashboard</button></a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -45,14 +45,14 @@
 			                    <tbody>
 									{% for task  in tasks %}
 										<tr data-position="{{task.pos}}" id="{{task.id}}">
-											<td> {{ task.iterate  }}	</td>
+											<td> {{ task.iterate__title  }}	</td>
 											<td> 
 												<a class="task_title" id="{{task.id}}">
 												 {{ task.title    }}
 												</a>
 											</td>
 											<td> {{ task.type_task}}	</td>
-											<td> {{ task.assigned }}	</td>
+											<td> {{ task.assigned__username }}	</td>
 											<td> {{ task.status   }}	</td>
 											<td> {{ task.updated  }}	</td>
 										</tr>
@@ -70,8 +70,8 @@
 {% endblock %}
 
 {% block nav %}
-	<li><a href="/projects/project/{{project.id}}">{{project.title}}</a></li>
-	<li><a href="/forum/{{project.id}}">Форум</a></li>
+	<li><a href="/projects/project">{{ cache.project_title }}</a></li>
+	<li><a href="/forum">Форум</a></li>
 	<li><a href="#">Сотрудники</a></li>
 	<li><a href="#">Статистика</a></li>
 {% endblock %}
