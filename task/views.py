@@ -31,7 +31,7 @@ def show_lst_not_dev(request, id_project = 0):
 def show_dashboard(request):
 	args = {}
 	args.update(csrf(request))
-	args['cache'] = cache.get_many([ 'project_id', 'iterate_id', 'project_title', 'user_name'])
+	args['cache'] = cache.get_many([ 'project_id', 'iterate_id', 'project_title', 'user_name', 'user_id'])
 
 	try:
 		args['iterations'] = Iteration.objects.filter(project = args['cache']['project_id'] ).values('title', 'id')
