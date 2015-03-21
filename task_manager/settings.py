@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.formtools',
+    'django.utils.log',
     'debug_toolbar',
     'django.contrib.staticfiles',
     'auth',
@@ -129,3 +130,14 @@ STATICFILES_DIRS =(
 )
 
 STATIC_URL = '/static/'
+
+#CASHE
+CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'TIMEOUT': 86400,
+    }
+}

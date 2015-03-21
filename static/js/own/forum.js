@@ -10,7 +10,7 @@ $(document).ready(function(){
                         $('#myModal').modal('show');
                   },
                   error : function(err) {
-                      alert("Fail GET /forum/edit_forum" + id_forum);
+                      alert("Fail GET /forum/edit_forum/" + id_forum);
                   }
             })
             $('.modal-title').text("Форум");

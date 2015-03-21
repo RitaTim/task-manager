@@ -10,13 +10,13 @@
 <div class="row">
     <div class='col-sm-12 dashboard-content'>
         <div class="row">
-            <div class='title col-sm-2' id="project" title="{{project.id}}">
-                <h3>{{ project.title }}</h3>
+            <div class='title col-sm-2' id="project" title="{{ project_id }}">
+                <h3>{{ cache.project_title }}</h3>
             </div>
             <div class = "col-sm-4 col-sm-offset-5">
                 <div class="btn-group" role="group" aria-label="...">
-                  <a  href="/task/tasks/{{project.id}}"><button type="button" class="btn btn-default">Задачи</button></a>
-                  <a  href="/task/dashboard/{{project.id}}"><button type="button" class="btn btn-default">Dashboard</button></a>
+                  <a  href="/task/tasks"><button type="button" class="btn btn-default">Задачи</button></a>
+                  <a  href="/task/dashboard"><button type="button" class="btn btn-default">Dashboard</button></a>
                 </div>
             </div>
             <div>
@@ -36,7 +36,7 @@
                 {% else %}                                                                      
                     <select class="selectpicker btn btn-default filter_select" id="which_iteration">
                         {% for iteration in iterations %}
-                            <option class="black_text" id="{{iteration.id}}" {% if iteration.id == iterate_curr_id %} selected {% endif %}>
+                            <option class="black_text" id="{{iteration.id}}" {% if iteration.id == cache.iterate_id %} selected {% endif %}>
                                 <a href="task/dashboard/{{project.id}}?id_iteration={{iteration.id}}">
                                     {{ iteration.title }}
                                 </a>
@@ -48,7 +48,7 @@
             <div class = "col-sm-1">
                 <select class="selectpicker btn btn-default filter_select" id="which_tasks">
                     <option class="black_text">Все</option>
-                    <option class="black_text" id="{{user.id}}">Мои</option>
+                    <option class="black_text" id="{{ user_id }}">Мои</option>
                 </select>
             </div>                       
         </div>                
@@ -102,8 +102,8 @@
 {% endblock %}
 
 {% block nav%}
-    <li><a href="/projects/project/{{project.id}}">{{project.title}}</a></li>
-    <li><a href="/forum/{{project.id}}">Форум</a></li>
+    <li><a href="/projects/project">{{ cache.project_title }}</a></li>
+    <li><a href="/forum">Форум</a></li>
     <li><a href="#">Сотрудники</a></li>
     <li><a href="#">Статистика</a></li>
 {% endblock %}

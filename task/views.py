@@ -13,52 +13,30 @@ import json
 import logging
 from datetime import datetime, timedelta
 from django.utils import timezone
-
-# import the logging library
 import logging
+from django.core.cache import cache
 
-# Get an instance of a logger
-#logger = logging.getLogger(log.error)
-
-def show_tasks(request, id_project = 0):
-	if request.GET:
-		return HttpResponse(request)
-
-	#logger.error('Something went wrong!')
-
+def show_tasks(request):
 	args = {}
-	args['user'    ] = request.user
-	args['project' ] = Project.objects.get(id = id_project)
-	args['tasks'   ] = Task.objects.filter(project = id_project)	
-
-	try:
-		args['iterations'] = Iteration.objects.filter(project = id_project)
-	except Iteration.DoesNotExist:
-		args['iterations'] = []
+	args['cache'] = cache.get_many( ['project_id', 'project_title', 'user_name'] )
+	args['tasks'] = Task.objects.filter(project = args['cache']['project_id']).values('title', 'id', 'iterate__title', 'type_task', 'assigned__username', 'status', 'updated')	
 
 	return render_to_response('tasks.html', args)
 
 def show_lst_not_dev(request, id_project = 0):
 	args = {}
-	args['user'    ] = request.user
-	#args['project' ] = Project.objects.get(id = id_project)
-	args['tasks'] = Task.objects.filter( status = "not_dev", assigned = None).values('title', 'id', 'text', 'priority')	
-
+	args['tasks'] = Task.objects.filter( status = "not_dev", assigned = None).values('title', 'id', 'text', 'priority')
 	return render_to_response('lst_not_dev.html', args)
 
-def show_dashboard(request, id_project = 0, id_iteration = 0, id_user = 0):
+def show_dashboard(request):
 	args = {}
 	args.update(csrf(request))
-	args['user'	   ] = request.user
-	
-	today_time  = datetime.now
-	args['iterate_curr_id'] = Iteration.objects.filter( dead_line__gt = today_time, start_line__lt = today_time )[0].id
-	if id_project:
-		args['project'] = Project.objects.get(id = id_project)
-		try:
-			args['iterations'] = Iteration.objects.filter(project = id_project).order_by('dead_line')
-		except Iteration.DoesNotExist:
-			args['iterations'] = []
+	args['cache'] = cache.get_many([ 'project_id', 'iterate_id', 'project_title', 'user_name'])
+
+	try:
+		args['iterations'] = Iteration.objects.filter(project = args['cache']['project_id'] ).values('title', 'id')
+	except Iteration.DoesNotExist:
+		args['iterations'] = []
 
 	return render_to_response('dashboard.html', args)
 

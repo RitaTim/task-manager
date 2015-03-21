@@ -23,8 +23,8 @@
 {% endblock %}
 
 {% block nav %}
-	<li> <a href="/projects/project/{{project.id}}">{{project.title}}</a></li>
-	<li> <a href="/task/tasks/{{project.id}}">Задачи</a></li>
+	<li> <a href="/projects/project">{{ cache.project_title }}</a></li>
+	<li> <a href="/task/tasks">Задачи</a></li>
 	<li><a href="#">Сотрудники</a></li>
 	<li><a href="#">Статистика</a></li>
 {% endblock %}

@@ -37,7 +37,7 @@
 									<div class='form-group'>
 										<label>
 											<i class="fa fa-user"></i>
-											{{user.first_name}} {{user.last_name}}
+											{{ user.user__first_name}} {{ user.user__last_name }}
 										</label>
 									</div>
 								</div>
@@ -73,7 +73,7 @@
 									<div class='form-group'>
 										<label>
 											<i class="fa fa-star"></i>
-											{{profile.level}}
+											{{user.level}}
 										</label>
 									</div>
 								</div>
@@ -202,15 +202,7 @@
 {% endblock %}
 
 {% block nav %}
-	<li id="/projects/project/{{project.id}}" class="active-li">
-		<a href="#">{{project.title}}</a>
-		<ul>
-			<li><a href="/projects">Все</a></li>
-			{% for pro in projects %}
-				<li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
-			{% endfor %}
-		</ul>
-	</li>
-	<li> <a href="/task/tasks/{{project.id}}">Задачи</a></li>
-	<li> <a href="/forum/{{project.id}}">Форум</a></li>
+	<li> <a href="/projects/project">{{ cache.project_title}}</a> </li>
+	<li> <a href="/task/tasks">      Задачи           </a> </li>
+	<li> <a href="/forum">           Форум            </a> </li>
 {% endblock %}
