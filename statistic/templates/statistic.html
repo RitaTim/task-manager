@@ -1,0 +1,132 @@
+{% extends "main.html" %}
+
+{% block title %}
+	Статистика
+{% endblock %}
+
+{% load staticfiles %}
+{% block script %}
+    <script src= "{% static 'js/own/statistic.js'%}"></script>
+    <script src= "{% static 'js/own/tasks.js'%}"></script>
+{% endblock %}
+
+{% block content%}	
+	<div class="row">
+		<div class='col-sm-12'>
+			<div class='box'>
+				<div class='box-header'>
+	                <div class = "row">
+	                    <div class='title'  id="project" id_project="{{ cache.project_id }}">
+	                        <h3>{{ cache.project_title }}</h3>
+	                    </div>
+
+	                    <div class="row">
+		                    <div class="col-sm-1">
+								<label>Итерация</label>
+							</div>
+
+							<div class="col-sm-1">
+				                {% if iterations|length == 0 %}
+				                    <a href="#"><h4> создать</h4></a> 
+				                {% else %}                                                                      
+				                    <select class="selectpicker btn btn-default filter_select" id="which_iteration">
+				                        {% for iteration in iterations %}
+				                            <option class="black_text" id="{{iteration.id}}" {% if iteration.id == cache.iterate_id %} selected {% endif %}>
+				                                <a href="task/dashboard/{{project.id}}?id_iteration={{iteration.id}}">
+				                                    {{ iteration.title }}
+				                                </a>
+				                            </option>
+				                        {% endfor %}
+				                    </select>                                        
+				                {% endif %}
+				            </div><!--col-sm-2-->
+				        </div><!--row-->
+	                </div><!--row-->
+				</div><!--box-header-->
+
+				<div class='box-content marg_top'>
+					<ul class='nav nav-tabs'>
+						<li class='active'>
+							<a data-toggle='tab' href='#tab1'>
+								<i class='icon-info'></i>
+								Таблица
+							</a>
+						</li>
+						<li>
+							<a data-toggle='tab' href='#tab2'>
+								<i class='icon-film'></i>
+								График
+							</a>
+						</li>
+					</ul>
+
+				<div class='tab-content padding_10'>
+					<div class='tab-pane active' id='tab1'>
+						<div class='box-table'>
+							<div class="row">
+								<h4 class="title-table col-sm-10 col-sm-offset-1">Таблица результативности сотрудников</h4>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-10 col-sm-offset-1 time-iterate"></div>
+							</div>
+
+							<hr>
+
+							<div class="row">
+								<div class="col-sm-1 center-text">
+									<label>Работник</label>
+								</div>
+
+								<div class="col-sm-10">
+									<label>Рабочий процесс</label>
+								</div>
+
+								<div class="col-sm-1">
+									<label>Рабочее время</label>
+								</div>
+							</div>
+							
+							{% for data_user in data_users %}
+								<div class="row user_data" id="{{ data_user.user_name }}" title="{{ data_user.user_id }}">
+									<div class="col-sm-1 employees">
+										{{ data_user.user_name }}
+									</div>
+
+									<div class="col-sm-10 work_process">
+										<div class="row progress" >
+										</div><!--row progress-->
+									</div><!--col-sm-8-->
+
+									<div class="col-sm-1 perform_time">
+										{{ data_user.work_data.all_time }}
+									</div>
+								</div>
+							{% endfor %}
+						</div><!--box-table-->
+					</div><!--tab1-->
+
+					<div class='tab-pane' id='tab2'>
+						<div class="row">
+
+							<div class="col-sm-10 col-sm-offset-1 time-iterate text-center"></div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12" id="graphic">
+  							</div>
+						</div>					
+					</div><!--tab2-->
+				</div><!--tab-content-->
+			</div><!--box-->
+		</div><!--col-sm-12-->
+	</div><!--row-->
+
+
+{% endblock %}
+
+{% block nav %}
+	<li><a href="/projects/project">{{ cache.project_title }}</a></li>
+	<li><a href="/forum">Форум</a></li>
+	<li><a href="/employees">Сотрудники</a></li>
+{% endblock %}

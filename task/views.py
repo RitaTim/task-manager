@@ -124,22 +124,27 @@ def get_tasks(request, id_project = 0, id_iteration = 0, which_tasks = '0'):
 
 	return HttpResponse(data, mimetype='application/json') 
 
-def get_progress_bar_user(request, id_iterate = '0', id_user = '0'):
-	if id_user == '0':
-		id_user = request.session['_auth_user_id']
+def get_progress_bar_user(request, user_id = None, iterate_id = None):
+	for_statistic = False
+	if 'user_id' in request.GET:
+		user_id = request.GET['user_id']
+	elif not user_id:
+		user_id = cache.get('user_id')
 	else:
-		id_user = int(id_user)
+		for_statistic = True
 
-	if id_iterate != '0':
-		iterate = Iteration.objects.filter(id = id_iterate).values('start_line', 'dead_line')[0]
-		iterate_time = { 
-			'start_line' : iterate['start_line'].strftime('%Y-%m-%d %H:%M'),
-			'dead_line'  : iterate['dead_line' ].strftime('%Y-%m-%d %H:%M'),
-		}
-	else:
-		iterate_time = { 'start_line' : 'Нет текущей итерации'}
+	if 'iterate_id' in request.GET:
+		iterate_id = request.GET['iterate_id']
+	elif not iterate_id:
+		iterate_id = cache.get('iterate_id')
+
+	iterate = Iteration.objects.filter(id = iterate_id).values('start_line', 'dead_line')[0]
+	iterate_time = { 
+		'start_line' : iterate['start_line'].strftime('%Y-%m-%d %H:%M'),
+		'dead_line'  : iterate['dead_line' ].strftime('%Y-%m-%d %H:%M'),
+	}		
 	
-	tasks  = Task.objects.filter( Q(assigned = id_user) & Q(iterate = id_iterate) & ( Q(status = 'in_progress') | Q(status = 'done') ) ).order_by('-status').values('status', 'start_time', 'end_time', 'title', 'id', 'priority')
+	tasks  = Task.objects.filter( Q(assigned = user_id) & Q(iterate = iterate_id) & ( Q(status = 'in_progress') | Q(status = 'done') ) ).order_by('-status').values('status', 'start_time', 'end_time', 'title', 'id', 'priority')
 	to_progress_bar = []
 	sum_work_time = timedelta(0)
 	today_time = timezone.now()
@@ -160,7 +165,49 @@ def get_progress_bar_user(request, id_iterate = '0', id_user = '0'):
 			'css_class'    : 'progress-bar-striped active '+_get_class_progress_by_priority(task['priority']) if task['status'] == 'in_progress' else _get_class_progress_by_priority(task['priority'])
 		}
 		to_progress_bar.append(data_task)
-	return HttpResponse(json.dumps({ 'all_time': str(sum_work_time).split('.')[0], 'progress_bar' : to_progress_bar, 'iterate_time' : iterate_time }), content_type='application/json')
+
+	res_data = { 'all_time': str(sum_work_time).split('.')[0], 'progress_bar' : to_progress_bar, 'iterate_time' : iterate_time }
+	if not for_statistic:
+		return HttpResponse(json.dumps(res_data), content_type='application/json')
+	else:
+		return res_data
+
+def statistic_users(request):
+	args = {}
+	args['cache'] = cache.get_many( [ 'project_id', 'user_name', 'project_title' ])
+	users         = _get_users_project( args['cache']['project_id'] )
+	iterate_id    = request.GET['iterate_id'] if 'iterate_id' in request.GET else cache.get('iterate_id')
+	data_users = []
+	for user in users:
+		data_users.append({
+			'user_name' : user['assigned__username'],
+			'user_id'   : user['assigned'],
+			#'work_data' : get_progress_bar_user( request = request, user_id = user['assigned'], iterate_id = iterate_id )
+		})
+
+	args['data_users'] = data_users
+
+	try:
+		args['iterations'] = Iteration.objects.filter(project = args['cache']['project_id'] ).values('title', 'id')
+	except Iteration.DoesNotExist:
+		args['iterations'] = []
+
+	return render_to_response('statistic.html', args)
+
+def get_progress_users(request, iterate_id = None, lst_users_id = []):
+	iterate_id   = request.GET['iterate_id'] if 'iterate_id' in request.GET else cache.get('iterate_id')
+	lst_users_id = json.loads(request.GET['lst_users_id']) if 'lst_users_id' in request.GET else []
+
+	args = {}
+	for user_id in lst_users_id:
+		args[user_id] = get_progress_bar_user( request = request, user_id = user_id, iterate_id = iterate_id )
+	logging.info(args)
+	return HttpResponse(json.dumps(args), content_type='application/json')
+
+def _get_users_project(project_id):
+	project_id = project_id if project_id else cache.get('project_id')
+	return Task.objects.filter(project = project_id).exclude(assigned = None).values('assigned', 'assigned__username').distinct()
+
 
 def _get_class_progress_by_priority(priority):
 	if priority == 0:

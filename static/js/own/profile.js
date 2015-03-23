@@ -57,11 +57,12 @@ $(document).ready(function(){
         })
     };
 
-    var fill_progress_bar = function(id_iterate){
+    var fill_progress_bar = function(iterate_id){
         $.ajax({
-            url : "/task/get_progress_bar_user/" + id_iterate + "/" + 0, 
+            url : "/task/get_progress_bar_user", 
             type : "GET",
             DataType: "json",
+            data : { 'iterate_id' : iterate_id },
             success : function(data) {
                 var lst_progress = "";
                 $.each( data.progress_bar, function( index, value ){
@@ -72,7 +73,7 @@ $(document).ready(function(){
                 $('#spend-time').html(data.all_time);
             },
             error : function(err) {
-                alert("Fail GET /task/get_progress_bar_user/");
+                alert("Fail GET /task/get_progress_bar_user");
             }
         })
     };
