@@ -49,8 +49,9 @@ $(document).ready(function() {
 
     var lst_tasks_dom = function(tasks){
         lst_res = '';
-        $.each( tasks, function( index, value ){
-                    lst_res += "<li class = '" + value.style + " board_item board_item_color' id=" + value.id + "><a><b><p class='task_title' id='" + value.id + "'>" + value.title + "</p></b></a><p>" + value.text + "</p></li>";
+        $.each( tasks, function( index, task ){
+            console.log(task.assigned__username);
+            lst_res += "<li class = '" + task.style + " board_item board_item_color' id=" + task.id + "><a><b><p class='task_title' id='" + task.id + "'>" + task.title + "</p></b></a><div class='row'><p class='col-sm-9'>" + task.text + "</p><div class='col-sm-2 assigned-ticket text-center'>" + task.assigned__username + "</div></div></li>";
         })
         return lst_res;
     };

@@ -99,7 +99,7 @@ def get_tasks(request, id_project = 0, id_iteration = 0, which_tasks = '0'):
 	if which_tasks != '0' :
 		tasks = tasks.filter(assigned = request.user.id)
 
-	tasks = tasks.values('id', 'title', 'text', 'priority', 'assigned', 'type_task', 'status', 'iterate')
+	tasks = tasks.values('id', 'title', 'text', 'priority', 'assigned__username', 'type_task', 'status', 'iterate')
 
 	tasks_to_do 		= []
 	tasks_in_progress 	= []
