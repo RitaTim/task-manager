@@ -126,7 +126,9 @@
 {% endblock %}
 
 {% block nav %}
-	<li><a href="/projects/project">{{ cache.project_title }}</a></li>
-	<li><a href="/forum">Форум</a></li>
-	<li><a href="/employees">Сотрудники</a></li>
+	<li><a href="/projects/project"> {{ cache.project_title }} </a> </li>
+	<li> <a href="/task/tasks">      Задачи                    </a> </li>
+	<li> <a href="/task/dashboard">  Dashboard                 </a> </li>
+	<li> <a href="/employees">       Сотрудники                </a> </li>
+	<li> <a href="/forum">           Форум                     </a> </li>
 {% endblock %}
