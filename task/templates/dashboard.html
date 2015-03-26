@@ -9,24 +9,18 @@
 {% block content %}
 <div class="row">
     <div class='col-sm-12 dashboard-content'>
-        <div class="row">
+        <div class="row  marg_right">
             <div class='title col-sm-2' id="project" title="{{ project_id }}">
                 <h3>{{ cache.project_title }}</h3>
             </div>
-            <div class = "col-sm-4 col-sm-offset-5">
-                <div class="btn-group" role="group" aria-label="...">
-                  <a  href="/task/tasks"><button type="button" class="btn btn-default">Задачи</button></a>
-                  <a  href="/task/dashboard"><button type="button" class="btn btn-default">Dashboard</button></a>
-                </div>
-            </div>
-            <div>
-                <a class="col-sm-1" id="active_menu"><i class='fa fa-align-justify text-success fa-2x'></i></a>
+            <div class='col-sm-1 col-sm-offset-9'>
+                <a class="col-sm-1" id="active_menu"><button type="button" class="btn btn-default bordered_green">Меню</button></a>
             </div>                    
         </div>
 
         <div class="row">                                   
-            <h4><label class="col-sm-1">спринт</label></h4>
-            <h4><label class="col-sm-1">фильтр</label></h4>
+            <h4 class="col-sm-1">Спринт</h4>
+            <h4 class="col-sm-1">Фильтр</h4>
         </div>
 
         <div class="row">
@@ -103,9 +97,10 @@
 
 {% block nav%}
     <li> <a href="/projects/project"> {{ cache.project_title }} </a> </li>
-    <li> <a href="/forum">            Форум                     </a> </li>
-    <li> <a href="#">                 Сотрудники                </a> </li>
-    <li> <a href="/statistic">        Статистика                </a> </li>
+    <li> <a href="/task/tasks">      Задачи                     </a> </li>
+    <li> <a href="/employees">       Сотрудники                 </a> </li>
+    <li> <a href="/statistic">       Статистика                 </a> </li>
+    <li> <a href="/forum">           Форум                      </a> </li>
 {% endblock %}
 
 {% load staticfiles %}

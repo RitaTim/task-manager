@@ -18,13 +18,10 @@
 	                    <div class = 'title col-sm-2'  id="project" id_project="{{ project_id }}">
 	                        <h3>{{ cache.project_title }}</h3>
 	                    </div>
-	                    <div class = "col-sm-4 col-sm-offset-6">
-	                        <div class="btn-group" role="group" aria-label="...">
-	                          <a  href="/task/tasks"><button type="button" class="btn btn-default">Задачи</button></a>
-	                          <a  href="/task/dashboard"><button type="button" class="btn btn-default">Dashboard</button></a>
-	                        </div>
-	                    </div>
 	                </div>
+				</div>
+				<div class="row">
+					<h4 class="title-table text-center marg_buttom_20">Задачи проекта</h4>
 				</div>
 				<div class='box-table'>
 					<div class='responsive-table'>
@@ -70,8 +67,9 @@
 {% endblock %}
 
 {% block nav %}
-	<li> <a href="/projects/project"> {{ cache.project_title }} </a></li>
-	<li> <a href="/forum">            Форум                     </a> </li>
-	<li> <a href="#">                 Сотрудники                </a> </li>
+	<li> <a href="/projects/project"> {{ cache.project_title }} </a> </li>
+	<li> <a href="/task/dashboard">   Dashboard                 </a> </li>
+	<li> <a href="/employees">        Сотрудники                </a> </li>
 	<li> <a href="/statistic">        Статистика                </a> </li>
+	<li> <a href="/forum">            Форум                     </a> </li>
 {% endblock %}

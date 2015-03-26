@@ -21,7 +21,7 @@
 	border-radius: 10px;
 	border: 1px solid green;
 }
-.marg_top_head{
+.top_head{
 	margin-top: 50px;
 	margin-left: 20px;
 	margin-right: 20px;
@@ -96,10 +96,6 @@
 }
 
 /*side bar*/
-/**
- * Skyrim-inspired Menu
- */
-
 
 a {
 	color: black; 
@@ -250,6 +246,10 @@ a {
 	padding: 5px;
 }
 /*tasks dashboard*/
+.bordered_green{
+	border: 1px solid green;
+}
+
 .margin-right-2{
 	margin-right: 2px;
 }
@@ -331,6 +331,9 @@ a {
 }
 .marg_left{
 	margin-left: 50px;
+}
+.marg_right{
+	margin-right: 50px;
 }
 .board_widget{
 	margin-top: 10px;
