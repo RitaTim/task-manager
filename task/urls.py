@@ -10,5 +10,7 @@ urlpatterns = patterns('task.views',
     url( r'^change_status$',                         'change_status'    ),
     url( r'^get_tasks$',                             'get_tasks'        ),
     url( r'^assign_for_user',                        'assign_for_user'  ),
-    url( r'^get_progress_bar_user/(?P<id_iterate>\d+)/(?P<id_user>\d+)$', 'get_progress_bar_user' ),
+    url( r'^get_progress_bar_user$',            'get_progress_bar_user' ),
+    url( r'^statistic_users$',                        'statistic_users' ),
+    url( r'^get_progress_users$',                  'get_progress_users' ),
 )
