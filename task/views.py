@@ -210,9 +210,7 @@ def _get_users_project(project_id):
 
 
 def _get_class_progress_by_priority(priority):
-	if priority == 0:
-		return ''
-	elif priority == 1:
+	if priority   == 1:
 		return 'progress-bar-warning'
 	elif priority == 2:
 		return 'progress-bar-success'
@@ -220,12 +218,12 @@ def _get_class_progress_by_priority(priority):
 		return 'progress-bar-info'
 	elif priority == 4:
 		return 'progress-bar-danger'
-	else:
+	elif priority >  4:
 		return 'progress-bar-black'
+	else:
+		return ''
 
 def _get_style_priority(priority):
-	if priority == 0:
-		return ""
 	if priority > 4:
 		return "priority_max"
 	else:

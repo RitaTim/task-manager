@@ -40,9 +40,9 @@ $(document).ready(function(){
         return lst_res;
     };
 
-    var fill_in_table = function(id_iterate){
+    var fill_in_table = function(iterate_id){
         $.ajax({
-            url : "/profile/get_tasks/" + id_iterate, 
+            url : "/profile/get_tasks/" + iterate_id, 
             type : "GET",
             DataType: "json",
             success : function(data) {
@@ -52,7 +52,7 @@ $(document).ready(function(){
                 });
             },
             error : function(err) {
-                alert("Fail GET /profile/get_task");
+                alert("Fail GET /profile/get_tasks/" + iterate_id);
             }
         })
     };
@@ -78,16 +78,40 @@ $(document).ready(function(){
         })
     };
 
+    var change_iterates = function(project_id){
+        $.ajax({
+            url : "/profile/change_iterates/" + project_id, 
+            type : "GET",
+            DataType: "json",
+            success : function(data) {
+                var lst_iterates = "";
+                $.each( data.iterates, function( index, iterate ){
+                    lst_iterates += "<option id='" + iterate.id + "' " + ( iterate.id == data.iterate_id ? 'selected' : '') + ">" +  iterate.title + "</option>";
+                });
+                $('#iterates-menu').html(lst_iterates);
+                fill_fields();
+            },
+            error : function(err) {
+                alert("Fail GET /profile/change_iterates/" + project_id);
+            }
+        })
+    };
+
 
     var fill_fields = function(){
-        var choice_iter = $('#iterates-menu option:selected')[0].id;
-        fill_in_table( choice_iter );
-        fill_progress_bar( choice_iter );
+        var choice_iterate  = $('#iterates-menu option:selected')[0].id;
+        fill_in_table( choice_iterate );
+        fill_progress_bar( choice_iterate );
     }
 
-    $('#iterates-menu').on('change', function(){
-        fill_fields();
+    $('#projects-menu').on('change', function(){ 
+        $('#describe_task').prop("hidden", true);
+        change_iterates($('#projects-menu option:selected')[0].id);
+    });
 
+    $('#iterates-menu').on('change', function(){
+        $('#describe_task').prop("hidden", true);
+        fill_fields();
     });
 
 	$(document).on('click', '.tasks-menu > li', function(){
@@ -98,7 +122,9 @@ $(document).ready(function(){
         show_task($(this).prop("id"));
     });
 
-    fill_fields();
+    if ( $('select').is('#iterates-menu') ) {
+        fill_fields();
+    };
     $("[data-toggle='tooltip']").tooltip(); 
 
 })

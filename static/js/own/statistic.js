@@ -11,8 +11,8 @@ $(document).ready(function(){
                 $('.time-iterate').html('<label>' + data.iterate_time.start_line + ' - ' + data.iterate_time.dead_line + '</label>');       
                 $.each( data.data_users, function( k, data_user ){
                     var lst_progress = "";
-                    $.each( data_user.progress_bar, function( i, value ){
-                        lst_progress += "<div id='" + value.id + "' class='progress-bar task_title " + value.css_class + "' role='progressbar' style='width:" + value.width + "%'><a href='#' data-toggle='tooltip' title='Выполнение: " + value.perform_time+ "'>" + value.title + "</a></div>";
+                    $.each( data_user.progress_bar, function( i, task ){
+                        lst_progress += "<div id='" + task.id + "' class='progress-bar task_title " + task.css_class + "' role='progressbar' style='width:" + task.width + "%'><a href='#' data-toggle='tooltip' title='Выполнение: " + task.perform_time+ "'>" + task.title + "</a></div>";
                     });
                     $('.user_data[title=' + k + '] > .work_process > .progress').html(lst_progress);
                     $('.user_data[title=' + k + '] > .perform_time').html(data_user.all_time);
