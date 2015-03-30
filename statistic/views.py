@@ -109,20 +109,32 @@ def get_data_graphic(request, iterate_id = None):
 	}
 
 	data_tasks = []
-	starting_point = iterate_time['start_line']
+	work_time = timedelta()
 	for task in tasks:
 		perform_time = task['end_time'] - task['start_time']
+		work_time += perform_time
 		data_tasks.append(
 			{
 				'id_task'      : task['id'],
 				'title_task'   : task['title'],
-				'x_coordinate' : starting_point.strftime('%Y-%m-%d %H:%M'),
-				'perform_time' : str(perform_time),
+				'perform_time' : perform_time,
 			}
-		)
-		starting_point = starting_point + perform_time	
+		)	
 
 	iterate = Iteration.objects.filter(id = iterate_id).values('start_line', 'dead_line')[0]
+
+	# calc koeff empty time
+	all_time_iter = iterate['dead_line'] - iterate['start_line']
+	empty_time = all_time_iter - work_time
+	count_done_tasks = len(data_tasks)
+	k_emty_time = empty_time/count_done_tasks
+	starting_point = iterate_time['start_line']
+
+	for task in data_tasks:
+		task['x_coordinate'] = (starting_point + task['perform_time'] + k_emty_time).strftime('%Y-%m-%d %H:%M')
+		starting_point += task['perform_time'] + k_emty_time
+		task['perform_time'] = str(task['perform_time'])
+
 	iterate_time = { 
 		'start_line' : iterate['start_line'].strftime('%Y-%m-%d %H:%M'),
 		'dead_line'  : iterate['dead_line' ].strftime('%Y-%m-%d %H:%M'),
