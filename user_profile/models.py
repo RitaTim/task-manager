@@ -11,7 +11,8 @@ class UserProfile(models.Model):
     avatar = models.ImageField(verbose_name='Аватар', upload_to='images/%Y/%m/%d', blank=True, null=True)
     date_of_birth = models.DateField(verbose_name='День рождения', blank=True, null=True)
     level = models.IntegerField(verbose_name='Уровень', default = 0)
-
+    phone = models.CharField(max_length = 20, default = '-', verbose_name = 'Контактный телефон',  blank=True, null=True)
+    post = models.CharField(max_length = 20, default = '-', verbose_name = 'Должность',  blank=True, null=True)
 
 def create_user_profile(sender, instance, created, **kwargs):  
     if created:  

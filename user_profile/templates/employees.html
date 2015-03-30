@@ -1,0 +1,71 @@
+{% extends "main.html" %}
+
+{% block title %}
+	Сотрудники
+{% endblock %}
+
+{% load staticfiles %}
+{% block script %}
+    <script src= "{% static 'js/own/employees.js'%}"></script>
+{% endblock %}
+
+{% block content%}	
+	<div class="row">
+		<div class='col-sm-12'>
+			<div class='box'>
+				<div class='box-header'>
+	                <div class = "row">
+	                    <div class = 'title col-sm-2'  id="project" id_project="{{ cache.project_id }}">
+	                        <h3>{{ cache.project_title }}</h3>
+	                    </div>
+	                </div>
+				</div>
+				<div class="row">
+					<h4 class="title-table text-center marg_buttom_20">Сотрудники проекта</h4>
+				</div>
+				<div class='box-table'>
+					<div class='responsive-table'>
+						<div class='scrollable-area' style= 'width:100%'>
+							<table class="table table-striped col-md-12 data-table">
+			                    <thead>
+			                        <tr>
+										<th> Сотрудник  </th>
+										<th> Должность  </th>
+										<th> Имя        </th>		
+										<th> Фамилия 	</th>
+										<th> e-mail     </th>
+										<th> телефон    </th>
+										<th> Д.р        </th>
+									</tr>
+			                    </thead>
+			                    <tbody>
+									{% for user  in users %}
+										<tr id="{{user.id}}">
+											<td> {{ user.user__username   }} </td>
+											<td> {{ user.post             }} </td>
+											<td> {{ user.user__first_name }} </td>
+											<td> {{ user.user__last_name  }} </td>
+											<td> {{ user.user__email      }} </td>
+											<td> {{ user.phone            }} </td>
+											<td> {{ user.date_of_birth    }} </td>
+										</tr>
+									{% endfor %}
+			                    </tbody>
+		                	</table>
+						</div><!--scrollable-area-->
+					</div><!--responsive-table-->
+				</div><!--box-table-->
+			</div><!--box-->
+		</div><!--col-sm-12-->
+	</div><!--row-->
+
+
+{% endblock %}
+
+{% block nav %}
+	<li> <a href="/projects/project"> {{ cache.project_title }} </a> </li>
+	<li> <a href="/task/tasks">       Задачи                    </a> </li>
+	<li> <a href="/task/dashboard">   Dashboard                 </a> </li>
+	<li> <a href="/statistic">        Статистика                </a> </li>
+	<li> <a href="/forum">            Форум                     </a> </li>
+{% endblock %}

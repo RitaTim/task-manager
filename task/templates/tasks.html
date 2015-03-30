@@ -15,7 +15,7 @@
 			<div class='box'>
 				<div class='box-header'>
 	                <div class = "row">
-	                    <div class = 'title col-sm-2'  id="project" id_project="{{ project_id }}">
+	                    <div class = 'title col-sm-2'  id="project" id_project="{{ cache.project_id }}">
 	                        <h3>{{ cache.project_title }}</h3>
 	                    </div>
 	                </div>
@@ -26,7 +26,7 @@
 				<div class='box-table'>
 					<div class='responsive-table'>
 						<div class='scrollable-area' style= 'width:100%'>
-							<table class="table table-striped col-md-12" id="table_articles">
+							<table class="table table-striped col-md-12 data-table">
 			                    <thead>
 			                        <tr>
 										<th> Итерация   </th>
@@ -67,9 +67,9 @@
 {% endblock %}
 
 {% block nav %}
-	<li> <a href="/projects/project"> {{ cache.project_title }} </a> </li>
-	<li> <a href="/task/dashboard">   Dashboard                 </a> </li>
-	<li> <a href="/employees">        Сотрудники                </a> </li>
-	<li> <a href="/statistic">        Статистика                </a> </li>
-	<li> <a href="/forum">            Форум                     </a> </li>
+	<li> <a href="/projects/project">   {{ cache.project_title }} </a> </li>
+	<li> <a href="/task/dashboard">     Dashboard                 </a> </li>
+	<li> <a href="/profile/employees">  Сотрудники                </a> </li>
+	<li> <a href="/statistic">          Статистика                </a> </li>
+	<li> <a href="/forum">              Форум                     </a> </li>
 {% endblock %}

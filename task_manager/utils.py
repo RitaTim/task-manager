@@ -30,3 +30,12 @@ def get_current_iterate(project_id = 0):
 			tasks.update( iterate = next_iterate )
 
 	return next_iterate.id
+
+def get_users_project(project_id):
+	project_id = project_id if project_id else cache.get('project_id')
+	dict_users = Task.objects.filter(project = project_id).exclude(assigned = None).values('assigned', 'assigned__username').distinct()
+	lst_id = [ user['assigned'] for user in dict_users ]
+	return { 
+		'dict_users' : dict_users,
+		'lst_id'     : lst_id
+	}
