@@ -36,7 +36,10 @@ $(document).ready(function(){
 
         var data_points_real = [];
         var data_tooltipe    = [];
-        var num_task = count_tasks;
+        var num_task = count_tasks - 1;
+        data_points_real.push(
+            {x: new Date(start_time), y: count_tasks}
+        );
         $.each( data.data_tasks, function( i, task ){
             data_points_real.push(
                 {x: new Date(task.x_coordinate), y: num_task}
