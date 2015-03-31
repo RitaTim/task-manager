@@ -14,16 +14,18 @@ import logging
 def edit_project(request):
 	project_id = cache.get('project_id')
 	if request.method == "POST":
+		cache.set('test', request.FILES)
 		if project_id:
 			project = Project.objects.get(id = project_id) 
-			form 	= ProjectForm(request.POST, instance = project)
+			form 	= ProjectForm(request.POST, request.FILES, instance = project)
 		else:
 			form = ProjectForm(request.POST, request.FILES)
 
 		if not form.is_valid():
 			return HttpResponse("Форма не валидна")
 		
-		form.save()	
+		form.save()
+		logging.info("save")	
 
 		return redirect(request.META.get('HTTP_REFERER','/'))
 	else: # GET
@@ -52,6 +54,7 @@ def projects(request):
 	return render_to_response('projects.html', args)
 
 def show_project(request):
+	logging.info(cache.get('test'))
 	if 'project_id' in request.GET:
 		project_id = request.GET['project_id']
 		cache.set('project_id', project_id)

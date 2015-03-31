@@ -24,9 +24,7 @@
 					<div class = "row">
 						<div class = "col-md-5">
 							{% if project.logo %}
-								<img src="{% static 'images/task_man.jpg' %}" class="logo-project-box">
-								<!--<img src="{{ MEDIA_URL }}{{ project.logo}}">-->
-								<!--<img src="{% static '' %}{{ project.logo}}" />-->
+								<img src="/media/{{ project.logo }}" class="logo-project-box" >
 							{% else %}
 								<img src="{% static 'images/tea.jpg' %}" class="logo-project-box">
 							{% endif %}	
