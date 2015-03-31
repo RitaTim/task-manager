@@ -6,43 +6,41 @@
 {% endblock %}
 
 {% block content%}
-	<div class = "projects col-sm-offset-2">		
-    	<div class="row">
-    		<h1 class="title text-center">Проекты <a class="add-project title">+</a></h1>
-    	</div>
-	    {% for project in projects %}
-	    
-	    <div class = "container">
-	    	<div class = "row">
-	    	<a href = "/projects/project?project_id={{project.id}}">
-			   <div class=" box-project green_back">
-			   	  <form action = "#" enctype="multipart/form-data">
-			   		<h2 class="title">
-						{{ project.title}}
-					</h2>
-					<hr>
-					<div class = "row">
-						<div class = "col-md-5">
-							{% if project.logo %}
-								<img src="/media/{{ project.logo }}" class="logo-project-box" >
-							{% else %}
-								<img src="{% static 'images/tea.jpg' %}" class="logo-project-box">
-							{% endif %}	
-						</div>
-						<div class = "col-md-6">
-							<label>
-								{{ project.text}}
-							</label>
-						</div>
-						
-					</div>
-
-				</form>
-
-			   	</div>
-			</a>
-			</div>
+	<div class = "projects col-sm-offset-1">
+		<div class="row">
+			<h1 class="title text-center">Проекты <a class="add-project title">+</a></h1>
 		</div>
+
+		{% for project in projects %}
+			<div class="col-sm-12">
+				<div class="row">
+					<a href="/projects/project?project_id={{project.id}}">
+						<div class="info-item padding_20">
+							<form action = "#" enctype="multipart/form-data">
+								<h2 class="title">
+									{{ project.title}}
+								</h2>
+
+								<hr>
+
+								<div class = "row">
+									<div class = "col-md-5">
+										{% if project.logo %}
+											<img src="/media/{{ project.logo }}" class="logo-project-box" >
+										{% else %}
+											<img src="{% static 'images/tea.jpg' %}" class="logo-project-box">
+										{% endif %}	
+									</div>
+
+									<div class="col-md-6">
+										{{ project.text}}
+									</div><!--col-md-6-->					
+								</div><!--row-->
+							</form>
+						</div><!--info-item-->
+					</a>
+				</div><!--row-->
+			</div><!--col-md-12-->
 		{% endfor %}
 	</div>
 	<script src= "{% static 'js/own/project.js' %}"></script>	

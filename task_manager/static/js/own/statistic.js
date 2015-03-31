@@ -24,7 +24,7 @@ $(document).ready(function(){
         })
     };
 
-    var render_chart = function(data){
+    var render_chart = function(data, size){
         var start_time  = data.iterate_time.start_line;
         var end_time    = data.iterate_time.dead_line;
         var count_tasks = data.count_tasks;
@@ -51,13 +51,8 @@ $(document).ready(function(){
         });                
 
         var data_chart = {
-            width: 1150,
-            height: 450,
-            title:{
-                text: "График",
-                fontColor: "green",
-                fontSize: 20,
-            },
+            width: size[0],
+            height: size[1],
             toolTip: {
                 content: function(e){
                     var content;
@@ -99,7 +94,9 @@ $(document).ready(function(){
             data : { 'iterate_id' : iterate_id },
             dataType: "json",
             success : function(data) {
-                render_chart(data);
+                size = iterate_id ? [ window.innerWidth * 0.85, window.innerHeight * 0.55 ] : [ window.innerWidth * 0.35, window.innerHeight * 0.35 ];
+                render_chart(data, size);
+                $('.time-iterate').html('<h4>' + data.iterate_time.start_line + ' - ' + data.iterate_time.dead_line + '</h4>');
             },
             error : function(err) {
                 console.log(err);
@@ -109,8 +106,14 @@ $(document).ready(function(){
 
     var load_data = function(){
         var iterate_id = $("#which_iteration option:selected").attr('id');
-        load_statistic( iterate_id );
-        load_highcharts( iterate_id) ;
+        if (iterate_id) {
+            load_statistic( iterate_id );
+            load_highcharts( iterate_id) ;
+        }
+        else {
+            load_highcharts();
+            $('.canvasjs-chart-canvas').css({ 'width': '300px'});
+        }
     };
 
     $(document).on('change', '#which_iteration', function(){
