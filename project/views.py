@@ -42,7 +42,6 @@ def projects(request):
 	user_name = request.user.username
 	cache.delete_many( [ 'project_id', 'iterate_id' ])
 	cache.set_many( { 'user_id' : request.user.id, 'user_name' : user_name })
-	logging.info(cache.get('user_name'))
 
 	args = {}
 	args['projects'] = Project.objects.all().values('id', 'title', 'logo', 'text')
@@ -67,6 +66,5 @@ def show_project(request):
 		cur_iterate = Iteration.objects.filter( dead_line__gt = today_time, start_line__lt = today_time )[0].id
 		cache.set('iterate_id', cur_iterate)
 
-	logging.info(cache.get('user_name'))
 	args['cache'] = { 'user_name' : cache.get('user_name') }
 	return render_to_response('project.html', args)

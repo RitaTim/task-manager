@@ -107,85 +107,105 @@
 										</a>
 									</div><!--row-->
 								</div>
-										
-								<div class='col-sm-11 col-sm-offset-1'>
-									<h3 class="title">Рабочий процесс</h3>
 
-									<div class="row">
-										<div class="col-sm-2">
-											<select id="iterates-menu" class="table-select">
-												{% for iterate in iterates %}
-													<option id="{{iterate.id}}" {% if iterate.id == iterate_curr_id %} selected {% endif %}>
-														<h4>{{ iterate.title }}</h4>
-													</option>
-												{% endfor %}
-											</select>
+								{% if empty %}
+									<div class='col-sm-11 col-sm-offset-1'>
+										<h3 class="title">Вы не являетесь участником ни одного из проектов</h3>
+										<h4> Чтобы принять участие в работе проекта, вам нужно выбрать проект. После чего вы сможете добавлять задачи или закреплять существующие задачи за собой. Выбрать проект вы можете на главной странице</h4> 
+										<hr> <h4> Желаем Вам удачи и приятного время провожения вместе с Task Maaaaaan! </h4>
+									</div>
+								{% else %}										
+									<div class='col-sm-11 col-sm-offset-1'>
+										<h3 class="title">Рабочий процесс</h3>
+
+										<div class="row">
+											<div class="col-sm-2">
+												<select id="projects-menu" class="table-select">
+													{% for project in projects %}
+														<option id="{{project.id}}" {% if project.id == project_id %} selected {% endif %}>
+															<h4>{{ project.title }}</h4>
+														</option>
+													{% endfor %}
+												</select>
+											</div>
 										</div>
 
-										<div id="time-iterate">
-										</div>
-									</div>
-									
-									<div class="row marg_buttom_20">
-										<h5 class="col-sm-2">Рабочее время:</h5>
-										<label id="spend-time"></label>
-									</div>
-
-									<div class="row progress" id="progress-bar">
-									</div><!--row progress-->	
-
-									<div class="row">
-										<table class="table table-striped col-md-12" id="table_articles">
-											<thead>
-												<tr>
-													<th> 
-														To do
-														<a id="add_task">+</a>
-													</th>
-													<th> In progress </th>		
-													<th> Test		 </th>
-													<th> Done        </th>
-												</tr>
-								            </thead>
-								            <tbody>								            
-												<tr class="text-center">
-													{% for type in type_tasks %}
-												        <td class="dropdown" id="{{type}}">
-												            <a href="#" class="dropdown-toggle count-tasks" data-toggle="dropdown">
-												                
-												            </a> 
-															<ul class='dropdown-menu tasks-menu'>
-															</ul> 
-												        </td>
-												    {% endfor %}
-												</tr>
-								            </tbody>
-										</table>
-									</div><!--row-->
-
-									<div class="row navbar-default padding_10" id="describe_task" hidden>
-										<div class="row padding_10">
-											<div class='form-group'>
-												<label id="title_task" class="title">
-												</label>
+										<div class="row">
+											<div class="col-sm-2">
+												<select id="iterates-menu" class="table-select">
+													{% for iterate in iterates %}
+														<option id="{{iterate.id}}" {% if iterate.id == iterate_id %} selected {% endif %}>
+															<h4>{{ iterate.title }}</h4>
+														</option>
+													{% endfor %}
+												</select>
 											</div>
 
-											<div class="row">
-												<div class='form-group col-sm-8'>
-													<div id="text_task">
-													</div>
-												</div>
-											</div><!--row-->
+											<div id="time-iterate">
+											</div>
+										</div>
+										
+										<div class="row marg_buttom_20">
+											<h5 class="col-sm-2">Рабочее время:</h5>
+											<label id="spend-time"></label>
+										</div>
 
-											<div class="row">
-												<div class='form-group col-sm-8'>
-													<div id="box_comments">
-													</div>
+										<div class="row progress marg_left_20" id="progress-bar">
+										</div><!--row progress-->	
+
+										<div class="row marg_left_20 ">
+											<table class="table table-striped width-100p" id="table_articles">
+												<thead>
+													<tr>
+														<th> 
+															To do
+															<a id="add_task">+</a>
+														</th>
+														<th> In progress </th>		
+														<th> Test		 </th>
+														<th> Done        </th>
+													</tr>
+									            </thead>
+									            <tbody>								            
+													<tr class="text-center">
+														{% for type in type_tasks %}
+													        <td class="dropdown" id="{{type}}">
+													            <a href="#" class="dropdown-toggle count-tasks" data-toggle="dropdown">
+													                
+													            </a> 
+																<ul class='dropdown-menu tasks-menu'>
+																</ul> 
+													        </td>
+													    {% endfor %}
+													</tr>
+									            </tbody>
+											</table>
+										</div><!--row-->
+
+										<div class="row navbar-default padding_10 marg_left_20" id="describe_task" hidden>
+											<div class="row padding_10">
+												<div class='form-group'>
+													<label id="title_task" class="title">
+													</label>
 												</div>
-											</div><!--row-->
-										</div><!--row padding_10-->
-									</div><!--row navbar-default padding_10-->
-								</div><!--col-sm-11 col-sm-offset-1-->
+
+												<div class="row">
+													<div class='form-group col-sm-8'>
+														<div id="text_task">
+														</div>
+													</div>
+												</div><!--row-->
+
+												<div class="row">
+													<div class='form-group col-sm-8'>
+														<div id="box_comments">
+														</div>
+													</div>
+												</div><!--row-->
+											</div><!--row padding_10-->
+										</div><!--row navbar-default padding_10-->
+									</div><!--col-sm-11 col-sm-offset-1-->
+								{% endif %}
 							</fieldset>
 						</div><!--col-md-10-->
 					</div><!--tab-pane 1-->
@@ -202,10 +222,14 @@
 {% endblock %}
 
 {% block nav %}
-	<li> <a href="/projects/project"> {{ cache.project_title}} </a> </li>
-	<li> <a href="/task/tasks">       Задачи                   </a> </li>
-	<li> <a href="/task/dashboard">   Dashboard                </a> </li>
-	<li> <a href="/employees">        Сотрудники               </a> </li>
-	<li> <a href="/statistic">        Статистика               </a> </li>
-	<li> <a href="/forum">            Форум                    </a> </li>
+	{% if empty == 'all' %}
+		<li> <a href="/projects">         Главная                  </a> </li>
+	{% else %}
+		<li> <a href="/projects/project"> {{ cache.project_title}} </a> </li>
+		<li> <a href="/task/tasks">       Задачи                   </a> </li>
+		<li> <a href="/task/dashboard">   Dashboard                </a> </li>
+		<li> <a href="/employees">        Сотрудники               </a> </li>
+		<li> <a href="/statistic">        Статистика               </a> </li>
+		<li> <a href="/forum">            Форум                    </a> </li>
+	{% endif %}
 {% endblock %}
