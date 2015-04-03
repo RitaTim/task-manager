@@ -1,14 +1,15 @@
 #-*-coding: utf-8 -*-
-from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
-from django.http.response import HttpResponse, Http404
-from project.models import Project
-from iteration.models import Iteration
-from forms import ProjectForm
-from django.contrib.auth.models import User
-import logging
+from django.contrib.auth.decorators import login_required
+from task_manager.utils             import get_current_iterate
+from django.shortcuts               import render_to_response, redirect
+from django.http.response           import HttpResponse, Http404
+from iteration.models  import Iteration
+from models            import Project
+from forms             import ProjectForm
 from django.core.cache import cache
-from datetime import datetime
+from datetime          import datetime
+import logging
 
 def edit_project(request):
 	project_id = cache.get('project_id')
@@ -38,6 +39,7 @@ def edit_project(request):
 
 		return render_to_response('project_edit.html', args)
 
+@login_required
 def projects(request):
 	user_name = request.user.username
 	cache.delete_many( [ 'project_id', 'iterate_id' ])
@@ -61,10 +63,9 @@ def show_project(request):
 	cache.set('project_title', args['project']['title'])
 	
 	args['iterations'] = Iteration.objects.filter(project_id = project_id).values('id', 'title')
-	if args['iterations']:
-		today_time  = datetime.now
-		cur_iterate = Iteration.objects.filter( dead_line__gt = today_time, start_line__lt = today_time )[0].id
-		cache.set('iterate_id', cur_iterate)
+	
+	cur_iterate = get_current_iterate(project_id)
+	cache.set('iterate_id', cur_iterate)
 
 	args['cache'] = { 'user_name' : cache.get('user_name') }
 	return render_to_response('project.html', args)

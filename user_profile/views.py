@@ -1,22 +1,20 @@
 #-*-coding: utf-8 -*-
-from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
-from user_profile.forms import UserProfileForm 
-from user_profile.forms import UserForm
 from django.contrib.auth.decorators import login_required
-from django.http.response import HttpResponse
-from iteration.models import Iteration
-from project.models import Project
-from task.models import Task
-from user_profile.models import UserProfile
+from task_manager.utils             import get_current_iterate
+from django.core.exceptions         import ObjectDoesNotExist
+from django.shortcuts               import render_to_response, redirect
+from django.http.response           import HttpResponse
+from forms             import UserProfileForm, UserForm
+from models            import UserProfile
+from iteration.models  import Iteration
+from project.models    import Project
+from task.models       import Task
+from django.core.cache import cache
+from django.db.models  import Q, Max
+from datetime          import datetime
 import json
 import logging
-from datetime import datetime
-from django.db.models import Max
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.cache import cache
-from django.db.models import Q
-#from django.http import JsonResponse
 
 @login_required
 def profile(request):
@@ -97,10 +95,10 @@ def _get_data_projects(request):
 				iterate_id = data_cache['iterate_id']
 			else:
 				project_id = projects[0]['id']
-				iterate_id = _get_current_iterate_project(request, project_id)
+				iterate_id = get_current_iterate(project_id)
 		else:
 			project_id = projects[0]['id']			
-			iterate_id = _get_current_iterate_project(request, project_id)
+			iterate_id = get_current_iterate(project_id)
 			cache.set_many( { 
 				'project_id'   : project_id,
 				'project_title': projects[0]['title'],
@@ -116,21 +114,12 @@ def _get_data_projects(request):
 		'iterate_id' : iterate_id,
 	}
 
-def _get_current_iterate_project(request, project_id = 0):
-	today_time  = datetime.now
-	try:
-		curr_iterate = Iteration.objects.filter( project = project_id, dead_line__gt = today_time, start_line__lt = today_time).order_by('-dead_line')[0].id
-		return curr_iterate
-	except Iteration.DoesNotExist:
-		return 0
-
-
 def change_iterates(request, project_id = 0):
 	iterates_  = Iteration.objects.filter(project = project_id).values('id', 'title')
 	iterates   = []
 	for iterate in iterates_:
 	 	iterates.append(iterate)
-	iterate_id = _get_current_iterate_project(request, project_id)
+	iterate_id = get_current_iterate(project_id)
 	return HttpResponse(json.dumps({
 		'iterates'   : iterates,
 		'iterate_id' : iterate_id

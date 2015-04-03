@@ -1,20 +1,18 @@
 #-*-coding: utf-8 -*-
-from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
-from django.http.response import HttpResponse, Http404
-from task.models import Task
-from project.models import Project
-from forms import TaskForm
-from iteration.models import Iteration
-from django.contrib.auth.models import User
+from django.http.response   import HttpResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q
+from django.shortcuts       import render_to_response, redirect
+from project.models         import Project
+from iteration.models       import Iteration
+from models                 import Task
+from forms                  import TaskForm
+from datetime               import datetime, timedelta
+from django.utils           import timezone
+from django.core.cache      import cache
+from django.db.models       import Q
 import json
 import logging
-from datetime import datetime, timedelta
-from django.utils import timezone
-import logging
-from django.core.cache import cache
 
 def show_tasks(request):
 	args = {}
@@ -52,7 +50,6 @@ def task(request, id_task = '0'):
 			return HttpResponse("Форма не валидна")
 		
 		form.save()	
-
 		return redirect(request.META.get('HTTP_REFERER','/'))
 	else: # GET
 		args={}	
@@ -182,7 +179,6 @@ def statistic_users(request):
 		data_users.append({
 			'user_name' : user['assigned__username'],
 			'user_id'   : user['assigned'],
-			#'work_data' : get_progress_bar_user( request = request, user_id = user['assigned'], iterate_id = iterate_id )
 		})
 
 	args['data_users'] = data_users
@@ -201,7 +197,6 @@ def get_progress_users(request, iterate_id = None, lst_users_id = []):
 	args = {}
 	for user_id in lst_users_id:
 		args[user_id] = get_progress_bar_user( request = request, user_id = user_id, iterate_id = iterate_id )
-	logging.info(args)
 	return HttpResponse(json.dumps(args), content_type='application/json')
 
 def _get_users_project(project_id):
