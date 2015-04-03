@@ -1,25 +1,24 @@
 #-*-coding: utf-8 -*-
-from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
-from django.http.response import HttpResponse, Http404
-from task.models import Task
-from project.models import Project
-from iteration.models import Iteration
-from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q
+from django.shortcuts       import render_to_response, redirect
+from task_manager.utils     import get_users_project
+from django.http.response   import HttpResponse, Http404
+from task.models            import Task
+from project.models         import Project
+from iteration.models       import Iteration
+from django.db.models       import Q
+from datetime               import datetime, timedelta
+from django.utils           import timezone
+from django.core.cache      import cache
+from django.db.models       import Count
 import json
 import logging
-from datetime import datetime, timedelta
-from django.utils import timezone
-import logging
-from django.core.cache import cache
-from django.db.models import Count
 
 def statistic_users(request):
 	args = {}
 	args['cache'] = cache.get_many( [ 'project_id', 'user_name', 'project_title', 'iterate_id' ])
-	users         = _get_users_project( args['cache']['project_id'] )
+	users         = get_users_project( args['cache']['project_id'] )['dict_users']
 	iterate_id    = request.GET['iterate_id'] if 'iterate_id' in request.GET else cache.get('iterate_id')
 	data_users = []
 	for user in users:
@@ -110,32 +109,20 @@ def get_data_graphic(request, iterate_id = None):
 	}
 
 	data_tasks = []
-	work_time  = timedelta()
+	starting_point = iterate_time['start_line']
 	for task in tasks:
-		perform_time = task['end_time'] - task['start_time']		
-		work_time   += perform_time
+		perform_time = task['end_time'] - task['start_time']
 		data_tasks.append(
 			{
 				'id_task'      : task['id'],
 				'title_task'   : task['title'],
-				'perform_time' : perform_time,
+				'x_coordinate' : starting_point.strftime('%Y-%m-%d %H:%M'),
+				'perform_time' : str(perform_time),
 			}
 		)
+		starting_point = starting_point + perform_time	
 
 	iterate = Iteration.objects.filter(id = iterate_id).values('start_line', 'dead_line')[0]
-
-	# calc koeff empty time
-	all_time_iter    = iterate['dead_line'] - iterate['start_line']
-	empty_time       = all_time_iter - work_time
-	count_done_tasks = len(data_tasks)
-	k_emty_time      = empty_time/count_done_tasks	
-
-	starting_point = iterate_time['start_line']
-	for task in data_tasks:
-		task['x_coordinate'] = (starting_point + task['perform_time'] + k_emty_time).strftime('%Y-%m-%d %H:%M')
-		starting_point      += task['perform_time'] + k_emty_time
-		task['perform_time'] = str(task['perform_time'])
-
 	iterate_time = { 
 		'start_line' : iterate['start_line'].strftime('%Y-%m-%d %H:%M'),
 		'dead_line'  : iterate['dead_line' ].strftime('%Y-%m-%d %H:%M'),
@@ -145,11 +132,8 @@ def get_data_graphic(request, iterate_id = None):
 	args['data_tasks']   = data_tasks	
 	args['iterate_time'] = iterate_time
 	args['count_tasks']  = Task.objects.filter(iterate = iterate_id).count()
-	return HttpResponse(json.dumps(args), content_type='application/json')
 
-def _get_users_project(project_id):
-	project_id = project_id if project_id else cache.get('project_id')
-	return Task.objects.filter(project = project_id).exclude(assigned = None).values('assigned', 'assigned__username').distinct()
+	return HttpResponse(json.dumps(args), content_type='application/json')
 
 
 def _get_class_progress_by_priority(priority):

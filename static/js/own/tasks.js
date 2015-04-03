@@ -1,11 +1,4 @@
-$(document).ready(function(){ 	
-	
-	$('#table_articles').dataTable({
-		"paging"   : false,
-		"searching": false,
-		"bInfo"	   : false,
-	})
-
+$(document).ready(function(){ 
     var lst_assigning_tasks = function(){
         return $('#lst_not_dev_tasks input:checked').map(function(){
             return parseInt($(this).attr("id"));
