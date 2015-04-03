@@ -1,0 +1,28 @@
+{% load bootstrap %}
+	<div class="modal-dialog box-task">
+    	<div class="modal-content">
+	    	<div class="modal-header">
+	    		<h4 class="modal-title title col-sm-4"> 
+	    			{% if iterate %}
+	    				{{ iterate.title }}
+	    			{% else %}
+	    				Итерация
+	    			{% endif %}
+	    			</h4>
+	    		<div class="col-sm-5 col-sm-offset-2 btn-modal" id="btn-modal"></div>
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="close_task">×</button>			        
+		    </div>
+	      	
+	      	<div class="modal-body">
+				<div class="box-form">
+					<div class="contents" id="edit">
+						<form action = "/iterates/iterate/{{iterate_id}}" method = "post" enctype="multipart/form-data">
+							{% csrf_token %}
+							{{ form|bootstrap }}
+							<input class="button" type="submit" value="Сохранить" id="save">		
+						</form>
+					</div>
+				</div>
+			</div>		
+    	</div>
+	</div>

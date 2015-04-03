@@ -49,24 +49,28 @@ $(document).ready(function() {
 
     var lst_tasks_dom = function(tasks){
         lst_res = '';
-        $.each( tasks, function( index, value ){
-                    lst_res += "<li class = '" + value.style + " board_item board_item_color' id=" + value.id + "><p><b><a class='task_title' id='" + value.id + "'>" + value.title + "</a></b></p><p>" + value.text + "</p></li>";
+        $.each( tasks, function( index, task ){
+            console.log(task.assigned__username);
+            lst_res += "<li class = '" + task.style + " board_item board_item_color' id=" + task.id + "><a><b><p class='task_title' id='" + task.id + "'>" + task.title + "</p></b></a><div class='row'><p class='col-sm-9'>" + task.text + "</p><div class='col-sm-2 assigned-ticket text-center'>" + task.assigned__username + "</div></div></li>";
         })
         return lst_res;
     };
 
     var change_dashboard = function(){
         $('#to_do, #in_progress, #test, #done').empty();
+        id_project = $('#project')[0].title;
         $.ajax({
             url : "/task/get_tasks", 
             type : "GET",
             dataType: "json",
             data : get_data_filter(),
-            success : function(data) {                    
-                $('#to_do')      .append( lst_tasks_dom(data.tasks_to_do)       ); 
-                $('#in_progress').append( lst_tasks_dom(data.tasks_in_progress) );
-                $('#test')       .append( lst_tasks_dom(data.tasks_test)        );
-                $('#done')       .append( lst_tasks_dom(data.tasks_done)        );           
+            success : function(data) {
+                if (!data.empty) {                    
+                    $('#to_do')      .append( lst_tasks_dom(data.tasks_to_do)       ); 
+                    $('#in_progress').append( lst_tasks_dom(data.tasks_in_progress) );
+                    $('#test')       .append( lst_tasks_dom(data.tasks_test)        );
+                    $('#done')       .append( lst_tasks_dom(data.tasks_done)        );  
+                }         
             },
             error : function(err) {
                 alert("fail");
@@ -75,6 +79,5 @@ $(document).ready(function() {
     }
 
     change_dashboard();
-    $('#which_iteration' ).on('change', function(){ change_dashboard() });
-    $('#which_tasks').on('change', function(){ change_dashboard() });
+    $('.filter_select' ).on('change', function(){ change_dashboard() });
 })

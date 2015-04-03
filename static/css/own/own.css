@@ -15,7 +15,13 @@
 	height: 100%;
 	border-radius: 10px;
 }
-.marg_top_head{
+.logo-project-box{
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	border: 1px solid green;
+}
+.top_head{
 	margin-top: 50px;
 	margin-left: 20px;
 	margin-right: 20px;
@@ -23,6 +29,10 @@
 
 .marg_top{
 	margin-top: 20px;
+}
+
+.marg_buttom_20{
+	margin-bottom: 20px;
 }
 
 .margin_20{
@@ -86,10 +96,6 @@
 }
 
 /*side bar*/
-/**
- * Skyrim-inspired Menu
- */
-
 
 a {
 	color: black; 
@@ -158,6 +164,9 @@ a {
 		left: -1.7em;
 	}
 /*main templ*/
+.text-top-bar{
+	color: white;
+}
 .body-content{	
 	margin-top: 70px;
 	margin-left: 30px;
@@ -177,16 +186,42 @@ a {
 	background-color: rgba(0,0,0,0.15);
 	color: green;
 }
-
+/*auth*/
+.auth-box{
+	margin-top : 100px;
+}
 /*profile*/
+.progress-bar a{
+	color: white; 
+	text-decoration: none;
+	font-size: 1.5em;
+}
+
+}
 .tab-pane{
 	margin-top: 20px;
 }
+.table-select{
+	width: 100%;
+	height: 100%;
+	border: none;
+	background-color: #f9f9f9;
+	margin-bottom: 10px;
+}
 /*forum*/
+
 .box-comments{
 	border: 1px solid green;
 	border-radius: 3px;
 	padding: 0px 30px 20px 30px;
+}
+
+.box-comments-not-bordered{
+	padding: 0px 30px 20px 30px;
+}
+
+.comments{
+	margin: 15px;
 }
 .box-comment{
 	list-style-type: none;
@@ -212,6 +247,24 @@ a {
 	padding: 5px;
 }
 /*tasks dashboard*/
+.assigned-ticket{
+	width: 50px;
+	height: 25px;
+	border: 1px solid green;
+	border-radius: 3px;
+	margin-top: 25px;
+	padding: 0px;
+}
+.bordered_green{
+	border: 1px solid green;
+}
+
+.margin-right-2{
+	margin-right: 2px;
+}
+.data-task{
+	border-left: 2px solid green;
+}
 .box-task{
 	width:50%;
 }
@@ -222,6 +275,10 @@ a {
 }
 .dashboard-menu{
 	margin-right: 80px;
+}
+.priority_0{
+	border: 7px solid gray;
+	margin-top: 10px;
 }
 .priority_1{
 	border: 7px solid yellow;
@@ -258,8 +315,11 @@ a {
 	border-radius: 4px;
  	border-top: 4px;
 	border-bottom: 4px;
-	height: 125px;
-	width: 400px;
+	height: 100%;
+	width: 100%;
+	min-height: 250px;
+	padding: 5px 20px 20px 20px;
+	font-size: 1.5em;
 }
 .green_back{
 	background: -webkit-linear-gradient(#71cb6d, #008500); /* For Safari 5.1 to 6.0 */
@@ -282,15 +342,21 @@ a {
 	height: 240px;
 	margin: 15px;
 }
+.marg_left_20{
+  margin: 0px 0px 20px 0px;
+}
 .marg_left{
 	margin-left: 50px;
+}
+.marg_right{
+	margin-right: 50px;
 }
 .board_widget{
 	margin-top: 10px;
 	border-radius: 4px;
  	border-top: 4px;
 	border-bottom: 4px;
-	height: 550px;
+	height: 650px;
 	width: 23%;
 	margin-left: 10px;
 

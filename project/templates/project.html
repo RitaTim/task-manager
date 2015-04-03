@@ -9,10 +9,10 @@
     <form href="/projects/edit_project/{{project.id}}" action="GET">
     	<div class = "row">
     		<div class="col-md-4">
-		   		<img src="{% static 'images/mauses_kixoj7j.jpg' %}" class="logo-project">
+		   		<img src="{% static 'images/task_man.jpg' %}" class="logo-project">
 		   	</div>	
 		   	<div class="col-md-8">
-		   		<label class="col-md-12"><h3>{{project.title}}</h3></label>
+		   		<label class="col-md-12"><h3 class="title">{{project.title}}</h3></label>
 		   		{{project.text}}
 		   		<a class="edit-project col-md-2 col-md-offset-10 btn btn-default" id="{{project.id}}">Редактировать</a>
 		   	</div>	
@@ -36,27 +36,12 @@
 {% endblock %}
 
 {% block nav %}
-	<li id="/projects/project/{{project.id}}" class="active-li">
-		<a href="#">{{project.title}}</a>
-		<ul>
-			<li><a href="/projects">Все</a></li>
-			{% for pro in projects %}
-				<li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
-			{% endfor %}
-		</ul>
-	</li>
-	<li>
-		<a href="#">Итерации</a>
-		<ul>
-			<li><a href="#">Все</a></li>
-			{% for iteration in iterations %}
-				<li><a href="#">{{iteration.title}}</a></li>
-			{% endfor %}
-			<li><a href="#">Добавить</a></li>
-		</ul>
-	</li>
-	<li> <a href="/task/tasks/{{project.id}}">Задачи</a></li>
-	<li><a href="/forum/{{project.id}}">Форум</a></li>
-	<li><a href="#">Сотрудники</a></li>
-	<li><a href="#">Статистика</a></li>
+	<li> <a href="/projects">       Главная    </a> </li>
+	<li> <a href="/iterates">       Итерации   </a> </li>
+	<li> <a href="/task/tasks">     Задачи     </a> </li>
+	<li> <a href="/task/dashboard"> Dashboard  </a> </li>
+	<li> <a href="/employees">      Сотрудники </a> </li>
+	<li> <a href="/statistic">      Статистика </a> </li>
+	<li> <a href="/forum">          Форум      </a> </li>
+	
 {% endblock %}

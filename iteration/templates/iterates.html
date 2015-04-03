@@ -1,0 +1,81 @@
+{% extends "main.html" %}
+
+{% block title %}
+	Итерации
+{% endblock %}
+
+{% load staticfiles %}
+{% block script %}
+    <script src= "{% static 'js/own/iterates.js'%}"></script>
+{% endblock %}
+
+{% block content%}	
+	<div class="row">
+		<div class='col-sm-12'>
+			<div class='box'>
+				<div class='box-header'>
+	                <div class = "row">
+	                    <div class = 'title col-sm-2'  id="project" id_project="{{ cache.project_id }}">
+	                        <h3>{{ cache.project_title }}</h3>
+	                    </div>
+	                </div>
+
+	                <div class="row">
+						<h5 class="col-sm-3">Количество дней в итерации по умолчанию: </h5> 
+						<h5 id="value_iterate_days" class="col-sm-1">
+							<a class="iterate_days" > {{ iterate_days }} </a> 
+						</h5>
+						<h5 id="input_iterate_days" class="col-sm-4" hidden> 
+							<input id="iterate_days" class="col-sm-2" type="number" min="0" max="50" step="1" value="{{ iterate_days }}">
+							<a id="save_iterate_days" class="btn btn-default btn-xs marg_left">Сохранить</a>
+						</h5>
+					</div>
+				</div>				
+
+				<div class="row">
+					<h4 class="title-table text-center marg_buttom_20">Итерации проекта <a class="add-iterate"><b>+</b></a></h4>
+				</div>
+
+				<div class='box-table'>
+					<div class='responsive-table'>
+						<div class='scrollable-area' style= 'width:100%'>
+							<table class="table table-striped col-md-12" id="table_iterates">
+			                    <thead>
+			                        <tr>
+										<th> Итерация </th>
+										<th> Старт    </th>		
+										<th> Финиш    </th>
+									</tr>
+			                    </thead>
+			                    <tbody>
+									{% for iterate in iterates %}
+										<tr id="{{iterate.id}}">
+											<td> 
+												<a class="iterate_title" id="{{iterate.id}}">
+													{{ iterate.title  }}	
+												</a>
+											</td>
+											<td> {{ iterate.dead_line   }}	</td>
+											<td> {{ iterate.start_line  }}	</td>
+										</tr>
+									{% endfor %}
+			                    </tbody>
+		                	</table>
+						</div><!--scrollable-area-->
+					</div><!--responsive-table-->
+				</div><!--box-table-->
+			</div><!--box-->
+		</div><!--col-sm-12-->
+	</div><!--row-->
+
+
+{% endblock %}
+
+{% block nav %}
+	<li> <a href="/projects/project"> {{ cache.project_title }} </a> </li>
+	<li> <a href="/task/tasks">       Задачи                    </a> </li>
+	<li> <a href="/task/dashboard">   Dashboard                 </a> </li>
+	<li> <a href="/employees">        Сотрудники                </a> </li>
+	<li> <a href="/statistic">        Статистика                </a> </li>
+	<li> <a href="/forum">            Форум                     </a> </li>
+{% endblock %}

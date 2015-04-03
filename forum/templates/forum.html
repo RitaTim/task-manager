@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content%}
-	<div class="row">
+	<div class="row margin-right-2">
 		<div class="col-sm-2">
 			<div class="box-form col-sm-12">
 				{% for forum in forums %}
@@ -15,7 +15,7 @@
 			</div>
 			<a class="add-forum col-sm-12"><i class="fa fa-plus text-success"></i> Создать</a>
 		</div>
-		<div class="col-sm-10" id="box_comments">
+		<div class="col-sm-10 box-comments" id="box_comments">
 		</div>
 	</div>		
 	{% load staticfiles %}
@@ -23,8 +23,9 @@
 {% endblock %}
 
 {% block nav %}
-	<li> <a href="/projects/project/{{project.id}}">{{project.title}}</a></li>
-	<li> <a href="/task/tasks/{{project.id}}">Задачи</a></li>
-	<li><a href="#">Сотрудники</a></li>
-	<li><a href="#">Статистика</a></li>
+	<li> <a href="/projects/project"> {{ cache.project_title }} </a> </li>
+	<li> <a href="/task/tasks">       Задачи                    </a> </li>
+	<li> <a href="/task/dashboard">   Dashboard                 </a> </li>
+	<li> <a href="/employees">        Сотрудники                </a> </li>
+	<li> <a href="/statistic">        Статистика                </a> </li>
 {% endblock %}

@@ -1,0 +1,16 @@
+{% load bootstrap %}
+<hr>
+<div class="row">
+	<div class="col-sm-12 col-sm-offset-1" id="lst_not_dev_tasks">
+		{% for task in tasks %}
+			<div class="checkbox">
+				<input type="checkbox" value="" id="{{task.id}}">				
+				<a class="not_dev_task_title">{{task.title}}</a>				
+			</div>			
+		{% endfor %}
+	</div>
+</div><!--row-->
+<hr>
+<a class="col-sm-offset-9"><button id="assign_for_user" class="btn btn-default" title="">Закрепить за мной</button></a>
+
+               

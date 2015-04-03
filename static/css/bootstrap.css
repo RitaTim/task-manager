@@ -3177,7 +3177,7 @@ tbody.collapse.in {
           box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 }
 .dropdown-menu.pull-right {
-  right: 0;
+  right: -70px;
   left: auto;
 }
 .dropdown-menu .divider {
@@ -4746,6 +4746,7 @@ a.thumbnail.active {
           box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
 }
 .progress-bar {
+  padding-top: 7px;
   float: left;
   width: 0;
   height: 100%;
@@ -4753,7 +4754,7 @@ a.thumbnail.active {
   line-height: 20px;
   color: #fff;
   text-align: center;
-  background-color: #428bca;
+  background-color: gray;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
           box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
   -webkit-transition: width .6s ease;
@@ -4805,6 +4806,9 @@ a.thumbnail.active {
 .progress-bar-warning {
   background-color: #f0ad4e;
 }
+.progress-bar-gray {
+  background-color: gray;
+}
 .progress-striped .progress-bar-warning {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
   background-image:      -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
@@ -4812,6 +4816,10 @@ a.thumbnail.active {
 }
 .progress-bar-danger {
   background-color: #d9534f;
+}
+
+.progress-bar-black {
+  background-color: black;
 }
 .progress-striped .progress-bar-danger {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
@@ -5470,7 +5478,8 @@ button.close {
 .modal-header {
   min-height: 16.42857143px;
   padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
+  /*border-bottom: 1px solid #e5e5e5;*/
+  margin-bottom: 15px;
 }
 .modal-header .close {
   margin-top: -2px;

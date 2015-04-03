@@ -1,7 +1,7 @@
 {% load bootstrap %}
 <div class="box-form">
 	<div class = "large-offset-3 large-6 columns">
-		<form action="/projects/edit_project/{{project.id}}" method = "post" enctype="multipart/form-data">
+		<form action="/projects/edit_project" method = "post" enctype="multipart/form-data">
 			{% csrf_token %}
 			{{form|bootstrap}}
 			<input class = "button" type = "submit" value = "Сохранить">		
