@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.formtools',
+    'django.utils.log',
     'debug_toolbar',
     'django.contrib.staticfiles',
     'auth',
@@ -59,10 +60,15 @@ INSTALLED_APPS = (
     'forum',
     'iteration',
     'user_profile',
-    'jquery'
+    'statistic',
+    'jquery',
 )
 
 AUTH_PROFILE_MODEL = 'user_profile.UserProfile'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -71,6 +77,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.transaction.TransactionMiddleware',
 )
 
 ROOT_URLCONF = 'task_manager.urls'
@@ -124,3 +131,14 @@ STATICFILES_DIRS =(
 )
 
 STATIC_URL = '/static/'
+
+#CASHE
+CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'TIMEOUT': 86400,
+    }
+}

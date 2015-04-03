@@ -1,44 +1,92 @@
-{% extends "main.html" %}
 {% load bootstrap %}
+	<div class="modal-dialog box-task">
+    	<div class="modal-content">
+	    	<div class="modal-header">
+	    		<h4 class="modal-title title col-sm-4"> 
+	    			{% if task %}
+	    				{{ task.title }}
+	    			{% else %}
+	    				Новая задача
+	    			{% endif %}
+	    			</h4>
+	    		<div class="col-sm-5 col-sm-offset-2 btn-modal" id="btn-modal"></div>
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="close_task">×</button>			        
+		    </div>
+	      	<div class="modal-body">
+				<div class="box-form">
+					<div class="contents" id="describe">
+						<div class="row">
+							<div class="col-sm-6">
+								{{ task.text }}
+							</div>
+							<div class="col-sm-6 data-task">
+								<div class='form-group'>
+									<label class="col-sm-4 control-label">Проект:</label>
+									<div class="col-sm-8">
+										<div class="form-control">
+											{{ task.project__title }}
+										</div>
+									</div> 				
+								</div>
+								<div class='form-group'>
+									<label class="col-sm-4 control-label">Итерация:</label>
+									<div class="col-sm-8">
+										<div class="form-control">
+											{{ task.iterate__title }}
+										</div>
+									</div> 				
+								</div>
+								<div class='form-group'>
+									<label class="col-sm-4 control-label">Тип:</label>
+									<div class="col-sm-8">
+										<div class="form-control">
+											{{ task.type_task }}
+										</div>
+									</div> 				
+								</div>
+								<div class='form-group'>
+									<label class="col-sm-4 control-label">Статус:</label>
+									<div class="col-sm-8">
+										<div class="form-control">
+											{{ task.status }}
+										</div>
+									</div> 				
+								</div>
+								<div class='form-group'>
+									<label class="col-sm-4 control-label">Автор:</label>
+									<div class="col-sm-8">
+										<div class="form-control">
+											{{ task.entrasted__username }}
+										</div>
+									</div> 				
+								</div>
+								<div class='form-group'>
+									<label class="col-sm-4 control-label">Исполнитель:</label>
+									<div class="col-sm-8">
+										<div class="form-control">
+											{{ task.assigned__username }}
+										</div>
+									</div> 				
+								</div>
+							</div><!--col-sm-6 data-task-->		
+						</div><!--row-->
+					</div>
 
-{% block content%}
-<div class="row" style="margin-top:20px;">
-	<div class='col-sm-12'>
-		<div class='box bordered-box blue-border' style='margin-top:50px;'>
-			<div class='box-header'>
-	            <div class = "row">
-	                <div class = 'title col-sm-2'  id="project" id_project="{{project.id}}">
-	                    <h3>{{project.title}}</h3>
-	                </div>
-	                <div class = "col-sm-4 col-sm-offset-6">
-	                    <div class="btn-group" role="group" aria-label="...">
-	                      <a  href="/task/tasks/{{project.id}}"><button type="button" class="btn btn-default">Задачи</button></a>
-	                      <a  href="/task/dashboard/{{project.id}}"><button type="button" class="btn btn-default">Dashboard</button></a>
-	                    </div>
-	                </div>
-	            </div>
-			</div>
-
-			<div class = "container">
-				<div class = "row">
-					<div class = "col-md-8 col-md-offset-1 well">
-						<div class = "large-offset-3 large-6 columns">
-							<form action = "" method = "post" enctype="multipart/form-data">
+					{% if form %}
+						<div class="contents" id="edit">
+							<form action = "/task/task/{{task_id}}" method = "post" enctype="multipart/form-data">
 								{% csrf_token %}
-								{{form|bootstrap}}
-								<input class = "button" type = "submit" value = "Сохранить">		
+								{{ form|bootstrap }}
+								<input class="button" type="submit" value="Сохранить" id="save">		
 							</form>
 						</div>
+					{% endif %}
+
+					<hr>
+					
+					<div id="box-comments">
 					</div>
 				</div>
-			</div><!--container-->
-		</div><!--box-->
-	</div><!--col-sm-12-->
-</div><!--row-->	
-
-{% endblock%}
-
-{% block nav%}
-	<li><a href="#">Статистика</a></li>
-	<li><a href="/profile">Моя страница</a></li>
-{% endblock %}
+	      	</div>
+    	</div>
+	</div>

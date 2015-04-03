@@ -6,43 +6,46 @@
 {% endblock %}
 
 {% block content%}
-	<div class = "projects">
+	<div class = "projects col-sm-offset-2">		
+    	<div class="row">
+    		<h1 class="title text-center">Проекты <a class="add-project title">+</a></h1>
+    	</div>
 	    {% for project in projects %}
 	    
 	    <div class = "container">
 	    	<div class = "row">
-	    		<a href = "/projects/project/{{project.id}}">
-			   <div class="col-md-4 col-md-offset-4 box-project green_back">
+	    	<a href = "/projects/project?project_id={{project.id}}">
+			   <div class=" box-project green_back">
 			   	  <form action = "#" enctype="multipart/form-data">
-			   		<h3 class="title">
+			   		<h2 class="title">
 						{{ project.title}}
-					</h3>
+					</h2>
+					<hr>
 					<div class = "row">
-						<div class = "col-md-6">
-							<small>
-								{{ project.text}}
-							</small>
-						</div>
-						<div class = "col-md-6">
+						<div class = "col-md-5">
 							{% if project.logo %}
-								<img src="{{ MEDIA_URL }}{{ project.logo}}">
+								<img src="{% static 'images/task_man.jpg' %}" class="logo-project-box">
+								<!--<img src="{{ MEDIA_URL }}{{ project.logo}}">-->
 								<!--<img src="{% static '' %}{{ project.logo}}" />-->
-							{% endif %}							
+							{% else %}
+								<img src="{% static 'images/tea.jpg' %}" class="logo-project-box">
+							{% endif %}	
 						</div>
+						<div class = "col-md-6">
+							<label>
+								{{ project.text}}
+							</label>
+						</div>
+						
 					</div>
 
 				</form>
 
 			   	</div>
-			   	</a>
+			</a>
 			</div>
 		</div>
 		{% endfor %}
 	</div>
-
-{% endblock %}
-
-{% block nav%}
-	<li><a href="#">Статистика</a></li>
-	<li><a href="/projects/new">Добавить проект</a></li>
+	<script src= "{% static 'js/own/project.js' %}"></script>	
 {% endblock %}

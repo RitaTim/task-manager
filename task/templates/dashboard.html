@@ -6,129 +6,85 @@
     Dashboard
 {% endblock %}
 
-
-{% load staticfiles %}
-{% block script %}
-    <script src= "{% static 'js/own/dashboard.js'%}"></script>
-{% endblock %}
-
 {% block content %}
-
-<div class="row" style="margin-top:20px;">
-    <div class='col-sm-12'>
-        <div class='box bordered-box blue-border' style='margin-top:50px;'>            
-            <div class='box-header'>
-                <div class = "row">
-                    <div class = 'title col-sm-2' id="project" id_project="{{project.id}}">
-                        <h3>{{project.title}}</h3>
-                    </div>
-                    <div class = "col-sm-4 col-sm-offset-6">
-                        <div class="btn-group" role="group" aria-label="...">
-                          <a  href="/task/tasks/{{project.id}}"><button type="button" class="btn btn-default">Задачи</button></a>
-                          <a  href="/task/dashboard/{{project.id}}"><button type="button" class="btn btn-default">Dashboard</button></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class = "row">
-                    <div class = "col-sm-1">                                    
-                        <h4><label>Спринт: </label></h4>
-                    </div>
-                    <div class = "col-sm-4">
-                        {% if iterations|length == 0 %}
-                            <a href="#"><h4> создать</h4></a> 
-                        {% else %}                                                                      
-                            <select class="selectpicker  btn btn-default" id="which_iteration">
-                                {% for iteration in iterations %}
-                                <option class="black_text" id="{{iteration.id}}"><a href="task/dashboard/{{project.id}}?id_iteration={{iteration.id}}">{{ iteration.title }}</a></option>
-                                {% endfor %}
-                            </select>                                        
-                        {% endif  %}
-                    </div>                                
-                </div>
-
-                <div class="row">
-                    <div class = "col-sm-1">
-                        <select class="selectpicker btn btn-default" id="which_tasks">
-                            <option class="black_text">Все</option>
-                            <option class="black_text" id="{{user.id}}">Мои</option>
-                        </select>
-                    </div>
-                </div>
+<div class="row">
+    <div class='col-sm-12 dashboard-content'>
+        <div class="row  marg_right">
+            <div class='title col-sm-2' id="project" title="{{ project_id }}">
+                <h3>{{ cache.project_title }}</h3>
             </div>
-        </div><!--box bordered-box-->
+            <div class='col-sm-1 col-sm-offset-9'>
+                <a class="col-sm-1" id="active_menu"><button type="button" class="btn btn-default bordered_green">Меню</button></a>
+            </div>                    
+        </div>
+
+        <div class="row">                                   
+            <h4 class="col-sm-1">Спринт</h4>
+            <h4 class="col-sm-1">Фильтр</h4>
+        </div>
+
+        <div class="row">
+            <div class = "col-sm-1">
+                {% if iterations|length == 0 %}
+                    <a href="#"><h4> создать</h4></a> 
+                {% else %}                                                                      
+                    <select class="selectpicker btn btn-default filter_select" id="which_iteration">
+                        {% for iteration in iterations %}
+                            <option class="black_text" id="{{iteration.id}}" {% if iteration.id == cache.iterate_id %} selected {% endif %}>
+                                <a href="task/dashboard/{{project.id}}?id_iteration={{iteration.id}}">
+                                    {{ iteration.title }}
+                                </a>
+                            </option>
+                        {% endfor %}
+                    </select>                                        
+                {% endif %}
+            </div>   
+            <div class = "col-sm-1">
+                <select class="selectpicker btn btn-default filter_select" id="which_tasks">
+                    <option class="black_text">Все</option>
+                    <option class="black_text" id="{{ cache.user_id }}">Мои</option>
+                </select>
+            </div>                       
+        </div>                
 
         <div class="dashboard">
             <div class = "row ">                    
-                <div class="col-md-3 board_widget green_back ">
-                    <center><div class = "h1 board-header">To Do</div></center>
+                <div class="col-md-4 board_widget green_back ">
+                    <center><div class = "h1 board-header title">To Do</div></center>
                     <div class = "board_list"> 
-                        <div class='table-responsive' style= 'width:100%'> 
-                            <ul class="list-group" id="to_do">
-                                {% for task in tasks %}
-                                    {% if task.status == "to_do" %}
-                                        <li class = "board_item background_light" id="{{task.id}}"> 
-                                            <p> <b> {{task.title}}</b> </p>
-                                            <p> {{task.text}} </p>
-                                        </li>
-                                    {% endif %}
-                                {% endfor%}    
+                        <div class='table-responsive'> 
+                            <ul class="list-group" id="to_do">                                
                             </ul>
                         </div>
                     </div>
-                    <a href = "#"><div class = "white_text"><h4>Добавить...</h4></div></a>
+                    <a href = "#"><div class="white_text assign_for_user"><h4>Добавить...</h4></div></a>
                 </div>
                    
-                <div class="col-md-3 board_widget green_back ">                  
-                    <center><div class = "h1 board-header">In progress</div></center>
+                <div class="col-md-4 board_widget green_back ">                  
+                    <center><div class = "h1 board-header title">In progress</div></center>
                     <div class = "board_list"> 
-                        <div class='table-responsive' style= 'width:100%'> 
-                            <ul class="list-group" id="in_progress">
-                                {% for task in tasks %}
-                                    {% if task.status == "in_progress" %}
-                                        <li class = "board_item background_light" id="{{task.id}}"> 
-                                            <p> <b> {{task.title}}</b> </p>
-                                            <p> {{task.text}} </p>
-                                        </li>
-                                    {% endif %}
-                                {% endfor%}    
+                        <div class='table-responsive'> 
+                            <ul class="list-group" id="in_progress">                               
                             </ul>
                         </div>
                     </div>          
-                </div>
-                   
+                </div>                   
                 
-                <div class="col-md-3 board_widget green_back ">
-                    <center><div class = "h1 board-header">Test</div></center>                        
+                <div class="col-md-4 board_widget green_back ">
+                    <center><div class = "h1 board-header title">Test</div></center>                        
                     <div class = "board_list"> 
-                        <div class='table-responsive' style= 'width:100%'> 
-                            <ul class="list-group" id="test">
-                                {% for task in tasks %}
-                                    {% if task.status == "test" %}
-                                        <li class = "board_item background_light" id="{{task.id}}"> 
-                                            <p> <b> {{task.title}}</b> </p>
-                                            <p> {{task.text}} </p>
-                                        </li>
-                                    {% endif %}
-                                {% endfor%}    
+                        <div class='table-responsive'> 
+                            <ul class="list-group" id="test">                                 
                             </ul>
                         </div>
                     </div>
                 </div>                    
 
-                <div class="col-md-3 board_widget green_back" >                  
-                    <center><div class = "h1 board-header">Done</div></center> 
+                <div class="col-md-4 board_widget green_back" >                  
+                    <center><div class = "h1 board-header title">Done</div></center> 
                     <div class = "board_list"> 
-                        <div class='table-responsive' style= 'width:100%'> 
-                            <ul class="list-group" id="done">
-                                {% for task in tasks %}
-                                    {% if task.status == "done" %}
-                                        <li class = "board_item background_light" id="{{task.id}}"> 
-                                            <p> <b> {{task.title}}</b> </p>
-                                            <p> {{task.text}} </p>
-                                        </li>
-                                    {% endif %}
-                                {% endfor%}    
+                        <div class='table-responsive'> 
+                            <ul class="list-group" id="done">                                 
                             </ul>
                         </div>
                     </div>         
@@ -136,21 +92,19 @@
             </div><!--row-->
         </div><!--dashboard-->
     </div><!--col-sm-12-->
-</div><!--row-->   
-
+</div><!--row--> 
 {% endblock %}
 
 {% block nav%}
-    <li class="dropdown">
-        <a href="/projects" class="dropdown-toggle" data-toggle="dropdown">Проекты<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-            <li><a href="/projects">Все</a></li>
-            {% for pro in projects %}
-            <li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
-            {% endfor %}
-        </ul>
-    </li>
-    <li><a href="#">Статистика</a></li>
-    <li><a href="/profile">Моя страница</a></li>
-    <li><a href="#">Форум</a></li>
+    <li> <a href="/projects/project"> {{ cache.project_title }} </a> </li>
+    <li> <a href="/task/tasks">      Задачи                     </a> </li>
+    <li> <a href="/employees">       Сотрудники                 </a> </li>
+    <li> <a href="/statistic">       Статистика                 </a> </li>
+    <li> <a href="/forum">           Форум                      </a> </li>
+{% endblock %}
+
+{% load staticfiles %}
+{% block script %}
+    <script src= "{% static 'js/own/dashboard.js'%}"></script>
+    <script src= "{% static 'js/own/tasks.js'%}"></script>
 {% endblock %}

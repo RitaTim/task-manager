@@ -10,21 +10,18 @@
 {% endblock %}
 
 {% block content%}	
-	<div class="row" style="margin-top:20px;">
+	<div class="row">
 		<div class='col-sm-12'>
-			<div class='box bordered-box blue-border' style='margin-top:50px;'>
+			<div class='box'>
 				<div class='box-header'>
 	                <div class = "row">
-	                    <div class = 'title col-sm-2'  id="project" id_project="{{project.id}}">
-	                        <h3>{{project.title}}</h3>
-	                    </div>
-	                    <div class = "col-sm-4 col-sm-offset-6">
-	                        <div class="btn-group" role="group" aria-label="...">
-	                          <a  href="/task/tasks/{{project.id}}"><button type="button" class="btn btn-default">Задачи</button></a>
-	                          <a  href="/task/dashboard/{{project.id}}"><button type="button" class="btn btn-default">Dashboard</button></a>
-	                        </div>
+	                    <div class = 'title col-sm-2'  id="project" id_project="{{ project_id }}">
+	                        <h3>{{ cache.project_title }}</h3>
 	                    </div>
 	                </div>
+				</div>
+				<div class="row">
+					<h4 class="title-table text-center marg_buttom_20">Задачи проекта</h4>
 				</div>
 				<div class='box-table'>
 					<div class='responsive-table'>
@@ -34,7 +31,7 @@
 			                        <tr>
 										<th> Итерация   </th>
 										<th>
-											 Задача <a href = "/task/new/{{project.id}}"><b>+</b></a>
+											 Задача <a class="add-task"><b>+</b></a>
 										</th>		
 										<th> Тип		 </th>
 										<th> Исполнитель </th>
@@ -45,14 +42,14 @@
 			                    <tbody>
 									{% for task  in tasks %}
 										<tr data-position="{{task.pos}}" id="{{task.id}}">
-											<td> {{ task.iterate  }}	</td>
+											<td> {{ task.iterate__title  }}	</td>
 											<td> 
-												<a href="/task/{{project.id}}/{{task.id}}" >
+												<a class="task_title" id="{{task.id}}">
 												 {{ task.title    }}
 												</a>
 											</td>
 											<td> {{ task.type_task}}	</td>
-											<td> {{ task.assigned }}	</td>
+											<td> {{ task.assigned__username }}	</td>
 											<td> {{ task.status   }}	</td>
 											<td> {{ task.updated  }}	</td>
 										</tr>
@@ -66,37 +63,13 @@
 		</div><!--col-sm-12-->
 	</div><!--row-->
 
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="task_title" aria-hidden="true">
-		<div class="modal-dialog">
-	    	<div class="modal-content">
-		      	<div class="modal-header">
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		        		<span aria-hidden="true">&times;</span>
-		        	</button>
-		        	<h4 class="modal-title" id="task_title">Modal title</h4>
-		      	</div>
-		      	<div class="modal-body">
-		        ...
-		      	</div>
-		      	<div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary">Save changes</button>
-		      	</div>
-	    	</div>
-		</div>
-	</div>
+
 {% endblock %}
 
-{% block nav%}
-	<li class="dropdown">
-		<a href="/projects" class="dropdown-toggle" data-toggle="dropdown">Проекты<b class="caret"></b></a>
-		<ul class="dropdown-menu">
-			<li><a href="/projects">Все</a></li>
-			{% for pro in projects %}
-				<li><a href="/projects/project/{{pro.id}}">{{pro.title}}</a></li>
-			{% endfor %}
-		</ul>
-	</li>
-	<li><a href="#">Статистика</a></li>
-	<li><a href="/profile">Моя страница</a></li>
+{% block nav %}
+	<li> <a href="/projects/project"> {{ cache.project_title }} </a> </li>
+	<li> <a href="/task/dashboard">   Dashboard                 </a> </li>
+	<li> <a href="/employees">        Сотрудники                </a> </li>
+	<li> <a href="/statistic">        Статистика                </a> </li>
+	<li> <a href="/forum">            Форум                     </a> </li>
 {% endblock %}
