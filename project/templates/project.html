@@ -9,7 +9,7 @@
     <form href="/projects/edit_project/{{project.id}}" action="GET">
     	<div class = "row">
     		<div class="col-md-4">
-		   		<img src="{% static 'images/task_man.jpg' %}" class="logo-project">
+    			<img src="/media/{{ project.logo }}" class="logo-project" >
 		   	</div>	
 		   	<div class="col-md-8">
 		   		<label class="col-md-12"><h3 class="title">{{project.title}}</h3></label>

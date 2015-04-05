@@ -6,6 +6,7 @@ from django.core.cache import cache
 from datetime          import datetime, timedelta
 
 def get_current_iterate(project_id = 0):
+	tasks = None
 	today_time  = datetime.now
 	cur_iterates = Iteration.objects.filter(project_id = project_id, dead_line__gt = today_time, start_line__lt = today_time )
 	if cur_iterates:

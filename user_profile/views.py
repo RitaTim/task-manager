@@ -35,7 +35,7 @@ def profile(request):
 		args['empty'] = data_projects['empty']
 		return render_to_response('profile.html', args)
 
-	args['user']    = UserProfile.objects.filter(id = args['cache']['user_id']).values('id', 'user__username', 'user__first_name', 'user__last_name', 'level', 'avatar', 'date_of_birth')
+	args['user']    = UserProfile.objects.filter(id = args['cache']['user_id']).values('id', 'avatar', 'user__username', 'user__first_name', 'user__last_name', 'level', 'date_of_birth')[0]
 	args['projects']   = data_projects['projects']
 	args['iterates']   = data_projects['iterates']
 	args['iterate_id'] = data_projects['iterate_id']

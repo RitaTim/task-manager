@@ -30,7 +30,11 @@
 						<div class='col-sm-2 bordered '>
 							<div class="user_info_panel padding_10">
 								<div class="row">
-									<img src="{% static 'images/mauses_kixoj7j.jpg' %}" class="avatar">
+									{% if user.avatar %}
+										<img src="/media/{{ user.avatar }}" class="avatar" >
+									{% else %}
+										<img src="{% static 'images/user.png' %}" class="avatar">
+									{% endif %}
 								</div>
 
 								<div class='row'>
