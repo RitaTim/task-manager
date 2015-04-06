@@ -1,10 +1,10 @@
 $(document).ready(function(){ 	
 
-	var show_form_project = function(id_project){
+	var show_form_project = function(project_id){
 		$.ajax({
             url : "/projects/edit_project", 
             type : "GET",
-            data : { 'id_project' : id_project},
+            data : { 'project_id' : project_id},
             success : function(data) { 
             	$('.modal-body').html(data);
             	$('#myModal').modal('show');

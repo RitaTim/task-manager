@@ -5,34 +5,87 @@
 {% endblock %}
 
 {% load staticfiles %}
-{% block content%}	    
-    <form href="/projects/edit_project/{{project.id}}" action="GET">
-    	<div class = "row">
-    		<div class="col-md-4">
-    			<img src="/media/{{ project.logo }}" class="logo-project" >
-		   	</div>	
-		   	<div class="col-md-8">
-		   		<label class="col-md-12"><h3 class="title">{{project.title}}</h3></label>
-		   		{{project.text}}
-		   		<a class="edit-project col-md-2 col-md-offset-10 btn btn-default" id="{{project.id}}">Редактировать</a>
-		   	</div>	
-		</div>
+{% block content%}	  
+	<div class="row">
+		<div class='col-sm-12'>
+			<div class='box'>
+				<div class='box-header'>
+	                <div class = "row">
+					    <form href="/projects/edit_project/{{project.id}}" action="GET">
+					    	<div class = "row">
+								<div class="info-item">
+									<div  id="project">
+										<h2 class='title'>{{project.title}}</h2>
+									</div>
 
-		<div class = "row">
-    		<div class="col-md-6">
-		   		<div class="info-item">
-		   			<label>Поседние обновления</label>
+									<div class="col-md-8">
+										{{ project.text }}
+										<div class="marg_top">
+											Руководитель проекта: {{project.leader__username}}
+										</div>
+										<div class="marg_top">
+											<a class="edit-project" id="{{project.id}}">
+												<i class="fa fa-2x fa-pencil-square-o"></i>
+											</a>
+										</div>
+									</div>
 
-		   		</div>
-		   	</div>
-		   	<div class="col-md-6">
-		   		<div class="info-item">
-		   			<label>Текущая итерация</label>
-		   		</div>
-		   	</div>	
-		</div>
-	</form>	
-	<script src= "{% static 'js/own/project.js' %}"></script>	
+									<div class="col-md-4">
+						    			<img src="/media/{{ project.logo }}" class="logo-project">
+								   	</div>
+								</div><!--info-item-->
+							</div><!--row-->
+
+							<div class = "row">
+								<div class="col-md-6 info-item half-block left-half-block">
+									<h3 class="title">Последние добавленные задачи</h3>
+
+									<table class="table data-table table-striped">
+										<thead>
+											<tr>
+												<td> Задача      </td>		
+												<td> Автор		 </td>
+												<td> Исполнитель </td>
+												<td> Тип         </td>
+											</tr>
+										</thead>
+										<tbody>
+												{% for task in new_tasks %}
+													<tr data-position="{{task.pos}}" id="{{task.id}}">
+													<td>
+														<a class="task_title" id="{{task.id}}">
+															{{task.title}}
+														</a>
+													</td>
+													<td> {{task.entrasted__username}} </td>
+													<td> {{task.assigned__username}}  </td>
+													<td> {{task.type_task}}	          </td>
+												</tr>
+												{% endfor %}
+											</tbody>
+									</table>
+								</div><!--info-item-->
+								
+								<div class="col-md-6 info-item half-block">							   			
+									<a href='#' data-toggle='tooltip' title='Текущая итерация'>
+										<h3 class="title">{{ iterate_title }}</h3>
+									</a>
+
+									<div class="row">
+										<div class="time-iterate"></div>
+										<div class="graphic margin_20" id="graphic"></div>
+									</div>
+							   	</div><!--info-item-->
+							</div><!--row-->
+						</form>	
+					</div><!--row-->
+				</div><!--box-header-->
+			</div><!--box-->
+		</div><!--col-sm-12-->
+	</div><!--row-->
+	<script src= "{% static 'js/own/project.js' %}">  </script>
+	<script src= "{% static 'js/own/statistic.js'%}"> </script>
+	<script src= "{% static 'js/own/tasks.js'%}">     </script>
 {% endblock %}
 
 {% block nav %}
