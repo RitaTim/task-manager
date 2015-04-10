@@ -196,10 +196,6 @@ a {
 	background-color: rgba(0,0,0,0.15);
 	color: green;
 }
-.graphic{
-	width:100%;
-	height:100%;
-}
 /*auth*/
 .auth-box{
 	margin-top : 100px;
@@ -248,7 +244,6 @@ a {
 }
 .title{
 	color: green;
-	margin: 10px 10px 10px 10px;
 }
 .sub-data{
 	color: #777;
@@ -368,6 +363,9 @@ a {
 }
 .marg_left_20{
   margin: 0px 0px 20px 0px;
+}
+.marg_10{
+  margin: 10px 10px 10px 10px;
 }
 .marg_left{
 	margin-left: 50px;
