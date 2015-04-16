@@ -125,6 +125,5 @@ $(document).ready(function(){
     if ( $('select').is('#iterates-menu') ) {
         fill_fields();
     };
-    $("[data-toggle='tooltip']").tooltip(); 
-
+    $("[data-toggle='tooltip']").tooltip();
 })

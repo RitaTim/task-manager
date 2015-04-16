@@ -5,8 +5,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts       import render_to_response, redirect
 from project.models         import Project
 from iteration.models       import Iteration
+from notification.models    import Notification
 from models                 import Task
 from forms                  import TaskForm
+from task_manager.utils     import create_notification
 from datetime               import datetime, timedelta
 from django.utils           import timezone
 from django.core.cache      import cache
@@ -46,16 +48,30 @@ def task(request, id_task = '0'):
 		else:
 			form = TaskForm(request.POST,  request.FILES)
 
+
 		if not form.is_valid():
 			return HttpResponse("Форма не валидна")
 		
-		form.save()	
+		saved_task = form.save()
+
+		if saved_task.assigned:
+			if id_task != saved_task.id:
+				if Notification.objects.filter(task=saved_task).exclude(action="change_iter"):
+					Notification.objects.filter(task=saved_task).exclude(action="change_iter").update(user=saved_task.assigned, action="assigned")
+				else:
+					Notification.objects.create(action="assigned", user=saved_task.assigned, task=saved_task)
+		else:
+			if Notification.objects.filter(task=saved_task).exclude(action="change_iter"):
+				Notification.objects.filter(task=saved_task).update(action="added", user=None)
+			else:
+				Notification.objects.create(action="added", task=saved_task, user=None)
+
 		return redirect(request.META.get('HTTP_REFERER','/'))
 	else: # GET
 		args={}	
 		args.update(csrf(request))
 		contents = request.GET['contents']
-		if id_task != '0':			
+		if id_task != '0':
 			if contents == 'describe' or  contents == 'all_form':
 				args['task'] = Task.objects.filter(id = id_task).values('title', 'id', 'text', 'project__title', 'iterate__title', 'type_task', 'status', 'assigned__username', 'entrasted__username', 'main_task__id', 'main_task__title')[0]
 			if contents == 'edit' or contents == 'all_form':

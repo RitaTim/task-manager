@@ -7,123 +7,77 @@
 
 {% load staticfiles %}
 {% block content%}	
-	<div class='row'>
-		<div class='box padding_10'>
-			<div class='box-content'>
-				<ul class='nav nav-tabs'>
-					<li class='active'>
-						<a data-toggle='tab' href='#tab1'>
-							<i class='icon-info'></i>
-							Информация
-						</a>
-					</li>
-					<li>
-						<a data-toggle='tab' href='#tab2'>
-							<i class='icon-film'></i>
-							Статистика
-						</a>
-					</li>
-				</ul>
+	<div class="row">
+		<div class='col-sm-12'>
+			<div class='box info-item'>
+				<div class='box-header'>
+					<div class = "row">
+						<h3 class='title'>
+							{{ user.user__first_name}} {{ user.user__last_name }}
+						</h3>
 
-				<div class='tab-content padding_10'>
-					<div class='tab-pane active' id='tab1'>
-						<div class='col-sm-2 bordered '>
-							<div class="user_info_panel padding_10">
-								<div class="row">
-									{% if user.avatar %}
-										<img src="/media/{{ user.avatar }}" class="avatar" >
-									{% else %}
-										<img src="{% static 'images/user.png' %}" class="avatar">
-									{% endif %}
-								</div>
+						<div class="row marg_top">
+							<div class='col-sm-3 bordered'>
+								<div class="user_info_panel padding_10">
+									<div class="row">
+										{% if user.avatar %}
+											<img src="/media/{{ user.avatar }}" class="avatar" >
+										{% else %}
+											<img src="{% static 'images/user.png' %}" class="avatar">
+										{% endif %}
+									</div>								
 
-								<div class='row'>
-									<div class='form-group'>
-										<label>
-											<i class="fa fa-user"></i>
-											{{ user.user__first_name}} {{ user.user__last_name }}
-										</label>
-									</div>
-								</div>
-
-								<div class="row">
-									<div class='form-group'>
-										<label>
-											<i class="icon-phone"></i>
-											Инженер программист
-										</label>													
-									</div>
-								</div>
-
-								<div class="row">
-									<div class='form-group'>
-										<label>
-											<i class="fa fa-phone"></i>
-											8-904-608-50-56
-										</label>
-									</div>
-								</div>
-
-								<div class="row">
-									<div class='form-group'>
-										<label>
-											<i class="fa fa-facebook"></i>
-											tatata@facebook.com
-										</label>
-									</div>
-								</div>
-
-								<div class="row">
-									<div class='form-group'>
-										<label>
-											<i class="fa fa-star"></i>
-											{{user.level}}
-										</label>
-									</div>
-								</div>
-							</div><!--user_info_panel--> 
-						</div><!--col-sm-2 bordered--> 
-
-						<div class="col-md-10">
-							<fieldset>
-								<div class='col-sm-8 col-sm-offset-6'>
-									<div class="row ">
-										<div class='user_option navbar-default col-sm-3'>
-											<div class='form-group'>
-												Сообщения 
-												<i class="fa fa-envelope"></i>
-											</div>
+									<div class="row">
+										<div class='form-group'>
+											<h4>
+												<i class="icon-phone"></i>
+												Инженер программист
+											</h4>													
 										</div>
+									</div>
 
-										<div class='user_option navbar-default col-sm-3'>
-											<div class='box-content'>
-												Обновления 
-												<i class="fa fa-envelope"></i>
-											</div>
+									<div class="row">
+										<div class='form-group'>
+											<h4>
+												<i class="fa fa-phone"></i>
+												8-904-608-50-56
+											</h4>
 										</div>
+									</div>
 
-										<a>
-											<div class='user_option navbar-default col-sm-3'>
-												<div class='box-content text-center title assign_for_user'>
-													<h4> Еще задач мне!!! </h4> 
-												</div>
-											</div>
-										</a>
-									</div><!--row-->
-								</div>
+									<div class="row">
+										<div class='form-group'>
+											<h4>
+												<i class="fa fa-facebook"></i>
+												tatata@facebook.com
+											</h4>
+										</div>
+									</div>
 
+									<div class="row">
+										<div class='form-group'>
+											<h4>
+												<i class="fa fa-star"></i>
+												{{user.level}}
+											</h4>
+										</div>
+									</div>
+								</div><!--user_info_panel--> 
+							</div><!--col-sm-2 bordered--> 
+
+							<div class="col-md-9">
 								{% if empty %}
-									<div class='col-sm-11 col-sm-offset-1'>
+									<div class='col-sm-12'>
 										<h3 class="title">Вы не являетесь участником ни одного из проектов</h3>
 										<h4> Чтобы принять участие в работе проекта, вам нужно выбрать проект. После чего вы сможете добавлять задачи или закреплять существующие задачи за собой. Выбрать проект вы можете на главной странице</h4> 
 										<hr> <h4> Желаем Вам удачи и приятного время провожения вместе с Task Maaaaaan! </h4>
 									</div>
 								{% else %}										
-									<div class='col-sm-11 col-sm-offset-1'>
+									<div class='col-sm-12'>
 										<h3 class="title">Рабочий процесс</h3>
 
 										<div class="row">
-											<div class="col-sm-2">
+											<div class="col-sm-3">
 												<select id="projects-menu" class="table-select">
 													{% for project in projects %}
 														<option id="{{project.id}}" {% if project.id == project_id %} selected {% endif %}>
@@ -135,7 +89,7 @@
 										</div>
 
 										<div class="row">
-											<div class="col-sm-2">
+											<div class="col-sm-3">
 												<select id="iterates-menu" class="table-select">
 													{% for iterate in iterates %}
 														<option id="{{iterate.id}}" {% if iterate.id == iterate_id %} selected {% endif %}>
@@ -150,7 +104,7 @@
 										</div>
 										
 										<div class="row marg_buttom_20">
-											<h5 class="col-sm-2">Рабочее время:</h5>
+											<h4 class="col-sm-3">Рабочее время:</h4>
 											<label id="spend-time"></label>
 										</div>
 
@@ -163,7 +117,7 @@
 													<tr>
 														<th> 
 															To do
-															<a id="add_task">+</a>
+															<a class="assign_for_user">+</a>
 														</th>
 														<th> In progress </th>		
 														<th> Test		 </th>
@@ -185,44 +139,88 @@
 									            </tbody>
 											</table>
 										</div><!--row-->
-
-										<div class="row navbar-default padding_10 marg_left_20" id="describe_task" hidden>
-											<div class="row padding_10">
-												<div class='form-group'>
-													<label id="title_task" class="title">
-													</label>
-												</div>
-
-												<div class="row">
-													<div class='form-group col-sm-8'>
-														<div id="text_task">
-														</div>
-													</div>
-												</div><!--row-->
-
-												<div class="row">
-													<div class='form-group col-sm-8'>
-														<div id="box_comments">
-														</div>
-													</div>
-												</div><!--row-->
-											</div><!--row padding_10-->
-										</div><!--row navbar-default padding_10-->
 									</div><!--col-sm-11 col-sm-offset-1-->
 								{% endif %}
-							</fieldset>
-						</div><!--col-md-10-->
-					</div><!--tab-pane 1-->
+							</div><!--col-md-9-->
+						</div>
 
-					<div class='tab-pane tab-content' id='tab2'>
-					</div><!--tab-pane 2-->
-				</div> <!--tab-content-->
-			</div><!--box-content-->
-		</div><!--box-->
-	</div><!--row marg_top_head-->
+						<div class="row">
+							<div class="col-sm-3 none_padding marg_top">
+								<div class='user_notification navbar-default {{notes.assigned.class}}' id="assigned">
+									<a class="notification">
+										<div class='form-group'>
+											У вас задание
+											{% if notes.assigned.class %}
+												<div class="pull-right">
+													<i class="fa fa-bell fa-2x"></i>
+													{{notes.assigned.count}}
+												</div>
+											{% endif %}
+										</div>
+									</a>
+								</div>
 
-	<script src = "{% static 'js/own/profile.js' %}"></script>
-	<script src = "{% static 'js/own/tasks.js' %}"></script>				
+								<div class='user_notification navbar-default {{notes.added.class}}' id="added">
+									<a class="notification">
+										<div class='form-group'>
+											Новые задачи 
+											{% if notes.added.class%}
+												<div class="pull-right">
+													<i class="fa fa-bell fa-2x"></i>
+													{{notes.added.count}}
+												</div>
+											{% endif %}
+										</div>
+									</a>
+								</div>
+
+								<div class='user_notification navbar-default {{notes.change_iter.class}}' id="change_iter">
+									<a class="notification">
+										<div class='form-group'>
+											Новая итерация
+											{% if notes.change_iter.class %}
+												<div class="pull-right">
+													<i class="fa fa-bell fa-2x"></i>
+													{{notes.change_iter.count}}
+												</div>
+											{% endif %}
+										</div>
+									</a>
+								</div>
+							</div>
+
+							<div class="col-sm-9 navbar-default padding_10 marg_left_20" id="describe_task" hidden>
+								<div class="padding_10">
+									<div class='form-group'>
+										<label id="title_task" class="title">
+										</label>
+									</div>
+
+									<div class="row">
+										<div class='form-group col-sm-8'>
+											<div id="text_task">
+											</div>
+										</div>
+									</div><!--row-->
+
+									<div class="row">
+										<div class='form-group col-sm-8'>
+											<div id="box_comments">
+											</div>
+										</div>
+									</div><!--row-->
+								</div><!--row padding_10-->
+							</div><!--row navbar-default padding_10-->
+						</div><!--row-->
+					</div><!--row-->
+				</div><!--box-->
+			</div><!--box-header-->
+		</div><!--col-sm-12-->
+	</div><!--row-->
+
+	<script src = "{% static 'js/own/profile.js' %}">      </script>
+	<script src = "{% static 'js/own/tasks.js' %}">        </script>
+	<script src = "{% static 'js/own/notification.js' %}"> </script>				
 {% endblock %}
 
 {% block nav %}

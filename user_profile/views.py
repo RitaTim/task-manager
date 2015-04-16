@@ -1,10 +1,11 @@
 #-*-coding: utf-8 -*-
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
-from task_manager.utils             import get_current_iterate, get_users_project
+from task_manager.utils             import get_current_iterate, get_projects_user
 from django.core.exceptions         import ObjectDoesNotExist
 from django.shortcuts               import render_to_response, redirect
 from django.http.response           import HttpResponse
+from notification.models import Notification
 from forms             import UserProfileForm, UserForm
 from models            import UserProfile
 from iteration.models  import Iteration
@@ -35,7 +36,8 @@ def profile(request):
 		args['empty'] = data_projects['empty']
 		return render_to_response('profile.html', args)
 
-	args['user']    = UserProfile.objects.filter(id = args['cache']['user_id']).values('id', 'avatar', 'user__username', 'user__first_name', 'user__last_name', 'level', 'date_of_birth')[0]
+	user = UserProfile.objects.filter(id = args['cache']['user_id'])
+	args['user']    = user.values('id', 'avatar', 'user__username', 'user__first_name', 'user__last_name', 'level', 'date_of_birth')[0]
 	args['projects']   = data_projects['projects']
 	args['iterates']   = data_projects['iterates']
 	args['iterate_id'] = data_projects['iterate_id']
@@ -44,6 +46,16 @@ def profile(request):
 	tasks = Task.objects.filter(assigned = args['cache']['user_id'], project = data_projects['project_id'] ).exclude(status="not_dev")
 	
 	args['type_tasks'] = [ 'tasks_to_do', 'tasks_in_progress', 'tasks_test', 'tasks_done']
+
+	added_count       = Notification.objects.filter(action='added').count()
+	assigned_count    = Notification.objects.filter(user=user, action='assigned').count()
+	change_iter_count = Notification.objects.filter(user=user, action='change_iter').count()
+
+	args['notes'] = { 
+		'added'      : {'class' : 'active_notification' if added_count else '', 'count' : added_count},
+		'assigned'   : {'class' : 'active_notification' if assigned_count else '', 'count' : assigned_count},
+		'change_iter': {'class' : 'active_notification' if change_iter_count else '', 'count' : change_iter_count}
+	}
 	
 	return render_to_response('profile.html', args)
 
@@ -78,10 +90,8 @@ def get_task(request, id_task = 0):
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
 def _get_data_projects(request):
-	user_id = cache.get('user_id')
-	projects_id = Task.objects.filter( Q(assigned = user_id) | Q(entrasted = user_id) ).exclude( project = None ).order_by('updated').values('project__id').distinct()
-	projects    = Project.objects.filter( id__in = projects_id ).values('id', 'title')
-	data_cache = cache.get_many([ 'project_id', 'iterate_id' ])
+	data_cache = cache.get_many(['project_id', 'iterate_id'])
+	projects = get_projects_user(cache.get('user_id'))
 
 	if not projects:	
 		if not data_cache:
