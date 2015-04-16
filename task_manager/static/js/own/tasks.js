@@ -103,6 +103,23 @@ $(document).ready(function(){
         })  
     };
 
+    var load_tasks = function(){
+        var iteration_id = $("#load_table_tasks option:selected").attr('id');
+        if (iteration_id) {
+            $.ajax({
+                url : "/task/load_table_tasks", 
+                data: {'iteration_id' : iteration_id},
+                type : "GET",
+                success : function(data) {            
+                    $('#content_task_table').html(data);
+                },
+                error : function(err) {
+                    alert("Fail GET /task/load_table_tasks");
+                }  
+            })  
+        }
+    };
+
     $(document).on('click','#assign_for_user', function(){
         assign_for_user( 'none' ); // !!! 
     });
@@ -128,6 +145,15 @@ $(document).ready(function(){
         $('#describe').toggle( 'display' );
     });
 
+    $(document).on('change','#load_table_tasks', function(){
+        console.log('change');
+        load_tasks();
+    });
+
 	$('#myModal').modal('hide');
+
+    if ( $('#load_table_tasks') ) {
+        load_tasks();
+    }
 
 })
