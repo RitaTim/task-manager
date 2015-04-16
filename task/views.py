@@ -64,7 +64,7 @@ def task(request, id_task = '0'):
 			if Notification.objects.filter(task=saved_task).exclude(action="change_iter"):
 				Notification.objects.filter(task=saved_task).update(action="added", user=None)
 			else:
-				Notification.objects.create(action="added", task=saved_task, user=None)
+				Notification.objects.create(action="added", task=saved_task, user=None, project=saved_task.project)
 
 		return redirect(request.META.get('HTTP_REFERER','/'))
 	else: # GET

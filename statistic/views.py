@@ -101,7 +101,8 @@ def get_progress_users(request, iterate_id = None, lst_users_id = []):
 def get_data_graphic(request, iterate_id = None):
 	iterate_id = request.GET['iterate_id'] if 'iterate_id' in request.GET else cache.get('iterate_id')
 	tasks      = Task.objects.filter( iterate = iterate_id, status = "done" ).values( 'id', 'title', 'start_time', 'end_time' )
-
+	if not tasks:
+		return HttpResponse(json.dumps({}), content_type='application/json')
 	iterate = Iteration.objects.filter(id = iterate_id).values('start_line', 'dead_line')[0]
 	iterate_time = { 
 		'start_line' : iterate['start_line'],

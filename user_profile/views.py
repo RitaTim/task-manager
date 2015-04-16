@@ -47,7 +47,7 @@ def profile(request):
 	
 	args['type_tasks'] = [ 'tasks_to_do', 'tasks_in_progress', 'tasks_test', 'tasks_done']
 
-	added_count       = Notification.objects.filter(action='added').count()
+	added_count       = Notification.objects.filter(action='added', project=data_projects['project_id']).count()
 	assigned_count    = Notification.objects.filter(user=user, action='assigned').count()
 	change_iter_count = Notification.objects.filter(user=user, action='change_iter').count()
 
@@ -100,12 +100,8 @@ def _get_data_projects(request):
 			return { 'empty' : 'user' }
 	else:
 		if data_cache:
-			if data_cache['project_id'] in projects:
-				project_id = data_cache['project_id']
-				iterate_id = data_cache['iterate_id']
-			else:
-				project_id = projects[0]['id']
-				iterate_id = get_current_iterate(project_id)
+			project_id = data_cache['project_id']
+			iterate_id = data_cache['iterate_id']
 		else:
 			project_id = projects[0]['id']			
 			iterate_id = get_current_iterate(project_id)

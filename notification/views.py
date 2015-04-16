@@ -9,7 +9,7 @@ def get_notification(request):
 
 	if action == "added":
 		text = "Появились новые задачи, которым нужен исполнитель:"
-		notifications = Notification.objects.filter(action=action).values('task__title', 'task__id', 'created', 'readed')
+		notifications = Notification.objects.filter(action=action, project=cache.get('project_id')).values('task__title', 'task__id', 'created', 'readed')
 	else:
 		notifications = Notification.objects.filter(user=user_id, action=action).values('task__title', 'task__id', 'created', 'readed')
 		if action == "assigned":
