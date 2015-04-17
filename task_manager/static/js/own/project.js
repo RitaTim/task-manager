@@ -1,10 +1,10 @@
 $(document).ready(function(){ 	
 
 	var show_form_project = function(project_id){
+        var param = project_id ? "project_id=" + project_id : "";
 		$.ajax({
-            url : "/projects/edit_project", 
+            url : "/projects/edit_project?" + param, 
             type : "GET",
-            data : { 'project_id' : project_id},
             success : function(data) { 
             	$('.modal-body').html(data);
             	$('#myModal').modal('show');
@@ -21,7 +21,7 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click', '.add-project', function(){
-		show_form_project(0);
+		show_form_project();
 	});
 
 	$('#myModal').modal('hide');
