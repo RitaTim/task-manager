@@ -12,7 +12,7 @@ from django.core.cache import cache
 
 def forum (request, id_project = 0):
 	args = {}
-	args['cache']  = cache.get_many( [ 'project_id', 'project_title', 'user_name' ] )
+	args['cache']  = cache.get_many(['project_id', 'project_title', 'user_name'])
 	args['forums'] = Forum.objects.filter(project = args['cache']['project_id'])
 	return render_to_response('forum.html', args)
 
