@@ -15,7 +15,6 @@ import logging
 def edit_project(request):	
 	if request.method == "POST":
 		project_id = cache.get('project_id')
-		cache.set('test', request.FILES)
 		if project_id:
 			project = Project.objects.get(id = project_id) 
 			form 	= ProjectForm(request.POST, request.FILES, instance = project)
