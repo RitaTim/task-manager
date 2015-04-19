@@ -16,9 +16,22 @@
 				<div class="box-form">
 					<div class="contents" id="describe">
 						<div class="row">
+							{% if task.main_task__id %}
+								<div class="col-sm-12">
+									<div class="title">
+										<label>Главная задача</label>
+									</div>
+
+									<a class="task_title" id="{{task.main_task__id}}">{{task.main_task__title}}</a>
+
+									<hr>
+								</div>								
+							{% endif %}
+
 							<div class="col-sm-6">
 								{{ task.text }}
 							</div>
+
 							<div class="col-sm-6 data-task">
 								<div class='form-group'>
 									<label class="col-sm-4 control-label">Проект:</label>
@@ -70,6 +83,20 @@
 								</div>
 							</div><!--col-sm-6 data-task-->		
 						</div><!--row-->
+
+						{% if subtasks %}
+							<div class="title">
+								<label>Подзадачи</label>
+							</div>
+							<div class="subtasks col-sm-12">
+								{% for subtask in subtasks %}
+									<div class="checkbox">
+										<input type="checkbox" {% if subtask.status == "done" %} checked {% endif %} disabled>
+										<a class="task_title" id="{{subtask.id}}">{{subtask.title}}</a>
+									</div>
+								{% endfor%}
+							</div>
+						{% endif %}
 					</div>
 
 					{% if form %}

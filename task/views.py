@@ -57,11 +57,12 @@ def task(request, id_task = '0'):
 		contents = request.GET['contents']
 		if id_task != '0':			
 			if contents == 'describe' or  contents == 'all_form':
-				args['task'] = Task.objects.filter(id = id_task).values('title', 'id', 'text', 'project__title', 'iterate__title', 'type_task', 'status', 'assigned__username', 'entrasted__username')[0]
+				args['task'] = Task.objects.filter(id = id_task).values('title', 'id', 'text', 'project__title', 'iterate__title', 'type_task', 'status', 'assigned__username', 'entrasted__username', 'main_task__id', 'main_task__title')[0]
 			if contents == 'edit' or contents == 'all_form':
 				task = Task.objects.get(id = id_task)
 				args['form'] = TaskForm(instance = task)
 				args['task_id'] = task.id
+			args['subtasks'] = Task.objects.filter(main_task = id_task).values('title', 'id', 'status')
 		else:
 			args['form'] = TaskForm()
 
@@ -96,7 +97,7 @@ def get_tasks(request, id_project = 0, id_iteration = 0, which_tasks = '0'):
 	if which_tasks != '0' :
 		tasks = tasks.filter(assigned = request.user.id)
 
-	tasks = tasks.values('id', 'title', 'text', 'priority', 'assigned__username', 'type_task', 'status', 'iterate')
+	tasks = tasks.values('id', 'title', 'text', 'priority', 'assigned__username', 'type_task', 'status', 'iterate', 'main_task')
 
 	tasks_to_do 		= []
 	tasks_in_progress 	= []
