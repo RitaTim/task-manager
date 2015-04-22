@@ -70,5 +70,5 @@ def show_project(request):
 	args['new_tasks'] = Task.objects.filter(project = project_id).values('title', 'id', 'entrasted__username', 'assigned__username', 'type_task') .order_by('-updated')[0:5]
 
 	args['cache'] = { 'user_name' : cache.get('user_name') }
-	args['editor'] = True if (cache.get('user_id') == args['project']['leader__id'] or UserProfile.objects.filter(id = cache.get('user_id')).values('user__is_superuser')) else False
+	args['editor'] = True if (cache.get('user_id') == args['project']['leader__id'] or UserProfile.objects.filter(id = cache.get('user_id')).values('user__is_superuser')[0]['user__is_superuser']) else False
 	return render_to_response('project.html', args)
