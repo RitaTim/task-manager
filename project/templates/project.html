@@ -23,16 +23,18 @@
 										<div class="marg_top">
 											Руководитель проекта: {{project.leader__username}}
 										</div>
-										<div class="marg_top">
-											<a class="edit-project" id="{{project.id}}">
-												<i class="fa fa-2x fa-pencil-square-o"></i>
-											</a>
-										</div>
+										{% if editor %}
+											<div class="marg_top">
+												<a class="edit-project" id="{{project.id}}">
+													<i class="fa fa-2x fa-pencil-square-o"></i>
+												</a>
+											</div>
+										{% endif %}
 									</div>
 
 									<div class="col-md-4">
-						    			<img src="/media/{{ project.logo }}" class="logo-project">
-								   	</div>
+										<img src="/media/{{ project.logo }}" class="logo-project">
+									</div>									
 								</div><!--info-item-->
 							</div><!--row-->
 

@@ -1,7 +1,7 @@
 #-*-coding: utf-8 -*-
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
-from task_manager.utils             import get_current_iterate, get_projects_user
+from task_manager.utils             import get_current_iterate, get_projects_user, get_users_project
 from django.core.exceptions         import ObjectDoesNotExist
 from django.shortcuts               import render_to_response, redirect
 from django.http.response           import HttpResponse
@@ -18,7 +18,7 @@ from datetime          import datetime
 import json
 import logging
 
-@login_required
+@login_required(login_url='/auth')
 def profile(request):
 	if request.method == "POST":
 		form = UserProfileForm(request.POST, instance = request.user.profile)
@@ -160,7 +160,7 @@ def change_iterates(request, project_id = 0):
 def employees(request):
 	args = {}
 	args.update(csrf(request))
-	args['cache']  = cache.get_many( [ 'user_id', 'project_id', 'project_title', 'user_name', 'iterate_id' ] )
+	args['cache']  = cache.get_many([ 'user_id', 'project_id', 'project_title', 'user_name', 'iterate_id' ])
 	
 	users_project = get_users_project(args['cache']['project_id'])['lst_id']
 	args['users']  = UserProfile.objects.filter(id__in = users_project).values('id', 'user__username', 'user__first_name', 'user__last_name', 'user__email', 'level', 'avatar', 'date_of_birth', 'phone', 'post', 'date_of_birth')

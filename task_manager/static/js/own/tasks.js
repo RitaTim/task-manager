@@ -71,11 +71,11 @@ $(document).ready(function(){
         })
 	};
 
-    var show_lst_not_dev = function(id_project){
+    var show_lst_not_dev = function(project_id){
         $.ajax({
             url : "/task/show_lst_not_dev", 
             type : "GET",
-            data : { 'id_project' : id_project},
+            data : { 'project_id' : project_id},
             success : function(data) {
                 $('.modal-body').html(data);
                 $('.modal-title').html("Склад задач");
