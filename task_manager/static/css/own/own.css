@@ -347,6 +347,13 @@ a {
 	padding: 5px 20px 20px 20px;
 	font-size: 1.5em;
 }
+.describe .redactor_box{
+	border: none;
+	background : none;
+}
+.describe .redactor_box .redactor_editor{
+	background : none !important;
+}
 .half-block{
 	width: 47%; 
 }
@@ -423,6 +430,10 @@ a {
 	height: 100px;
 	width: 100%;
 	padding: 10px;
+}
+.board_item_text{
+	height: 67%;
+	width: 100%;
 	overflow: hidden;
 }
 .subtask{

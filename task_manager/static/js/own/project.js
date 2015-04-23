@@ -7,6 +7,7 @@ $(document).ready(function(){
             type : "GET",
             success : function(data) { 
             	$('.modal-body').html(data);
+                $('#myModal #id_text').redactor({minHeight: 200});
             	$('#myModal').modal('show');
             },
             error : function(err) {
@@ -25,4 +26,8 @@ $(document).ready(function(){
 	});
 
 	$('#myModal').modal('hide');
+    $('#text').redactor({
+        minHeight: 200,
+        buttons: []
+    });
 })

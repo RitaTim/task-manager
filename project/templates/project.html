@@ -18,8 +18,11 @@
 										<h2 class='title marg_10'>{{project.title}}</h2>
 									</div>
 
-									<div class="col-md-8">
-										{{ project.text }}
+									<div class="col-md-8 describe">
+										<textarea id="text" name="text">
+											{{ project.text }}
+										</textarea>
+
 										<div class="marg_top">
 											Руководитель проекта: {{project.leader__username}}
 										</div>
@@ -85,9 +88,9 @@
 			</div><!--box-->
 		</div><!--col-sm-12-->
 	</div><!--row-->
-	<script src= "{% static 'js/own/project.js' %}">  </script>
-	<script src= "{% static 'js/own/statistic.js'%}"> </script>
-	<script src= "{% static 'js/own/tasks.js'%}">     </script>
+	<script src= "{% static 'js/own/project.js' %}">      </script>
+	<script src= "{% static 'js/own/statistic.js'%}">     </script>
+	<script src= "{% static 'js/own/tasks.js'%}">         </script>	
 {% endblock %}
 
 {% block nav %}
