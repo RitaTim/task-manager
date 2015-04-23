@@ -66,8 +66,7 @@ $(document).ready(function(){
                 $('#task-modal #id_text').redactor({minHeight: 200});
             	$('#text').redactor({
                         minHeight: 200,
-                        buttons: [],
-                        border: None
+                        buttons: []
                 });
                 $('#task-modal').modal('show');
             },
