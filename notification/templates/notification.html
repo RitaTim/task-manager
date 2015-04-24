@@ -1,0 +1,32 @@
+{% load bootstrap %}
+<div class="col-sm-11 col-sm-offset-1">
+	<h3>{{text}}</h3>
+</div>
+
+<div class="row">
+	{% for notificate in new_notes %}
+		<div class="col-sm-5 col-sm-offset-1 marg_top">
+			<a class="task_title title" id="{{notificate.task__id}}">{{notificate.task__title}}</a>	
+		</div>
+
+		<div class="col-sm-4 col-sm-offset-2 marg_top title">
+			{{notificate.created}}
+		</div>
+	{% endfor %}
+</div>
+
+<hr class="col-sm-10 col-sm-offset-1">
+
+<div class="row marg_bottom_20">
+	{% for notificate in readed_notes %}
+		<div class="col-sm-5 col-sm-offset-1 marg_top">		
+			<a class="task_title" id="{{notificate.task__id}}">{{notificate.task__title}}</a>		
+		</div>
+
+		<div class="col-sm-4 col-sm-offset-2 marg_top">
+			{{notificate.created}}
+		</div>
+	{% endfor %}
+</div>
+
+               

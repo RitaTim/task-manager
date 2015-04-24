@@ -31,7 +31,7 @@
 	margin-top: 20px;
 }
 
-.marg_buttom_20{
+.marg_bottom_20{
 	margin-bottom: 20px;
 }
 
@@ -46,6 +46,9 @@
 	margin: 10px 10px 10px 10px;
 }
 
+.none_padding{
+	padding:0px;
+}
 .padding_10{
 	padding: 10px 10px 10px 10px;
 }
@@ -62,6 +65,7 @@
 
 .bordered{
 	border: 1px solid #E7E7E7;
+	border-radius: 5px;
 }
 .user_info_panel{
 	background-size: 100%;
@@ -69,13 +73,12 @@
 	margin-bottom: 10px;
 }
 
-.user_option{
+.user_notification{
 	border: 1px solid #E7E7E7;
 	border-radius: 5px;
 	min-height: 50px;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 	vertical-align: middle;
-	margin-left: 5px;
 	padding:5px;
 }
 
@@ -99,6 +102,9 @@
 }
 
 /*side bar*/
+li {
+	cursor: pointer;
+}
 
 a {
 	color: black; 
@@ -201,6 +207,16 @@ a {
 	margin-top : 100px;
 }
 /*profile*/
+.active_notification{
+	border: 1px solid green;
+	border-radius: 3px;
+}
+.active_notification i{
+	color: green;
+}
+.red{
+	color:red;
+}
 .progress-bar a{
 	color: white; 
 	text-decoration: none;

@@ -1,9 +1,11 @@
 #-*-coding: utf-8 -*-
-from iteration.models  import Iteration
-from project.models    import Project
-from task.models       import Task
-from django.core.cache import cache
-from datetime          import datetime, timedelta
+from iteration.models    import Iteration
+from project.models      import Project
+from task.models         import Task
+from notification.models import Notification
+from django.core.cache   import cache
+from datetime            import datetime, timedelta
+from django.db.models    import Q
 
 def get_current_iterate(project_id = 0):
 	tasks = None
@@ -28,7 +30,12 @@ def get_current_iterate(project_id = 0):
 			next_iterate = next_iterates[0].id
 
 		if tasks:
-			tasks.update( iterate = next_iterate )
+			tasks.update(iterate = next_iterate)
+			for task in tasks:
+				if Notification.objects.filter(task=task, action="change_iter"):
+					Notification.objects.filter(task=task, action="change_iter").update(created=datetime.now())
+				else:
+					Notification.objects.create(task=task, user=task.assigned, action="change_iter")
 
 	return next_iterate.id
 
@@ -40,3 +47,10 @@ def get_users_project(project_id):
 		'dict_users' : dict_users,
 		'lst_id'     : lst_id
 	}
+
+def get_projects_user(user_id):
+	projects_id = Task.objects.filter( Q(assigned = user_id) | Q(entrasted = user_id) ).exclude( project = None ).order_by('updated').values('project__id').distinct()
+	return Project.objects.filter(id__in = projects_id).values('id', 'title')
+
+def create_notification(user_id, task_id, action):
+	Notification.objects.create(action=action, user=user_id, task=task_id)

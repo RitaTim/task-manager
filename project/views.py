@@ -44,13 +44,9 @@ def edit_project(request):
 
 @login_required
 def projects(request):
-	user_name = request.user.username
-	cache.delete_many( [ 'project_id', 'iterate_id' ])
-	cache.set_many( { 'user_id' : request.user.id, 'user_name' : user_name })
-
 	args = {}
 	args['projects'] = Project.objects.all().values('id', 'title', 'logo', 'text')
-	args['cache'] = { 'user_name' : user_name }
+	args['cache'] = { 'user_name' : cache.get('user_name') }
 
 	return render_to_response('projects.html', args)
 

@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     'iteration',
     'user_profile',
     'statistic',
+    'notification',
     'jquery',
 )
 
@@ -83,7 +84,7 @@ ROOT_URLCONF = 'task_manager.urls'
 
 WSGI_APPLICATION = 'task_manager.wsgi.application'
 
-LOGIN_REDIRECT_URL = '/projects'
+LOGIN_REDIRECT_URL = '/auth/set_data_after_logging'
 
 
 # Database
