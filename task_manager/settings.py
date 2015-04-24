@@ -62,6 +62,7 @@ INSTALLED_APPS = (
     'statistic',
     'notification',
     'jquery',
+    'file',
 )
 
 AUTH_PROFILE_MODEL = 'user_profile.UserProfile'

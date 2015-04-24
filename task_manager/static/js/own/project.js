@@ -7,7 +7,16 @@ $(document).ready(function(){
             type : "GET",
             success : function(data) { 
             	$('.modal-body').html(data);
-                $('#myModal #id_text').redactor({minHeight: 200});
+                $('#myModal #id_text').redactor({
+                    minHeight: 200,
+                    buttons: [
+                        'html', 'formatting', 'bold', 'italic', 'deleted','unorderedlist', 'orderedlist', 'outdent', 'indent',
+'image', 'file', 'link', 'alignment', 'horizontalrule'],
+                    imageUpload: "/file/photos/upload",
+                    imageGetJson: "/file/photos/recent",
+                    fileUpload: "/file/files/upload",
+                    fileGetJson: "/file/files/recent"
+                });
             	$('#myModal').modal('show');
             },
             error : function(err) {
@@ -26,8 +35,8 @@ $(document).ready(function(){
 	});
 
 	$('#myModal').modal('hide');
-    $('#text').redactor({
+    $('.text').redactor({
         minHeight: 200,
-        buttons: []
+        toolbar: false
     });
 })
