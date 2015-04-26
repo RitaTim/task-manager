@@ -15,4 +15,12 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ( 'avatar', 'date_of_birth', 'level',)
 
+class ProfileEditForm(forms.ModelForm):
+	class Meta:
+		model = UserProfile
+		fields = ( 'date_of_birth', 'phone', 'avatar')
 
+class UserEditForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ( 'username', 'first_name', 'last_name', 'email')

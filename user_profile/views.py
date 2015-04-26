@@ -6,7 +6,8 @@ from django.core.exceptions         import ObjectDoesNotExist
 from django.shortcuts               import render_to_response, redirect
 from django.http.response           import HttpResponse
 from notification.models import Notification
-from forms             import UserProfileForm, UserForm
+from django.contrib.auth.models import User
+from forms             import UserProfileForm, UserForm, ProfileEditForm, UserEditForm
 from models            import UserProfile
 from iteration.models  import Iteration
 from project.models    import Project
@@ -58,6 +59,31 @@ def profile(request):
 	}
 	
 	return render_to_response('profile.html', args)
+
+def edit_profile(request):	
+	user_id = cache.get('user_id')
+	if request.method == "POST":
+		cache.set('user_name', request.POST.get('username'))
+
+		user_form = UserEditForm(request.POST, request.FILES, instance=User.objects.get(id=user_id))
+		if not user_form.is_valid():
+			return HttpResponse("Форма не валидна")
+		user_form.save()
+	
+		profile_form = ProfileEditForm(request.POST, request.FILES, instance=UserProfile.objects.get(user_id=user_id))
+		if not profile_form.is_valid():
+			return HttpResponse("Форма не валидна")
+		profile_form.save()
+		
+		return redirect(request.META.get('HTTP_REFERER','/'))
+	else: # GET
+		args={}
+		args.update(csrf(request))
+
+		args['profile_form'] = ProfileEditForm(instance=UserProfile.objects.get(user_id = cache.get('user_id')))
+		args['user_form'] = UserEditForm(instance=User.objects.get(id=user_id))
+		
+		return render_to_response('edit_profile.html', args)
 
 def get_tasks(request, iterate_id = 0):
 	today_time = datetime.now

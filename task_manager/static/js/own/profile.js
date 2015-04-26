@@ -104,6 +104,27 @@ $(document).ready(function(){
         fill_progress_bar( choice_iterate );
     }
 
+    var show_form_profile = function(){
+        $.ajax({
+            url : "/profile/edit", 
+            type : "GET",
+            success : function(data) { 
+                $('.modal-body').html(data);
+                $('#myModal').modal('show');
+            },
+            error : function(err) {
+                alert("Fail GET /profile/edit");
+            }
+        })
+        $('.modal-title').text("Профиль");
+    };
+
+    $(document).on('click','.edit-profile', function(){
+        show_form_profile();
+    });
+
+    $('#myModal').modal('hide');
+
     $('#projects-menu').on('change', function(){ 
         $('#describe_task').prop("hidden", true);
         change_iterates($('#projects-menu option:selected')[0].id);
