@@ -15,9 +15,29 @@
 			<div class='box'>
 				<div class='box-header'>
 	                <div class = "row">
-	                    <div class = 'title col-sm-2'  id="project" id_project="{{ cache.project_id }}">
+	                    <div class = 'title'  id="project" id_project="{{ cache.project_id }}">
 	                        <h3>{{ cache.project_title }}</h3>
 	                    </div>
+
+	                    <div class="row">
+		                    <div class="col-sm-1">
+								<label>Итерация</label>
+							</div>
+
+							<div class="col-sm-1">
+				                {% if iterations|length == 0 %}
+				                    <a href="#"><h4> создать</h4></a> 
+				                {% else %}                                                                      
+				                    <select class="selectpicker btn btn-default filter_select" id="load_table_tasks">
+				                        {% for iteration in iterations %}
+				                            <option class="black_text" id="{{iteration.id}}" {% if iteration.id == cache.iterate_id %} selected {% endif %}>
+				                                {{ iteration.title }}
+				                            </option>
+				                        {% endfor %}
+				                    </select>                                        
+				                {% endif %}
+				            </div><!--col-sm-2-->
+				        </div><!--row-->
 	                </div>
 				</div>
 				<div class="row">
@@ -27,9 +47,8 @@
 					<div class='responsive-table'>
 						<div class='scrollable-area' style= 'width:100%'>
 							<table class="table table-striped col-md-12 data-table">
-			                    <thead>
-			                        <tr>
-										<th> Итерация   </th>
+							    <thead>
+							        <tr>
 										<th>
 											 Задача <a class="add-task"><b>+</b></a>
 										</th>		
@@ -38,24 +57,10 @@
 										<th> Статус		 </th>
 										<th> Обновлена   </th>
 									</tr>
-			                    </thead>
-			                    <tbody>
-									{% for task  in tasks %}
-										<tr data-position="{{task.pos}}" id="{{task.id}}">
-											<td> {{ task.iterate__title  }}	</td>
-											<td> 
-												<a class="task_title" id="{{task.id}}">
-												 {{ task.title    }}
-												</a>
-											</td>
-											<td> {{ task.type_task}}	</td>
-											<td> {{ task.assigned__username }}	</td>
-											<td> {{ task.status   }}	</td>
-											<td> {{ task.updated  }}	</td>
-										</tr>
-									{% endfor %}
-			                    </tbody>
-		                	</table>
+							    </thead>
+							    <tbody  id="content_task_table">
+							    </tbody>
+							</table>
 						</div><!--scrollable-area-->
 					</div><!--responsive-table-->
 				</div><!--box-table-->

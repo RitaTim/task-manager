@@ -18,10 +18,14 @@ import logging
 
 def show_tasks(request):
 	args = {}
-	args['cache'] = cache.get_many( ['project_id', 'project_title', 'user_name'] )
-	args['tasks'] = Task.objects.filter(project = args['cache']['project_id']).values('title', 'id', 'iterate__title', 'type_task', 'assigned__username', 'status', 'updated')	
-
+	args['cache'] = cache.get_many( ['project_id', 'project_title', 'user_name', 'iterate_id'] )
+	args['iterations'] = Iteration.objects.filter(project=args['cache']['project_id']).values('id', 'title')
 	return render_to_response('tasks.html', args)
+
+def load_table_tasks(request):
+	if 'iteration_id' in request.GET:
+		tasks = Task.objects.filter(project=cache.get('project_id'), iterate=request.GET['iteration_id']).values('title', 'id', 'type_task', 'assigned__username', 'status', 'updated')	
+	return render_to_response('table_tasks.html', {'tasks' : tasks})
 
 def show_lst_not_dev(request, id_project = 0):
 	args = {}

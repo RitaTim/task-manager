@@ -1,0 +1,13 @@
+{% for task  in tasks %}
+	<tr data-position="{{task.pos}}" id="{{task.id}}">
+		<td> 
+			<a class="task_title" id="{{task.id}}">
+			 {{ task.title    }}
+			</a>
+		</td>
+		<td> {{ task.type_task}}	</td>
+		<td> {{ task.assigned__username }}	</td>
+		<td> {{ task.status   }}	</td>
+		<td> {{ task.updated  }}	</td>
+	</tr>
+{% endfor %}
