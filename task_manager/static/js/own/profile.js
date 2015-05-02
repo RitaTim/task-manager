@@ -7,7 +7,7 @@ $(document).ready(function(){
             success : function(data) {
                 $('#describe_task').prop("hidden", false);
                 $('#title_task').text(data.title);
-                $('#text_task').text(data.text);
+                $('.redactor_editor').html(data.text);
                 load_comments(id_task);
             },
             error : function(err) {
@@ -147,4 +147,9 @@ $(document).ready(function(){
         fill_fields();
     };
     $("[data-toggle='tooltip']").tooltip();
+
+    $('.text').redactor({
+        minHeight: 200,
+        toolbar: false
+    });
 })

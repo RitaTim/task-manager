@@ -95,7 +95,7 @@ $(document).ready(function(){
             dataType: "json",
             success : function(data) {
                 if (data.data_tasks){
-                    size = iterate_id ? [ window.innerWidth * 0.85, window.innerHeight * 0.55 ] : [ window.innerWidth * 0.35, window.innerHeight * 0.45 ];
+                    size = iterate_id ? [ window.innerWidth * 0.85, window.innerHeight * 0.55 ] : [ window.innerWidth * 0.35, window.innerHeight * 0.35 ];
                     render_chart(data, size);
                     $('.time-iterate').html('<h4>' + data.iterate_time.start_line + ' - ' + data.iterate_time.dead_line + '</h4>');
                 }
