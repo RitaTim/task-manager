@@ -85,13 +85,13 @@ $(document).ready(function(){
         })
 	};
 
-    var show_lst_not_dev = function(project_id){
+    var show_lst_not_dev = function(){
         $.ajax({
             url : "/task/show_lst_not_dev", 
             type : "GET",
-            data : { 'project_id' : project_id},
             success : function(data) {
                 $('.modal-body').html(data);
+                $('.btn-modal').empty();
                 $('.modal-title').html("Склад задач");
                 $('#myModal').modal('show');
             },
@@ -107,8 +107,7 @@ $(document).ready(function(){
             url : "/task/assign_for_user", 
             data: tasks_id,
             type : "GET",
-            success : function(data) {                
-                $('#myModal2').modal('hide');
+            success : function(data) {
                 location.reload();
             },
             error : function(err) {
@@ -135,23 +134,23 @@ $(document).ready(function(){
     };
 
     $(document).on('click','#assign_for_user', function(){
-        assign_for_user( 'none' ); // !!! 
+        assign_for_user('none');
     });
 
     $(document).on('click','.assign_for_user', function(){
-        show_lst_not_dev( 1 ); // !!current project
+        show_lst_not_dev();
     });
 
 	$(document).on('click','.task_title', function(){
-		show_task( 'all_form', $(this).attr('id') );
+		show_task('all_form', $(this).attr('id'));
 	});
 
     $('.add-task').on('click', function(){
-        show_task( 'edit' );
+        show_task('edit');
     });
 
     $(document).on('click','.not_dev_task_title', function(){
-        show_task( 'describe', $(this).prev('input')[0].id );
+        show_task('describe', $(this).prev('input')[0].id);
     });
 
     $(document).on('click','.toggle_form_task', function(){

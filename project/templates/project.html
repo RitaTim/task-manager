@@ -44,31 +44,32 @@
 							<div class = "row">
 								<div class="col-md-6 info-item half-block left-half-block">
 									<h3 class="title marg_10">Последние добавленные задачи</h3>
-
-									<table class="table data-table table-striped">
-										<thead>
-											<tr>
-												<td> Задача      </td>		
-												<td> Автор		 </td>
-												<td> Исполнитель </td>
-												<td> Тип         </td>
-											</tr>
-										</thead>
-										<tbody>
-												{% for task in new_tasks %}
-													<tr data-position="{{task.pos}}" id="{{task.id}}">
-													<td>
-														<a class="task_title" id="{{task.id}}">
-															{{task.title}}
-														</a>
-													</td>
-													<td> {{task.entrasted__username}} </td>
-													<td> {{task.assigned__username}}  </td>
-													<td> {{task.type_task}}	          </td>
+									{% if new_tasks %}
+										<table class="table data-table table-striped">
+											<thead>
+												<tr>
+													<td> Задача      </td>		
+													<td> Автор		 </td>
+													<td> Исполнитель </td>
+													<td> Тип         </td>
 												</tr>
-												{% endfor %}
-											</tbody>
-									</table>
+											</thead>
+											<tbody>
+													{% for task in new_tasks %}
+														<tr data-position="{{task.pos}}" id="{{task.id}}">
+														<td>
+															<a class="task_title" id="{{task.id}}">
+																{{task.title}}
+															</a>
+														</td>
+														<td> {{task.entrasted__username}} </td>
+														<td> {{task.assigned__username}}  </td>
+														<td> {{task.type_task}}	          </td>
+													</tr>
+													{% endfor %}
+												</tbody>
+										</table>
+									{% endif %}
 								</div><!--info-item-->
 								
 								<div class="col-md-6 info-item half-block">							   			

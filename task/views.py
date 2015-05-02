@@ -27,10 +27,10 @@ def load_table_tasks(request):
 		tasks = Task.objects.filter(project=cache.get('project_id'), iterate=request.GET['iteration_id']).values('title', 'id', 'type_task', 'assigned__username', 'status', 'updated')	
 	return render_to_response('table_tasks.html', {'tasks' : tasks})
 
-def show_lst_not_dev(request, project_id = 0):
+def show_lst_not_dev(request):
 	args = {}
-	project_id = cache.get('project_id') if not 'project_id' in request.GET else request.GET['project_id']
-	args['tasks'] = Task.objects.filter( status = "not_dev", assigned = None, project = project_id).values('title', 'id', 'text', 'priority')
+	project_id = cache.get('project_id')
+	args['tasks'] = Task.objects.filter( status="not_dev", assigned=None, project=project_id).values('title', 'id', 'text', 'priority')
 	return render_to_response('lst_not_dev.html', args)
 
 def show_dashboard(request):
