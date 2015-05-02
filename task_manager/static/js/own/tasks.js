@@ -168,5 +168,5 @@ $(document).ready(function(){
 
     if ( $('#load_table_tasks') ) {
         load_tasks();
-    }
+    };
 })

@@ -4,10 +4,10 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = patterns('project.views',
-
     url( r'^$',              'projects'	   ),
     url( r'^project$',       'show_project'),
     url( r'^edit_project$',  'edit_project'),
+    url( r'^edit_project/new$',  'edit_project', {'new' : True}),
 )
 
 urlpatterns += staticfiles_urlpatterns()

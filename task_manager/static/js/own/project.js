@@ -27,7 +27,7 @@ $(document).ready(function(){
 	};
 
 	$(document).on('click','.edit-project', function(){
-		show_form_project( $(this).attr('id') );
+		show_form_project($(this).attr('id'));
 	});
 
 	$(document).on('click', '.add-project', function(){

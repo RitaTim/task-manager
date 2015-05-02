@@ -13,12 +13,10 @@ from django.core.cache import cache
 from datetime          import datetime
 import logging
 
-def edit_project(request):	
+def edit_project(request, new = False):	
 	if request.method == "POST":
-		logging.info(request.POST['text'])
-		project_id = cache.get('project_id')
-		if project_id:
-			project = Project.objects.get(id = project_id) 
+		if not new:
+			project = Project.objects.get(id = cache.get('project_id')) 
 			form 	= ProjectForm(request.POST, request.FILES, instance = project)
 		else:
 			form = ProjectForm(request.POST, request.FILES)
@@ -37,9 +35,10 @@ def edit_project(request):
 			project_id = request.GET['project_id']
 			project = Project.objects.get(id = project_id)
 			args['form'] = ProjectForm(instance = project)
-			args['project'] = Project.objects.filter(id = project_id).values('id', 'title', 'text', 'leader__username', 'logo')[0]
+			args['project'] = Project.objects.filter(id = project_id).values('id', 'title', 'text', 'leader__username', 'logo')[0] 
 		else:
-			args['form'] = ProjectForm()		
+			args['form'] = ProjectForm()
+			args['new'] = '/new'		
 
 		return render_to_response('project_edit.html', args)
 
