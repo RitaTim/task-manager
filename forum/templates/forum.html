@@ -1,34 +1,48 @@
 {% extends "main.html" %}
 
 {% block title %}
-	{{project.title}}
+	Форум
 {% endblock %}
 
-{% block content%}	
-	<div class="row margin-right-2">
-		{% if forums %}
-			<div class="col-sm-2">
-				<div class="box-form col-sm-12">
-					{% for forum in forums %}
-						<a><label class="forum col-sm-12" id="{{forum.id}}">{{forum.title}}</label></a>
-					{% endfor %}
+{% block content%}
+<div class="row">
+	<div class='col-sm-12'>
+		<div class='box info-item'>
+			<div class='box-header'>
+				<div class="row">
+					<div class='title'  id="project">
+						<h3>{{ cache.project_title }}</h3>
+					</div>
 				</div>
+			</div>
 
-				<a class="add-forum col-sm-12"><i class="fa fa-plus text-success"></i> Создать</a>
-			</div>
-			<div class="col-sm-10 box-comments" id="box_comments">
-			</div>
-		{% else %}
-			<div class="col-sm-2">
-				<a class="add-forum col-sm-12"><i class="fa fa-plus text-success"></i> Создать</a>
-			</div>
-			<div class="col-sm-10 box-form">
-				В данном проекте нет ни одного форума
-			</div>
-		{% endif %}
-	</div>	
+			<div class="row margin-right-2">
+				{% if forums %}
+					<div class="col-sm-2">
+						<div class="box-form col-sm-12">
+							{% for forum in forums %}
+								<a><div class="forum col-sm-12" id="{{forum.id}}">{{forum.title}}</div></a>
+								<hr>
+							{% endfor %}
+						</div>
 
-	{% load staticfiles %}
+						<a class="add-forum col-sm-12"><i class="fa fa-plus text-success"></i> Создать</a>
+					</div>
+					<div class="col-sm-10 box-comments" id="box_comments">
+					</div>
+				{% else %}
+					<div class="col-sm-2">
+						<a class="add-forum col-sm-12"><i class="fa fa-plus text-success"></i> Создать</a>
+					</div>
+					<div class="col-sm-10 box-form">
+						В данном проекте нет ни одного форума
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% load staticfiles %}
 	<script src = "{% static 'js/own/forum.js' %}"></script>
 {% endblock %}
 

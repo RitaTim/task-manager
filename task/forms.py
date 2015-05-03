@@ -6,6 +6,6 @@ class TaskForm(forms.ModelForm):
 	
 	class Meta:
 		model = Task
-		fields = ('title', 'type_task', 'text', 'assigned', 'priority', 'iterate', 'dead_line','main_task', 'project', 'entrasted')
+		fields = ('title', 'type_task', 'text', 'assigned', 'priority', 'status', 'iterate', 'dead_line','main_task', 'project', 'entrasted')
 
 

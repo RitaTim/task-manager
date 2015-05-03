@@ -50,7 +50,7 @@ $(document).ready(function() {
     var lst_tasks_dom = function(tasks){
         lst_res = '';
         $.each( tasks, function( index, task ){
-            lst_res += "<li class = '" + task.style + (task.main_task ? " subtask " : " ") + "board_item board_item_color' id=" + task.id + "><a><b><p class='task_title' id='" + task.id + "'>" + task.title + "</p></b></a><div class='board_item_text'><div class='col-sm-9'>" + task.text + "</div><div class='col-sm-2 assigned-ticket text-center'>" + task.assigned__username + "</div></div></li>";
+            lst_res += "<li class = '" + task.style + (task.main_task ? " subtask " : " ") + "board_item board_item_color' id=" + task.id + "><a><b><p class='task_title' id='" + task.id + "'>" + task.title + "</p></b></a><div class='board_item_text'><div class='col-sm-8'>" + task.text + "</div><div class='col-sm-2 assigned-ticket text-center'>" + task.assigned__username + "</div></div></li>";
         })
         return lst_res;
     };

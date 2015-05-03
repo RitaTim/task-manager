@@ -8,48 +8,44 @@
 {% block content%}	  
 	<div class="row">
 		<div class='col-sm-12'>
-			<div class='box'>
+			<div class='box info-item'>
 				<div class='box-header'>
-	                <div class = "row">
+	                <div class="row">
+	                	<div class='title'  id="project">
+	                        <h3>{{ project.title }}</h3>
+	                    </div>
 					    <form href="/projects/edit_project/{{project.id}}" action="GET">
 					    	<div class = "row">
-								<div class="info-item">
-									<div  id="project">
-										<h2 class='title marg_10'>{{project.title}}</h2>
+								<div class="col-md-6 describe">
+									<textarea class="text" name="text" hidden>
+										{{ project.text }}
+									</textarea>
+
+									<div class="marg_top">
+										Руководитель проекта: {{project.leader__username}}
 									</div>
-
-									<div class="col-md-8 describe">
-										<textarea class="text" name="text" hidden>
-											{{ project.text }}
-										</textarea>
-
+									{% if editor %}
 										<div class="marg_top">
-											Руководитель проекта: {{project.leader__username}}
+											<a class="edit-project" id="{{project.id}}">
+												<i class="fa fa-2x fa-pencil-square-o"></i>
+											</a>
 										</div>
-										{% if editor %}
-											<div class="marg_top">
-												<a class="edit-project" id="{{project.id}}">
-													<i class="fa fa-2x fa-pencil-square-o"></i>
-												</a>
-											</div>
-										{% endif %}
-									</div>
+									{% endif %}
+								</div>
 
-									<div class="col-md-4">
-										<img src="/media/{{ project.logo }}" class="logo-project">
-									</div>									
-								</div><!--info-item-->
+								<div class="col-md-6">
+									<img src="/media/{{ project.logo }}" class="logo-project">
+								</div>
 							</div><!--row-->
 
 							<div class = "row">
 								<div class="col-md-6 info-item half-block left-half-block">
-									<h3 class="title marg_10">Последние добавленные задачи</h3>
+									<h4 class="title marg_10">Последние добавленные задачи</h4>
 									{% if new_tasks %}
 										<table class="table data-table table-striped">
 											<thead>
 												<tr>
-													<td> Задача      </td>		
-													<td> Автор		 </td>
+													<td> Задача      </td>
 													<td> Исполнитель </td>
 													<td> Тип         </td>
 												</tr>
@@ -62,7 +58,6 @@
 																{{task.title}}
 															</a>
 														</td>
-														<td> {{task.entrasted__username}} </td>
 														<td> {{task.assigned__username}}  </td>
 														<td> {{task.type_task}}	          </td>
 													</tr>
@@ -74,11 +69,13 @@
 								
 								<div class="col-md-6 info-item half-block">							   			
 									<a href='#' data-toggle='tooltip' title='Текущая итерация'>
-										<h3 class="title">{{ iterate_title }}</h3>
+										<h4 class="title">{{ iterate_title }}</h4>
 									</a>
 
 									<div class="row">
-										<div class="time-iterate"></div>
+										<div>
+											<h5 class="time-iterate padding_left_20"></h5>
+										</div>
 										<div class="graphic margin_20" id="graphic"></div>
 									</div>
 							   	</div><!--info-item-->

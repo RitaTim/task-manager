@@ -95,9 +95,9 @@ $(document).ready(function(){
             dataType: "json",
             success : function(data) {
                 if (data.data_tasks){
-                    size = iterate_id ? [ window.innerWidth * 0.85, window.innerHeight * 0.55 ] : [ window.innerWidth * 0.35, window.innerHeight * 0.35 ];
+                    size = iterate_id ? [ window.innerWidth * 0.70, window.innerHeight * 0.55 ] : [ window.innerWidth * 0.32, window.innerHeight * 0.33 ];
                     render_chart(data, size);
-                    $('.time-iterate').html('<h4>' + data.iterate_time.start_line + ' - ' + data.iterate_time.dead_line + '</h4>');
+                    $('.time-iterate').html(data.iterate_time.start_line + ' - ' + data.iterate_time.dead_line);
                 }
             },
             error : function(err) {
@@ -109,8 +109,9 @@ $(document).ready(function(){
     var load_data = function(){
         var iterate_id = $("#which_iteration option:selected").attr('id');
         if (iterate_id) {
-            load_statistic( iterate_id );
-            load_highcharts( iterate_id) ;
+            load_statistic(iterate_id);
+            load_highcharts(iterate_id);
+            $('.info-item').height($('.info-item').innerHeight()/3 + Math.max($('.canvasjs-chart-canvas').innerHeight(), $('#tab1').innerHeight()));
         }
         else {
             load_highcharts();

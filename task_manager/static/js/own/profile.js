@@ -1,21 +1,5 @@
 $(document).ready(function(){ 	
 
-    var show_task = function(id_task) {
-        $.ajax({
-            url : "/profile/"+id_task, 
-            type : "GET",
-            success : function(data) {
-                $('#describe_task').prop("hidden", false);
-                $('#title_task').text(data.title);
-                $('.redactor_editor').html(data.text);
-                load_comments(id_task);
-            },
-            error : function(err) {
-                alert("Fail GET /task/get_task");
-            }
-        })
-    }
-
     var load_comments = function(id_task){
         $.ajax({
           url : "/comment/get_comments", 
@@ -35,7 +19,7 @@ $(document).ready(function(){
     var lst_item_dom = function(items){
         lst_res = '';
         $.each( items, function( index, value ){
-            lst_res += "<li id=" + value.id + ">" + value.title + "</li>";
+            lst_res += "<li id=" + value.id + " class='task_title'>" + value.title + "</li>";
         });
         return lst_res;
     };
@@ -66,7 +50,7 @@ $(document).ready(function(){
             success : function(data) {
                 var lst_progress = "";
                 $.each( data.progress_bar, function( index, value ){
-                    lst_progress += "<div id='" + value.id + "' class='progress-bar " + value.css_class + "' role='progressbar' style='width:" + value.width + "%'><a href='#' data-toggle='tooltip' title='Выполнение: " + value.perform_time+ "'>" + value.title + "</a></div>";
+                    lst_progress += "<div id='" + value.id + "' class='progress-bar task_title " + value.css_class + "' role='progressbar' style='width:" + value.width + "%'><a href='#' data-toggle='tooltip' title='Выполнение: " + value.perform_time+ "'>" + value.title + "</a></div>";
                 });
                 $('#progress-bar').html(lst_progress);
                 $('#time-iterate').html('<label>' + data.iterate_time.start_line + ' - ' + data.iterate_time.dead_line + '</label>');
@@ -110,6 +94,7 @@ $(document).ready(function(){
             type : "GET",
             success : function(data) { 
                 $('.modal-body').html(data);
+                $('.btn-modal').empty();
                 $('#myModal').modal('show');
             },
             error : function(err) {
@@ -133,14 +118,6 @@ $(document).ready(function(){
     $('#iterates-menu').on('change', function(){
         $('#describe_task').prop("hidden", true);
         fill_fields();
-    });
-
-	$(document).on('click', '.tasks-menu > li', function(){
-		show_task($(this).prop("id"));
-	});
-
-    $(document).on('click', '#progress-bar > div', function(){
-        show_task($(this).prop("id"));
     });
 
     if ( $('select').is('#iterates-menu') ) {

@@ -12,34 +12,31 @@
 {% block content%}	
 	<div class="row">
 		<div class='col-sm-12'>
-			<div class='box'>
+			<div class='box info-item'>
 				<div class='box-header'>
-	                <div class = "row">
-	                    <div class = 'title col-sm-2'  id="project" id_project="{{ cache.project_id }}">
-	                        <h3>{{ cache.project_title }}</h3>
-	                    </div>
-	                </div>
+					<div class="row">
+						<div class='title'  id="project">
+							<h3>{{ cache.project_title }}</h3>
+						</div>
 
-	                <div class="row">
-						<h5 class="col-sm-3">Количество дней в итерации по умолчанию: </h5> 
-						<h5 id="value_iterate_days" class="col-sm-1">
-							<a class="iterate_days" > {{ iterate_days }} </a> 
-						</h5>
-						<h5 id="input_iterate_days" class="col-sm-4" hidden> 
-							<input id="iterate_days" class="col-sm-2" type="number" min="0" max="50" step="1" value="{{ iterate_days }}">
-							<a id="save_iterate_days" class="btn btn-default btn-xs marg_left">Сохранить</a>
-						</h5>
+						<div class="row">
+							<h4 class="col-sm-6">Количество дней в итерации по умолчанию: </h4> 
+							<h4 id="value_iterate_days" class="col-sm-4">
+								<a class="iterate_days" > {{ iterate_days }} </a> 
+							</h4>
+							<h4 id="input_iterate_days" class="col-sm-6" hidden> 
+								<input id="iterate_days" class="col-sm-2" type="number" min="0" max="50" step="1" value="{{ iterate_days }}">
+								<a id="save_iterate_days" class="btn btn-default btn-xs marg_left">Сохранить</a>
+							</h4>
+						</div>
 					</div>
 				</div>				
-
-				<div class="row">
-					<h4 class="title-table text-center marg_buttom_20">Итерации проекта <a class="add-iterate"><b>+</b></a></h4>
-				</div>
-
+				<hr>
 				<div class='box-table'>
 					<div class='responsive-table'>
 						<div class='scrollable-area' style= 'width:100%'>
 							<table class="table table-striped col-md-12" id="table_iterates">
+								<caption><h4>Итерации проекта <a class="add-iterate">+</a></h4></caption>
 			                    <thead>
 			                        <tr>
 										<th> Итерация </th>

@@ -31,6 +31,7 @@ $(document).ready(function(){
                 if (contents != 'describe') {
                     $('#edit_task').addClass('active');
                     $('#describe_task').removeClass('active');
+
                 }
                 else {
                     $('#describe_task').addClass('active'); 
@@ -52,7 +53,7 @@ $(document).ready(function(){
             success : function(data) {
                 $('#task-modal').html(data);
                 if ( contents === "all_form" ) {
-                    $('.btn-modal').html('<a><button class="btn btn-default toggle_form_task" title="' + id_task + '">Описание</button></a> <a><button class="btn btn-default toggle_form_task" title="' + id_task + '">Редактирование</button></a>');
+                    $('.btn-modal').html('<a><button class="btn btn-default toggle_form_task active" id="describe_btn" title="' + id_task + '">Описание</button></a> <a><button class="btn btn-default toggle_form_task" id="edit_btn" title="' + id_task + '">Редактирование</button></a>');
                 }
                 if ( contents === "edit" ){
                     $('#describe').hide();                    
@@ -123,8 +124,9 @@ $(document).ready(function(){
                 url : "/task/load_table_tasks", 
                 data: {'iteration_id' : iteration_id},
                 type : "GET",
-                success : function(data) {            
+                success : function(data) {          
                     $('#content_task_table').html(data);
+                    $('.info-item').height($('.info-item').innerHeight()/3 + $('.table').innerHeight())
                 },
                 error : function(err) {
                     alert("Fail GET /task/load_table_tasks");

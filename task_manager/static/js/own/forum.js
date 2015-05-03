@@ -29,7 +29,7 @@ $(document).ready(function(){
                   dataType: "html",
                   success : function(data) { 
                   	$('#box_comments').html(data);                        
-                        $('#title').addClass('h2');
+                        $('#title').addClass('h3');
                   	return false;
                   },
                   error : function(err) {
@@ -38,7 +38,7 @@ $(document).ready(function(){
             })
 	}
 
-	load_comments( $('.box-form a:first-child').find('label').prop('id') );
+	load_comments( $('.box-form a:first-child').find('div').prop('id') );
 
 	$('.forum').on('click', function(){
 		load_comments($(this).attr('id'));
