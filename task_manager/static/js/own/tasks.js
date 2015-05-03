@@ -53,7 +53,7 @@ $(document).ready(function(){
             success : function(data) {
                 $('#task-modal').html(data);
                 if ( contents === "all_form" ) {
-                    $('.btn-modal').html('<a><button class="btn btn-default toggle_form_task active" id="describe_btn" title="' + id_task + '">Описание</button></a> <a><button class="btn btn-default toggle_form_task" id="edit_btn" title="' + id_task + '">Редактирование</button></a>');
+                    $('.btn-modal').html('<a><button class="btn btn-default toggle_form_task" id="describe_btn" title="' + id_task + '">Редактирование</button></a>');
                 }
                 if ( contents === "edit" ){
                     $('#describe').hide();                    
@@ -156,8 +156,9 @@ $(document).ready(function(){
     });
 
     $(document).on('click','.toggle_form_task', function(){
-        $('#edit').toggle( 'display' );
-        $('#describe').toggle( 'display' );
+        $(this).text($('#edit').css('display')==="none" ? "Описание" : "Редактирование");
+        $('#edit').toggle('display');
+        $('#describe').toggle('display');        
     });
 
     $(document).on('change','#load_table_tasks', function(){
