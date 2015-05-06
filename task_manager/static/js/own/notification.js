@@ -6,6 +6,8 @@ $(document).ready(function(){
             data : {'action' : action},
             success : function(data) {
                 $('.modal-body').html(data);
+                $('.modal-dialog').width(500);
+                $('.modal-title').html("Оповещение");
                 $('.btn-modal').hide();
                 $('#myModal').modal('show');
             },

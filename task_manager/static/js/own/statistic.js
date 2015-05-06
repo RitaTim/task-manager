@@ -50,6 +50,7 @@ $(document).ready(function(){
             num_task -= 1;
         });                
 
+        console.log(data_points_real);
         var data_chart = {
             width: size[0],
             height: size[1],
@@ -95,7 +96,7 @@ $(document).ready(function(){
             dataType: "json",
             success : function(data) {
                 if (data.data_tasks){
-                    size = iterate_id ? [ window.innerWidth * 0.70, window.innerHeight * 0.55 ] : [ window.innerWidth * 0.32, window.innerHeight * 0.33 ];
+                    size = iterate_id ? [ window.innerWidth * 0.70, window.innerHeight * 0.50 ] : [ window.innerWidth * 0.32, window.innerHeight * 0.33 ];
                     render_chart(data, size);
                     $('.time-iterate').html(data.iterate_time.start_line + ' - ' + data.iterate_time.dead_line);
                 }

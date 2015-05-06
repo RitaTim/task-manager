@@ -242,6 +242,9 @@ a {
 	background-color: #f9f9f9;
 	margin-bottom: 10px;
 }
+.task_title{
+	font-size: 1em;
+}
 /*forum*/
 
 .box-comments{

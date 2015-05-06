@@ -92,8 +92,9 @@ $(document).ready(function(){
             type : "GET",
             success : function(data) {
                 $('.modal-body').html(data);
+                $('.modal-dialog').width(400);
                 $('.btn-modal').empty();
-                $('.modal-title').html("Склад задач");
+                $('.modal-title').html("Неназначенные задачи");
                 $('#myModal').modal('show');
             },
             error : function(err) {

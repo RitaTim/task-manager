@@ -11,7 +11,7 @@
 			<div class='box info-item'>
 				<div class='box-header'>
 	                <div class="row">
-	                	<div class='title'  id="project">
+	                	<div class='title marg_left_5'  id="project">
 	                        <h3>{{ project.title }}</h3>
 	                    </div>
 					    <form href="/projects/edit_project/{{project.id}}" action="GET">
@@ -21,11 +21,11 @@
 										{{ project.text }}
 									</textarea>
 
-									<div class="marg_top">
+									<div class="marg_top marg_left_5">
 										Руководитель проекта: {{project.leader__username}}
 									</div>
 									{% if editor %}
-										<div class="marg_top">
+										<div class="marg_top marg_left_5">
 											<a class="edit-project" id="{{project.id}}">
 												<i class="fa fa-2x fa-pencil-square-o"></i>
 											</a>
@@ -40,7 +40,9 @@
 
 							<div class = "row">
 								<div class="col-md-6 info-item half-block left-half-block">
-									<h4 class="title marg_10">Последние добавленные задачи</h4>
+									<div class="row">
+										<h4 class="title marg_10">Последние добавленные задачи</h4>
+									</div>
 									{% if new_tasks %}
 										<table class="table data-table table-striped">
 											<thead>
@@ -67,10 +69,12 @@
 									{% endif %}
 								</div><!--info-item-->
 								
-								<div class="col-md-6 info-item half-block">							   			
-									<a href='#' data-toggle='tooltip' title='Текущая итерация'>
-										<h4 class="title">{{ iterate_title }}</h4>
-									</a>
+								<div class="col-md-6 info-item half-block">	
+									<div class="row">
+										<a href='#' data-toggle='tooltip' title='Текущая итерация'>
+											<h4 class="title">{{ iterate_title }}</h4>
+										</a>
+									</div>
 
 									<div class="row">
 										<div>

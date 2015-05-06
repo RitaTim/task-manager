@@ -98,40 +98,44 @@
 										</div>
 										
 										<div class="row marg_buttom_20">
-											<h5 class="col-sm-3">Рабочее время:</h5>
+											<h5 class="col-sm-3 marg_left_5">Рабочее время:</h5>
 											<b><h5 id="spend-time"></h5></b>
 										</div>
 
-										<div class="row progress marg_left_20" id="progress-bar">
-										</div><!--row progress-->	
+										<div class="row">
+											<div class="progress marg_left_20" id="progress-bar">
+											</div><!--progress-->
+										</div>	
 
-										<div class="row marg_left_20 ">
-											<table class="table table-striped width-100p" id="table_articles">
-												<thead>
-													<tr>
-														<th> 
-															To do
-															<a class="assign_for_user">+</a>
-														</th>
-														<th> In progress </th>		
-														<th> Test		 </th>
-														<th> Done        </th>
-													</tr>
-									            </thead>
-									            <tbody>								            
-													<tr class="text-center">
-														{% for type in type_tasks %}
-													        <td class="dropdown" id="{{type}}">
-													            <a href="#" class="dropdown-toggle count-tasks" data-toggle="dropdown">
-													                
-													            </a> 
-																<ul class='dropdown-menu tasks-menu'>
-																</ul> 
-													        </td>
-													    {% endfor %}
-													</tr>
-									            </tbody>
-											</table>
+										<div class="row">
+											<div class="marg_left_20">
+												<table class="table table-striped width-100p" id="table_articles">
+													<thead>
+														<tr>
+															<th> 
+																To do
+																<a class="assign_for_user">+</a>
+															</th>
+															<th> In progress </th>		
+															<th> Test		 </th>
+															<th> Done        </th>
+														</tr>
+										            </thead>
+										            <tbody>								            
+														<tr class="text-center">
+															{% for type in type_tasks %}
+														        <td class="dropdown" id="{{type}}">
+														            <a href="#" class="dropdown-toggle count-tasks" data-toggle="dropdown">
+														                
+														            </a> 
+																	<ul class='dropdown-menu tasks-menu'>
+																	</ul> 
+														        </td>
+														    {% endfor %}
+														</tr>
+										            </tbody>
+												</table>
+											</div><!--marg_left_20-->
 										</div><!--row-->
 									</div><!--col-sm-11 col-sm-offset-1-->
 								{% endif %}

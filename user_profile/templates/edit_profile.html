@@ -1,13 +1,12 @@
 {% load bootstrap %}
 <div class="box-form">
-	<div class = "large-offset-3 large-6 columns">
+	<div class="large-offset-3 large-6 columns">
 		<form action="/profile/edit" method="post" enctype="multipart/form-data">
 			{% csrf_token %}
 			{{ user_form | bootstrap}}
 			{{ profile_form |bootstrap }}
 			<input class="button btn btn-default" type="submit" value="Сохранить">
 		</form>
-
 	</div>
 </div>
 					
