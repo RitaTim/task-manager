@@ -55,15 +55,21 @@ $(document).ready(function(){
                     $('.btn-modal').html('<a><button class="btn btn-default toggle_form_task" title="' + id_task + '">Описание</button></a> <a><button class="btn btn-default toggle_form_task" title="' + id_task + '">Редактирование</button></a>');
                 }
                 if ( contents === "edit" ){
-                    $('#describe').hide();
+                    $('#describe').hide();                    
                 }
                 else {
-                    $('#edit').hide();
+                    $('#edit').hide();                    
                 }
             	if (id_task) { 
                     load_comments(id_task);
-                };               
-            	$('#task-modal').modal('show');
+                };
+                $('#task-modal #id_text').redactor({minHeight: 200});
+            	$('#text').redactor({
+                        minHeight: 200,
+                        buttons: [],
+                        border: None
+                });
+                $('#task-modal').modal('show');
             },
             error : function(err) {
                 alert("Fail GET /task/task");
@@ -155,5 +161,4 @@ $(document).ready(function(){
     if ( $('#load_table_tasks') ) {
         load_tasks();
     }
-
 })

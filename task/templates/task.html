@@ -28,8 +28,10 @@
 								</div>								
 							{% endif %}
 
-							<div class="col-sm-6">
-								{{ task.text }}
+							<div class="col-sm-6 describe">
+								<textarea id="text" name="text">
+									{{ task.text }}
+								</textarea>
 							</div>
 
 							<div class="col-sm-6 data-task">

@@ -15,6 +15,7 @@ import logging
 
 def edit_project(request):	
 	if request.method == "POST":
+		logging.info(request.POST['text'])
 		project_id = cache.get('project_id')
 		if project_id:
 			project = Project.objects.get(id = project_id) 
@@ -24,7 +25,7 @@ def edit_project(request):
 
 		if not form.is_valid():
 			return HttpResponse("Форма не валидна")
-		
+
 		form.save()	
 
 		return redirect(request.META.get('HTTP_REFERER','/'))
@@ -36,7 +37,7 @@ def edit_project(request):
 			project_id = request.GET['project_id']
 			project = Project.objects.get(id = project_id)
 			args['form'] = ProjectForm(instance = project)
-			args['project'] = Project.objects.get(id = project_id)
+			args['project'] = Project.objects.filter(id = project_id).values('id', 'title', 'text', 'leader__username', 'logo')[0]
 		else:
 			args['form'] = ProjectForm()		
 
@@ -51,8 +52,13 @@ def projects(request):
 	return render_to_response('projects.html', args)
 
 def show_project(request):
+	project_id = request.GET.get('project_id', cache.get('project_id'))
+	cur_iterate = cache.get('iterate_id')
 	if 'project_id' in request.GET:
 		project_id = request.GET['project_id']
+		if not project_id == cache.get('project_id'):
+			cur_iterate = get_current_iterate(project_id)
+			cache.set('iterate_id', cur_iterate)
 		cache.set('project_id', project_id)
 	else:
 		project_id = cache.get('project_id')
@@ -61,12 +67,8 @@ def show_project(request):
 	args['project']   = Project.objects.filter(id = project_id).values('id', 'title', 'text', 'logo', 'leader__username', 'leader__id')[0]
 	cache.set('project_title', args['project']['title'])
 	
-	args['iterations'] = Iteration.objects.filter(project_id = project_id).values('id', 'title')
-	
-	cur_iterate = get_current_iterate(project_id)
-	cache.set('iterate_id', cur_iterate)
-	args['iterate_title'] = Iteration.objects.filter(id = cur_iterate).values('title')[0]['title']
 
+	args['iterate_title'] = Iteration.objects.filter(id = cur_iterate).values('title')[0]['title']
 	args['new_tasks'] = Task.objects.filter(project = project_id).values('title', 'id', 'entrasted__username', 'assigned__username', 'type_task') .order_by('-updated')[0:5]
 
 	args['cache'] = { 'user_name' : cache.get('user_name') }
