@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <title>Test coverage report: statistic.views</title>
+    <style type="text/css" media="screen">
+      a
+      {
+        color: #3d707a;
+      }
+      
+      a:hover, a:active
+      {
+        color: #bf7d18;
+      }
+    
+      body 
+      {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        font-size: 13px;
+      }
+      
+      .nav 
+      {
+        font-size: 12px;
+        margin-left: 50px;
+      }
+
+      .ignored
+      {
+        color: #707070;
+      }
+
+      .executed 
+      {
+        color: #3d9900;
+      }
+
+      .missed 
+      {
+        color: red;
+        font-weight: bold;
+      }
+
+      .excluded 
+      {
+        color: #6090f0;
+        font-weight: lighter;
+      }
+    
+      #content-header 
+      {
+        font-size: 12px;
+        padding: 18px 0 18px 50px;
+      }
+
+      #content-header h1 
+      {
+        font-size: 16px;
+        margin: 10px 0 0 0;
+        color: #909090;
+      }
+      
+      #module-name
+      {
+        color: #583707;
+      }
+    
+      #content-header p
+      {
+        font-size: 13px;
+        margin: 0;
+        color: #909090;
+      }
+
+      #content-header .normal 
+      {
+        color: #609030;
+      }
+
+      #content-header .warning 
+      {
+        color: #d0a000;
+      }
+
+      #content-header .critical 
+      {
+        color: red;
+      }
+      
+      #source-listing 
+      {
+        margin-bottom: 24px;
+      }
+
+      #source-listing ol 
+      {
+        padding: 0 0 0 50px;
+        width: 90%;
+        font-family: monospace;
+        list-style-position: outside;
+      }
+
+      #source-listing ol li 
+      {
+        line-height: 18px;
+        font-size: small;
+      }
+        
+      #source-listing ol code 
+      {
+        padding:  0 .001em 0 0; /* Firefox doesn't render empty li's properly */
+        font-size: medium;
+        white-space: pre;
+      }
+   </style>
+  </head>
+
+  <body>
+
+<div class="nav">
+  <a href="statistic.models.html">statistic.models</a> &lt;&lt;
+  <a href="../index.html">index</a>
+  &gt;&gt; <a href="task.admin.html">task.admin</a>
+</div>
+
+<div id="content-header">
+  <h1>
+    <span id="module-name">statistic.views</span>:
+    109 total statements,
+    <span class="critical">5.3% covered</span>
+  </h1>
+  <p>Generated: Thu 2015-05-07 01:13 UTC</p>
+  <p>Source file: /home/rita/Documents/task_manager/statistic/views.py</p>
+  <p>
+    Stats:
+    <span class="executed">5 executed</span>,
+    <span class="missed">89 missed</span>,
+    <span class="excluded">15 excluded</span>,
+    <span class="ignored">55 ignored</span> 
+  </p> 
+</div>
+
+<div id="source-listing">
+  <ol>
+    <li class="ignored"><code>#-*-coding: utf-8 -*-</code></li>
+<li class="excluded"><code>from django.core.context_processors import csrf</code></li>
+<li class="excluded"><code>from django.core.exceptions import ObjectDoesNotExist</code></li>
+<li class="excluded"><code>from django.shortcuts       import render_to_response, redirect</code></li>
+<li class="excluded"><code>from task_manager.utils     import get_users_project</code></li>
+<li class="excluded"><code>from django.http.response   import HttpResponse, Http404</code></li>
+<li class="excluded"><code>from task.models            import Task</code></li>
+<li class="excluded"><code>from project.models         import Project</code></li>
+<li class="excluded"><code>from iteration.models       import Iteration</code></li>
+<li class="excluded"><code>from django.db.models       import Q</code></li>
+<li class="excluded"><code>from datetime               import datetime, timedelta</code></li>
+<li class="excluded"><code>from django.utils           import timezone</code></li>
+<li class="excluded"><code>from django.core.cache      import cache</code></li>
+<li class="excluded"><code>from django.db.models       import Count</code></li>
+<li class="excluded"><code>import json</code></li>
+<li class="excluded"><code>import logging</code></li>
+<li class="ignored"><code></code></li>
+<li class="executed"><code>def statistic_users(request):</code></li>
+<li class="missed"><code>	args = {}</code></li>
+<li class="missed"><code>	args['cache'] = cache.get_many( [ 'project_id', 'user_name', 'project_title', 'iterate_id' ])</code></li>
+<li class="missed"><code>	users         = get_users_project( args['cache']['project_id'] )['dict_users']</code></li>
+<li class="missed"><code>	iterate_id    = request.GET['iterate_id'] if 'iterate_id' in request.GET else cache.get('iterate_id')</code></li>
+<li class="missed"><code>	data_users = []</code></li>
+<li class="missed"><code>	for user in users:</code></li>
+<li class="missed"><code>		data_users.append({</code></li>
+<li class="ignored"><code>			'user_name' : user['assigned__username'],</code></li>
+<li class="ignored"><code>			'user_id'   : user['assigned'],</code></li>
+<li class="ignored"><code>		})</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	args['data_users'] = data_users</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	try:</code></li>
+<li class="missed"><code>		args['iterations'] = Iteration.objects.filter(project = args['cache']['project_id'] ).values('title', 'id')</code></li>
+<li class="missed"><code>	except Iteration.DoesNotExist:</code></li>
+<li class="missed"><code>		args['iterations'] = []</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	return render_to_response('statistic.html', args)</code></li>
+<li class="ignored"><code></code></li>
+<li class="executed"><code>def get_progress_bar_user(request, user_id = None, iterate_id = None):</code></li>
+<li class="missed"><code>	for_statistic = False</code></li>
+<li class="missed"><code>	if 'user_id' in request.GET:</code></li>
+<li class="missed"><code>		user_id = request.GET['user_id']</code></li>
+<li class="missed"><code>	elif not user_id:</code></li>
+<li class="missed"><code>		user_id = cache.get('user_id')</code></li>
+<li class="ignored"><code>	else:</code></li>
+<li class="missed"><code>		for_statistic = True</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	if 'iterate_id' in request.GET:</code></li>
+<li class="missed"><code>		iterate_id = request.GET['iterate_id']</code></li>
+<li class="missed"><code>	elif not iterate_id:</code></li>
+<li class="missed"><code>		iterate_id = cache.get('iterate_id')</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	tasks = Task.objects.filter( Q(assigned = user_id) &amp; Q(iterate = iterate_id) &amp; ( Q(status = 'in_progress') | Q(status = 'done') ) ).order_by('-status').values('status', 'start_time', 'end_time', 'title', 'id', 'priority')</code></li>
+<li class="missed"><code>	to_progress_bar = []</code></li>
+<li class="missed"><code>	sum_work_time = timedelta(0)</code></li>
+<li class="missed"><code>	today_time = timezone.now()</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	for task in tasks:</code></li>
+<li class="missed"><code>		if task['status'] == "done":</code></li>
+<li class="missed"><code>			task['perform_time'] = task['end_time'] - task['start_time']</code></li>
+<li class="ignored"><code>		else:</code></li>
+<li class="missed"><code>			task['perform_time'] = today_time - task['start_time']</code></li>
+<li class="missed"><code>		sum_work_time += task['perform_time']</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	for task in tasks:</code></li>
+<li class="missed"><code>		data_task = {</code></li>
+<li class="ignored"><code>			'id'           : task['id'],</code></li>
+<li class="ignored"><code>			'width'        : (task['perform_time'].total_seconds() * 100) / sum_work_time.total_seconds(),</code></li>
+<li class="ignored"><code>			'perform_time' : str(task['perform_time']).split('.')[0],</code></li>
+<li class="ignored"><code>			'title'        : task['title'],</code></li>
+<li class="ignored"><code>			'css_class'    : 'progress-bar-striped active '+_get_class_progress_by_priority(task['priority']) if task['status'] == 'in_progress' else _get_class_progress_by_priority(task['priority'])</code></li>
+<li class="ignored"><code>		}</code></li>
+<li class="missed"><code>		to_progress_bar.append(data_task)</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	res_data = { 'all_time': str(sum_work_time).split('.')[0], 'progress_bar' : to_progress_bar}</code></li>
+<li class="missed"><code>	if not for_statistic:</code></li>
+<li class="missed"><code>		return HttpResponse(json.dumps(res_data), content_type='application/json')</code></li>
+<li class="ignored"><code>	else:</code></li>
+<li class="missed"><code>		return res_data</code></li>
+<li class="ignored"><code></code></li>
+<li class="executed"><code>def get_progress_users(request, iterate_id = None, lst_users_id = []):</code></li>
+<li class="missed"><code>	iterate_id   = request.GET['iterate_id'] if 'iterate_id' in request.GET else cache.get('iterate_id')</code></li>
+<li class="missed"><code>	lst_users_id = json.loads(request.GET['lst_users_id']) if 'lst_users_id' in request.GET else []</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	data_users = {}</code></li>
+<li class="missed"><code>	for user_id in lst_users_id:</code></li>
+<li class="missed"><code>		data_users[user_id] = get_progress_bar_user( request = request, user_id = user_id, iterate_id = iterate_id )</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	iterate = Iteration.objects.filter(id = iterate_id).values('start_line', 'dead_line')[0]</code></li>
+<li class="missed"><code>	iterate_time = {</code></li>
+<li class="ignored"><code>		'start_line' : iterate['start_line'].strftime('%Y-%m-%d %H:%M'),</code></li>
+<li class="ignored"><code>		'dead_line'  : iterate['dead_line' ].strftime('%Y-%m-%d %H:%M'),</code></li>
+<li class="ignored"><code>	}</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	args = {}</code></li>
+<li class="missed"><code>	args['data_users']   = data_users</code></li>
+<li class="missed"><code>	args['iterate_time'] = iterate_time</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	return HttpResponse(json.dumps(args), content_type='application/json')</code></li>
+<li class="ignored"><code></code></li>
+<li class="executed"><code>def get_data_graphic(request, iterate_id = None):</code></li>
+<li class="missed"><code>	iterate_id = request.GET.get('iterate_id', cache.get('iterate_id'))</code></li>
+<li class="missed"><code>	current_iterate = True if (str(cache.get('iterate_id')) == iterate_id) else False</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	tasks = Task.objects.filter( iterate=iterate_id, status="done" ).values( 'id', 'title', 'start_time', 'end_time' )</code></li>
+<li class="missed"><code>	if not tasks:</code></li>
+<li class="missed"><code>		return HttpResponse(json.dumps({}), content_type='application/json')</code></li>
+<li class="missed"><code>	iterate = Iteration.objects.filter(id=iterate_id).values('start_line', 'dead_line')[0]</code></li>
+<li class="missed"><code>	iterate_time = {</code></li>
+<li class="ignored"><code>		'start_line' : iterate['start_line'],</code></li>
+<li class="ignored"><code>		'dead_line'  : iterate['dead_line' ],</code></li>
+<li class="ignored"><code>	}</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	data_tasks = []</code></li>
+<li class="missed"><code>	work_time = timedelta()</code></li>
+<li class="missed"><code>	for task in tasks:</code></li>
+<li class="missed"><code>		perform_time = task['end_time'] - task['start_time']</code></li>
+<li class="missed"><code>		work_time += perform_time</code></li>
+<li class="missed"><code>		data_tasks.append(</code></li>
+<li class="ignored"><code>			{</code></li>
+<li class="ignored"><code>				'id_task'      : task['id'],</code></li>
+<li class="ignored"><code>				'title_task'   : task['title'],</code></li>
+<li class="ignored"><code>				'perform_time' : perform_time,</code></li>
+<li class="ignored"><code>			}</code></li>
+<li class="ignored"><code>		)</code></li>
+<li class="ignored"><code></code></li>
+<li class="ignored"><code>	# calc koeff empty time</code></li>
+<li class="missed"><code>	spend_time_iter = (timezone.now() - iterate['start_line']) if current_iterate else (iterate['dead_line'] - iterate['start_line'])</code></li>
+<li class="missed"><code>	empty_time = spend_time_iter - work_time</code></li>
+<li class="missed"><code>	count_done_tasks = len(data_tasks)</code></li>
+<li class="missed"><code>	k_emty_time = empty_time/count_done_tasks</code></li>
+<li class="missed"><code>	starting_point = iterate_time['start_line']</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	for task in data_tasks:</code></li>
+<li class="missed"><code>		task['x_coordinate'] = (starting_point + task['perform_time'] + k_emty_time).strftime('%Y-%m-%d %H:%M')</code></li>
+<li class="missed"><code>		starting_point += task['perform_time'] + k_emty_time</code></li>
+<li class="missed"><code>		task['perform_time'] = str(task['perform_time'])</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	iterate_time = {</code></li>
+<li class="ignored"><code>		'start_line' : iterate['start_line'].strftime('%Y-%m-%d %H:%M'),</code></li>
+<li class="ignored"><code>		'dead_line'  : iterate['dead_line' ].strftime('%Y-%m-%d %H:%M'),</code></li>
+<li class="ignored"><code>	}</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	args = {}</code></li>
+<li class="missed"><code>	args['data_tasks']   = data_tasks</code></li>
+<li class="missed"><code>	args['iterate_time'] = iterate_time</code></li>
+<li class="missed"><code>	args['count_tasks']  = Task.objects.filter(iterate = iterate_id).count()</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>	return HttpResponse(json.dumps(args), content_type='application/json')</code></li>
+<li class="ignored"><code></code></li>
+<li class="ignored"><code></code></li>
+<li class="executed"><code>def _get_class_progress_by_priority(priority):</code></li>
+<li class="missed"><code>	if priority == 0:</code></li>
+<li class="missed"><code>		return ''</code></li>
+<li class="missed"><code>	elif priority == 1:</code></li>
+<li class="missed"><code>		return 'progress-bar-warning'</code></li>
+<li class="missed"><code>	elif priority == 2:</code></li>
+<li class="missed"><code>		return 'progress-bar-success'</code></li>
+<li class="missed"><code>	elif priority == 3:</code></li>
+<li class="missed"><code>		return 'progress-bar-info'</code></li>
+<li class="missed"><code>	elif priority == 4:</code></li>
+<li class="missed"><code>		return 'progress-bar-danger'</code></li>
+<li class="ignored"><code>	else:</code></li>
+<li class="missed"><code>		return 'progress-bar-black'</code></li>
+  </ol>
+</div>
+
+<div class="nav">
+  <a href="statistic.models.html">statistic.models</a> &lt;&lt;
+  <a href="../index.html">index</a>
+  &gt;&gt; <a href="task.admin.html">task.admin</a>
+</div>
+
+  </body>
+</html>
+

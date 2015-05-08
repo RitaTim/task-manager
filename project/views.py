@@ -16,17 +16,14 @@ import logging
 def edit_project(request, new = False):	
 	if request.method == "POST":
 		if not new:
-			project = Project.objects.get(id = cache.get('project_id')) 
+			project = Project.objects.get(id = request.POST.get('project_id', cache.get('project_id')) ) 
 			form 	= ProjectForm(request.POST, request.FILES, instance = project)
 		else:
 			form = ProjectForm(request.POST, request.FILES)
 
-		if not form.is_valid():
-			return HttpResponse("Форма не валидна")
-
-		form.save()	
-
-		return redirect(request.META.get('HTTP_REFERER','/'))
+		if form.is_valid():
+			form.save()	
+			return redirect(request.META.get('HTTP_REFERER','/'))
 	else: # GET
 		args={}
 		args.update(csrf(request))
@@ -58,16 +55,16 @@ def show_project(request):
 		if not project_id == cache.get('project_id'):
 			cur_iterate = get_current_iterate(project_id)
 			cache.set('iterate_id', cur_iterate)
-		cache.set('project_id', project_id)
+			cache.set('project_id', project_id)
 	else:
 		project_id = cache.get('project_id')
 	
 	args = {}
-	args['project']   = Project.objects.filter(id = project_id).values('id', 'title', 'text', 'logo', 'leader__username', 'leader__id')[0]
+	args['project'] = Project.objects.filter(id = project_id).values('id', 'title', 'text', 'logo', 'leader__username', 'leader__id')[0]
 	cache.set('project_title', args['project']['title'])
 	
-
-	args['iterate_title'] = Iteration.objects.filter(id = cur_iterate).values('title')[0]['title']
+	iterate = Iteration.objects.filter(id = cur_iterate)
+	args['iterate_title'] = iterate[0].title if iterate else 'Нет итерации'
 	args['new_tasks'] = Task.objects.filter(project = project_id).values('title', 'id', 'entrasted__username', 'assigned__username', 'type_task') .order_by('-updated')[0:5]
 
 	args['cache'] = { 'user_name' : cache.get('user_name') }

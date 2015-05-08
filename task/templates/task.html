@@ -102,7 +102,7 @@
 							<form action = "/task/task/{{task_id}}" method = "post" enctype="multipart/form-data">
 								{% csrf_token %}
 								{{ form|bootstrap }}
-								<input class="button" type="submit" value="Сохранить" id="save">		
+								<input class="button btn-default btn" type="submit" value="Сохранить" id="save">		
 							</form>
 						</div>
 					{% endif %}

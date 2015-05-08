@@ -46,7 +46,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.formtools',
     'django.utils.log',
-    'debug_toolbar',
+    #'debug_toolbar',
     'django.contrib.staticfiles',
     'auth',
     'bootstrapform',
@@ -63,7 +63,10 @@ INSTALLED_APPS = (
     'notification',
     'jquery',
     'file',
+    'django_coverage',
 )
+
+COVERAGE_REPORT_HTML_OUTPUT_DIR = os.path.join(BASE_DIR, 'cover')
 
 AUTH_PROFILE_MODEL = 'user_profile.UserProfile'
 

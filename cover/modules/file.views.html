@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <title>Test coverage report: file.views</title>
+    <style type="text/css" media="screen">
+      a
+      {
+        color: #3d707a;
+      }
+      
+      a:hover, a:active
+      {
+        color: #bf7d18;
+      }
+    
+      body 
+      {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        font-size: 13px;
+      }
+      
+      .nav 
+      {
+        font-size: 12px;
+        margin-left: 50px;
+      }
+
+      .ignored
+      {
+        color: #707070;
+      }
+
+      .executed 
+      {
+        color: #3d9900;
+      }
+
+      .missed 
+      {
+        color: red;
+        font-weight: bold;
+      }
+
+      .excluded 
+      {
+        color: #6090f0;
+        font-weight: lighter;
+      }
+    
+      #content-header 
+      {
+        font-size: 12px;
+        padding: 18px 0 18px 50px;
+      }
+
+      #content-header h1 
+      {
+        font-size: 16px;
+        margin: 10px 0 0 0;
+        color: #909090;
+      }
+      
+      #module-name
+      {
+        color: #583707;
+      }
+    
+      #content-header p
+      {
+        font-size: 13px;
+        margin: 0;
+        color: #909090;
+      }
+
+      #content-header .normal 
+      {
+        color: #609030;
+      }
+
+      #content-header .warning 
+      {
+        color: #d0a000;
+      }
+
+      #content-header .critical 
+      {
+        color: red;
+      }
+      
+      #source-listing 
+      {
+        margin-bottom: 24px;
+      }
+
+      #source-listing ol 
+      {
+        padding: 0 0 0 50px;
+        width: 90%;
+        font-family: monospace;
+        list-style-position: outside;
+      }
+
+      #source-listing ol li 
+      {
+        line-height: 18px;
+        font-size: small;
+      }
+        
+      #source-listing ol code 
+      {
+        padding:  0 .001em 0 0; /* Firefox doesn't render empty li's properly */
+        font-size: medium;
+        white-space: pre;
+      }
+   </style>
+  </head>
+
+  <body>
+
+<div class="nav">
+  <a href="file.models.html">file.models</a> &lt;&lt;
+  <a href="../index.html">index</a>
+  &gt;&gt; <a href="forum.admin.html">forum.admin</a>
+</div>
+
+<div id="content-header">
+  <h1>
+    <span id="module-name">file.views</span>:
+    19 total statements,
+    <span class="critical">46.2% covered</span>
+  </h1>
+  <p>Generated: Thu 2015-05-07 01:13 UTC</p>
+  <p>Source file: /home/rita/Documents/task_manager/file/views.py</p>
+  <p>
+    Stats:
+    <span class="executed">6 executed</span>,
+    <span class="missed">7 missed</span>,
+    <span class="excluded">6 excluded</span>,
+    <span class="ignored">9 ignored</span> 
+  </p> 
+</div>
+
+<div id="source-listing">
+  <ol>
+    <li class="excluded"><code>import json</code></li>
+<li class="ignored"><code></code></li>
+<li class="excluded"><code>from django.http import HttpResponse</code></li>
+<li class="excluded"><code>from django.views.decorators.csrf import csrf_exempt</code></li>
+<li class="excluded"><code>from django.views.decorators.http import require_POST</code></li>
+<li class="ignored"><code></code></li>
+<li class="excluded"><code>from django.contrib.auth.decorators import login_required</code></li>
+<li class="ignored"><code></code></li>
+<li class="excluded"><code>from models import File</code></li>
+<li class="ignored"><code></code></li>
+<li class="executed"><code>@csrf_exempt</code></li>
+<li class="executed"><code>@require_POST</code></li>
+<li class="executed"><code>@login_required</code></li>
+<li class="executed"><code>def upload(request, is_img=False):</code></li>
+<li class="missed"><code>	files = []</code></li>
+<li class="missed"><code>	for f in request.FILES.getlist('file'):</code></li>
+<li class="missed"><code>		obj = File.objects.create(upload=f, is_image=is_img)</code></li>
+<li class="missed"><code>		files.append({'filelink': obj.upload.url, 'filename':  obj.upload.url})</code></li>
+<li class="missed"><code>	return HttpResponse(json.dumps(files), mimetype="application/json")</code></li>
+<li class="ignored"><code></code></li>
+<li class="ignored"><code></code></li>
+<li class="executed"><code>@login_required</code></li>
+<li class="executed"><code>def recent(request, is_img=False):</code></li>
+<li class="missed"><code>	files = [</code></li>
+<li class="ignored"><code>		{"thumb": obj.upload.url, "file": obj.upload.url}</code></li>
+<li class="ignored"><code>		for obj in File.objects.filter(is_image=is_img).order_by("-created")[:20]</code></li>
+<li class="ignored"><code>	]</code></li>
+<li class="missed"><code>	return HttpResponse(json.dumps(files), mimetype="application/json")</code></li>
+  </ol>
+</div>
+
+<div class="nav">
+  <a href="file.models.html">file.models</a> &lt;&lt;
+  <a href="../index.html">index</a>
+  &gt;&gt; <a href="forum.admin.html">forum.admin</a>
+</div>
+
+  </body>
+</html>
+

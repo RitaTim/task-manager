@@ -127,7 +127,7 @@ $(document).ready(function(){
                 type : "GET",
                 success : function(data) {          
                     $('#content_task_table').html(data);
-                    $('.info-item').height($('.info-item').innerHeight()/3 + $('.table').innerHeight())
+                    $('.info-item').height($('.box-header').innerHeight() + $('.table').innerHeight() + 15)
                 },
                 error : function(err) {
                     alert("Fail GET /task/load_table_tasks");

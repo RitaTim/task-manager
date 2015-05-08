@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <title>Test coverage report: debug_toolbar.panels.redirects</title>
+    <style type="text/css" media="screen">
+      a
+      {
+        color: #3d707a;
+      }
+      
+      a:hover, a:active
+      {
+        color: #bf7d18;
+      }
+    
+      body 
+      {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        font-size: 13px;
+      }
+      
+      .nav 
+      {
+        font-size: 12px;
+        margin-left: 50px;
+      }
+
+      .ignored
+      {
+        color: #707070;
+      }
+
+      .executed 
+      {
+        color: #3d9900;
+      }
+
+      .missed 
+      {
+        color: red;
+        font-weight: bold;
+      }
+
+      .excluded 
+      {
+        color: #6090f0;
+        font-weight: lighter;
+      }
+    
+      #content-header 
+      {
+        font-size: 12px;
+        padding: 18px 0 18px 50px;
+      }
+
+      #content-header h1 
+      {
+        font-size: 16px;
+        margin: 10px 0 0 0;
+        color: #909090;
+      }
+      
+      #module-name
+      {
+        color: #583707;
+      }
+    
+      #content-header p
+      {
+        font-size: 13px;
+        margin: 0;
+        color: #909090;
+      }
+
+      #content-header .normal 
+      {
+        color: #609030;
+      }
+
+      #content-header .warning 
+      {
+        color: #d0a000;
+      }
+
+      #content-header .critical 
+      {
+        color: red;
+      }
+      
+      #source-listing 
+      {
+        margin-bottom: 24px;
+      }
+
+      #source-listing ol 
+      {
+        padding: 0 0 0 50px;
+        width: 90%;
+        font-family: monospace;
+        list-style-position: outside;
+      }
+
+      #source-listing ol li 
+      {
+        line-height: 18px;
+        font-size: small;
+      }
+        
+      #source-listing ol code 
+      {
+        padding:  0 .001em 0 0; /* Firefox doesn't render empty li's properly */
+        font-size: medium;
+        white-space: pre;
+      }
+   </style>
+  </head>
+
+  <body>
+
+<div class="nav">
+  <a href="debug_toolbar.panels.profiling.html">debug_toolbar.panels.profiling</a> &lt;&lt;
+  <a href="../index.html">index</a>
+  &gt;&gt; <a href="debug_toolbar.panels.request.html">debug_toolbar.panels.request</a>
+</div>
+
+<div id="content-header">
+  <h1>
+    <span id="module-name">debug_toolbar.panels.redirects</span>:
+    22 total statements,
+    <span class="critical">0.0% covered</span>
+  </h1>
+  <p>Generated: Thu 2015-05-07 01:13 UTC</p>
+  <p>Source file: /usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/redirects.py</p>
+  <p>
+    Stats:
+    <span class="executed">0 executed</span>,
+    <span class="missed">17 missed</span>,
+    <span class="excluded">5 excluded</span>,
+    <span class="ignored">11 ignored</span> 
+  </p> 
+</div>
+
+<div id="source-listing">
+  <ol>
+    <li class="excluded"><code>from __future__ import absolute_import, unicode_literals</code></li>
+<li class="ignored"><code></code></li>
+<li class="excluded"><code>from django.core.handlers.wsgi import STATUS_CODE_TEXT</code></li>
+<li class="excluded"><code>from django.shortcuts import render_to_response</code></li>
+<li class="excluded"><code>from django.utils.translation import ugettext_lazy as _</code></li>
+<li class="ignored"><code></code></li>
+<li class="excluded"><code>from debug_toolbar.panels import Panel</code></li>
+<li class="ignored"><code></code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>class RedirectsPanel(Panel):</code></li>
+<li class="ignored"><code>    """</code></li>
+<li class="ignored"><code>    Panel that intercepts redirects and displays a page with debug info.</code></li>
+<li class="ignored"><code>    """</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>    has_content = False</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>    nav_title = _("Intercept redirects")</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>    def process_response(self, request, response):</code></li>
+<li class="missed"><code>        if 300 &lt;= int(response.status_code) &lt; 400:</code></li>
+<li class="missed"><code>            redirect_to = response.get('Location', None)</code></li>
+<li class="missed"><code>            if redirect_to:</code></li>
+<li class="missed"><code>                try:        # Django &gt;= 1.6</code></li>
+<li class="missed"><code>                    reason_phrase = response.reason_phrase</code></li>
+<li class="missed"><code>                except AttributeError:</code></li>
+<li class="missed"><code>                    reason_phrase = STATUS_CODE_TEXT.get(response.status_code,</code></li>
+<li class="ignored"><code>                                                         'UNKNOWN STATUS CODE')</code></li>
+<li class="missed"><code>                status_line = '%s %s' % (response.status_code, reason_phrase)</code></li>
+<li class="missed"><code>                cookies = response.cookies</code></li>
+<li class="missed"><code>                context = {'redirect_to': redirect_to, 'status_line': status_line}</code></li>
+<li class="missed"><code>                response = render_to_response('debug_toolbar/redirect.html', context)</code></li>
+<li class="missed"><code>                response.cookies = cookies</code></li>
+<li class="missed"><code>        return response</code></li>
+  </ol>
+</div>
+
+<div class="nav">
+  <a href="debug_toolbar.panels.profiling.html">debug_toolbar.panels.profiling</a> &lt;&lt;
+  <a href="../index.html">index</a>
+  &gt;&gt; <a href="debug_toolbar.panels.request.html">debug_toolbar.panels.request</a>
+</div>
+
+  </body>
+</html>
+

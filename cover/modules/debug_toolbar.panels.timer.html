@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <title>Test coverage report: debug_toolbar.panels.timer</title>
+    <style type="text/css" media="screen">
+      a
+      {
+        color: #3d707a;
+      }
+      
+      a:hover, a:active
+      {
+        color: #bf7d18;
+      }
+    
+      body 
+      {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        font-size: 13px;
+      }
+      
+      .nav 
+      {
+        font-size: 12px;
+        margin-left: 50px;
+      }
+
+      .ignored
+      {
+        color: #707070;
+      }
+
+      .executed 
+      {
+        color: #3d9900;
+      }
+
+      .missed 
+      {
+        color: red;
+        font-weight: bold;
+      }
+
+      .excluded 
+      {
+        color: #6090f0;
+        font-weight: lighter;
+      }
+    
+      #content-header 
+      {
+        font-size: 12px;
+        padding: 18px 0 18px 50px;
+      }
+
+      #content-header h1 
+      {
+        font-size: 16px;
+        margin: 10px 0 0 0;
+        color: #909090;
+      }
+      
+      #module-name
+      {
+        color: #583707;
+      }
+    
+      #content-header p
+      {
+        font-size: 13px;
+        margin: 0;
+        color: #909090;
+      }
+
+      #content-header .normal 
+      {
+        color: #609030;
+      }
+
+      #content-header .warning 
+      {
+        color: #d0a000;
+      }
+
+      #content-header .critical 
+      {
+        color: red;
+      }
+      
+      #source-listing 
+      {
+        margin-bottom: 24px;
+      }
+
+      #source-listing ol 
+      {
+        padding: 0 0 0 50px;
+        width: 90%;
+        font-family: monospace;
+        list-style-position: outside;
+      }
+
+      #source-listing ol li 
+      {
+        line-height: 18px;
+        font-size: small;
+      }
+        
+      #source-listing ol code 
+      {
+        padding:  0 .001em 0 0; /* Firefox doesn't render empty li's properly */
+        font-size: medium;
+        white-space: pre;
+      }
+   </style>
+  </head>
+
+  <body>
+
+<div class="nav">
+  <a href="debug_toolbar.panels.templates.views.html">debug_toolbar.panels.templates.views</a> &lt;&lt;
+  <a href="../index.html">index</a>
+  &gt;&gt; <a href="debug_toolbar.panels.versions.html">debug_toolbar.panels.versions</a>
+</div>
+
+<div id="content-header">
+  <h1>
+    <span id="module-name">debug_toolbar.panels.timer</span>:
+    46 total statements,
+    <span class="critical">0.0% covered</span>
+  </h1>
+  <p>Generated: Thu 2015-05-07 01:13 UTC</p>
+  <p>Source file: /usr/local/lib/python2.7/dist-packages/debug_toolbar/panels/timer.py</p>
+  <p>
+    Stats:
+    <span class="executed">0 executed</span>,
+    <span class="missed">40 missed</span>,
+    <span class="excluded">6 excluded</span>,
+    <span class="ignored">37 ignored</span> 
+  </p> 
+</div>
+
+<div id="source-listing">
+  <ol>
+    <li class="excluded"><code>from __future__ import absolute_import, unicode_literals</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>try:</code></li>
+<li class="excluded"><code>    import resource     # Not available on Win32 systems</code></li>
+<li class="missed"><code>except ImportError:</code></li>
+<li class="missed"><code>    resource = None</code></li>
+<li class="excluded"><code>import time</code></li>
+<li class="excluded"><code>from django.template.loader import render_to_string</code></li>
+<li class="excluded"><code>from django.utils.translation import ugettext_lazy as _</code></li>
+<li class="excluded"><code>from debug_toolbar.panels import Panel</code></li>
+<li class="ignored"><code></code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>class TimerPanel(Panel):</code></li>
+<li class="ignored"><code>    """</code></li>
+<li class="ignored"><code>    Panel that displays the time a response took in milliseconds.</code></li>
+<li class="ignored"><code>    """</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>    def nav_subtitle(self):</code></li>
+<li class="missed"><code>        stats = self.get_stats()</code></li>
+<li class="missed"><code>        if hasattr(self, '_start_rusage'):</code></li>
+<li class="missed"><code>            utime = self._end_rusage.ru_utime - self._start_rusage.ru_utime</code></li>
+<li class="missed"><code>            stime = self._end_rusage.ru_stime - self._start_rusage.ru_stime</code></li>
+<li class="missed"><code>            return _("CPU: %(cum)0.2fms (%(total)0.2fms)") % {</code></li>
+<li class="ignored"><code>                'cum': (utime + stime) * 1000.0,</code></li>
+<li class="ignored"><code>                'total': stats['total_time']</code></li>
+<li class="ignored"><code>            }</code></li>
+<li class="missed"><code>        elif 'total_time' in stats:</code></li>
+<li class="missed"><code>            return _("Total: %0.2fms") % stats['total_time']</code></li>
+<li class="ignored"><code>        else:</code></li>
+<li class="missed"><code>            return ''</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>    has_content = resource is not None</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>    title = _("Time")</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>    template = 'debug_toolbar/panels/timer.html'</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>    @property</code></li>
+<li class="ignored"><code>    def content(self):</code></li>
+<li class="missed"><code>        stats = self.get_stats()</code></li>
+<li class="missed"><code>        rows = (</code></li>
+<li class="ignored"><code>            (_("User CPU time"), _("%(utime)0.3f msec") % stats),</code></li>
+<li class="ignored"><code>            (_("System CPU time"), _("%(stime)0.3f msec") % stats),</code></li>
+<li class="ignored"><code>            (_("Total CPU time"), _("%(total)0.3f msec") % stats),</code></li>
+<li class="ignored"><code>            (_("Elapsed time"), _("%(total_time)0.3f msec") % stats),</code></li>
+<li class="ignored"><code>            (_("Context switches"), _("%(vcsw)d voluntary, %(ivcsw)d involuntary") % stats),</code></li>
+<li class="ignored"><code>        )</code></li>
+<li class="missed"><code>        return render_to_string(self.template, {'rows': rows})</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>    def process_request(self, request):</code></li>
+<li class="missed"><code>        self._start_time = time.time()</code></li>
+<li class="missed"><code>        if self.has_content:</code></li>
+<li class="missed"><code>            self._start_rusage = resource.getrusage(resource.RUSAGE_SELF)</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>    def process_response(self, request, response):</code></li>
+<li class="missed"><code>        stats = {}</code></li>
+<li class="missed"><code>        if hasattr(self, '_start_time'):</code></li>
+<li class="missed"><code>            stats['total_time'] = (time.time() - self._start_time) * 1000</code></li>
+<li class="missed"><code>        if hasattr(self, '_start_rusage'):</code></li>
+<li class="missed"><code>            self._end_rusage = resource.getrusage(resource.RUSAGE_SELF)</code></li>
+<li class="missed"><code>            stats['utime'] = 1000 * self._elapsed_ru('ru_utime')</code></li>
+<li class="missed"><code>            stats['stime'] = 1000 * self._elapsed_ru('ru_stime')</code></li>
+<li class="missed"><code>            stats['total'] = stats['utime'] + stats['stime']</code></li>
+<li class="missed"><code>            stats['vcsw'] = self._elapsed_ru('ru_nvcsw')</code></li>
+<li class="missed"><code>            stats['ivcsw'] = self._elapsed_ru('ru_nivcsw')</code></li>
+<li class="missed"><code>            stats['minflt'] = self._elapsed_ru('ru_minflt')</code></li>
+<li class="missed"><code>            stats['majflt'] = self._elapsed_ru('ru_majflt')</code></li>
+<li class="ignored"><code>            # these are documented as not meaningful under Linux.  If you're running BSD</code></li>
+<li class="ignored"><code>            # feel free to enable them, and add any others that I hadn't gotten to before</code></li>
+<li class="ignored"><code>            # I noticed that I was getting nothing but zeroes and that the docs agreed. :-(</code></li>
+<li class="ignored"><code>            #</code></li>
+<li class="ignored"><code>            #        stats['blkin'] = self._elapsed_ru('ru_inblock')</code></li>
+<li class="ignored"><code>            #        stats['blkout'] = self._elapsed_ru('ru_oublock')</code></li>
+<li class="ignored"><code>            #        stats['swap'] = self._elapsed_ru('ru_nswap')</code></li>
+<li class="ignored"><code>            #        stats['rss'] = self._end_rusage.ru_maxrss</code></li>
+<li class="ignored"><code>            #        stats['srss'] = self._end_rusage.ru_ixrss</code></li>
+<li class="ignored"><code>            #        stats['urss'] = self._end_rusage.ru_idrss</code></li>
+<li class="ignored"><code>            #        stats['usrss'] = self._end_rusage.ru_isrss</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>        self.record_stats(stats)</code></li>
+<li class="ignored"><code></code></li>
+<li class="missed"><code>    def _elapsed_ru(self, name):</code></li>
+<li class="missed"><code>        return getattr(self._end_rusage, name) - getattr(self._start_rusage, name)</code></li>
+  </ol>
+</div>
+
+<div class="nav">
+  <a href="debug_toolbar.panels.templates.views.html">debug_toolbar.panels.templates.views</a> &lt;&lt;
+  <a href="../index.html">index</a>
+  &gt;&gt; <a href="debug_toolbar.panels.versions.html">debug_toolbar.panels.versions</a>
+</div>
+
+  </body>
+</html>
+

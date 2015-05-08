@@ -24,7 +24,7 @@ def get_current_iterate(project_id = 0):
 			iterate_days_t = timedelta( days = cur_project['iterate_days'] )
 			start_line     = datetime.now()
 			dead_line      = start_line + iterate_days_t
-			next_iterate   = Iteration.objects.create(title = "default title", project_id = project_id, start_line = start_line, dead_line = dead_line)
+			next_iterate   = Iteration.objects.create(title = "Автоитерация", project_id = project_id, start_line = start_line, dead_line = dead_line)
 			next_iterate.save()
 		else:
 			next_iterate = next_iterates[0].id

@@ -30,10 +30,10 @@ def set_data_after_logging(request):
 		project_id = projects[0]['id']			
 		iterate_id = get_current_iterate(project_id)
 		cache.set_many( { 
-				'project_id'   : project_id,
-				'project_title': projects[0]['title'],
-				'iterate_id'   : iterate_id
-			} )
+			'project_id'   : project_id,
+			'project_title': projects[0]['title'],
+			'iterate_id'   : iterate_id
+		})
 
 	return redirect('/auth')
 
