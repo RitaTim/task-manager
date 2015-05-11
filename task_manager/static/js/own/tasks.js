@@ -63,10 +63,19 @@ $(document).ready(function(){
             	if (id_task) { 
                     load_comments(id_task);
                 };
-                $('#task-modal #id_text').redactor({minHeight: 200});
+                $('#task-modal #id_text').redactor({
+                    minHeight: 200,
+                    buttons: [
+                        'html', 'formatting', 'bold', 'italic', 'deleted','unorderedlist', 'orderedlist', 'outdent', 'indent',
+'image', 'file', 'link', 'alignment', 'horizontalrule'],
+                    imageUpload: "/file/photos/upload",
+                    imageGetJson: "/file/photos/recent",
+                    fileUpload: "/file/files/upload",
+                    fileGetJson: "/file/files/recent"
+                });
             	$('#text').redactor({
                         minHeight: 200,
-                        buttons: []
+                        toolbar: false
                 });
                 $('#task-modal').modal('show');
             },

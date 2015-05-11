@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^statistic/',    include('statistic.urls'   )),
     url(r'^iterates/',     include('iteration.urls'   )),
     url(r'^notification/', include('notification.urls')),
+    url(r'^file/',         include('file.urls'        )),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
