@@ -100,7 +100,9 @@ def get_progress_users(request, iterate_id = None, lst_users_id = []):
 
 def get_data_graphic(request, iterate_id = None):
 	iterate_id = request.GET.get('iterate_id', cache.get('iterate_id'))
-	tasks      = Task.objects.filter( iterate = iterate_id, status = "done" ).values( 'id', 'title', 'start_time', 'end_time' )
+	current_iterate = True if (str(cache.get('iterate_id')) == iterate_id) else False
+	
+	tasks = Task.objects.filter( iterate = iterate_id, status = "done" ).values( 'id', 'title', 'start_time', 'end_time' )
 	if not tasks:
 		return HttpResponse(json.dumps({}), content_type='application/json')
 	iterate = Iteration.objects.filter(id = iterate_id).values('start_line', 'dead_line')[0]
@@ -125,11 +127,13 @@ def get_data_graphic(request, iterate_id = None):
 	#iterate = Iteration.objects.filter(id = iterate_id).values('start_line', 'dead_line')[0]
 
 	# calc koeff empty time
-	all_time_iter = iterate['dead_line'] - iterate['start_line']
-	empty_time = all_time_iter - work_time
+	spend_time_iter = (timezone.now() - iterate['start_line']) if current_iterate else (iterate['dead_line'] - iterate['start_line'])
+	empty_time = spend_time_iter - work_time
 	count_done_tasks = len(data_tasks)
 	k_emty_time = empty_time/count_done_tasks
 	starting_point = iterate_time['start_line']
+	logging.info(empty_time)
+	logging.info(k_emty_time)
 
 	for task in data_tasks:
 		task['x_coordinate'] = (starting_point + task['perform_time'] + k_emty_time).strftime('%Y-%m-%d %H:%M')
